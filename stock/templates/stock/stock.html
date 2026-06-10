@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Oval Classics | Stock Disponible</title>
+    <base href="/">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+        :root {
+            --azul-noche: #070e1a;
+            --azul-profundo: #0b1d3d;
+            --azul-medio: #132b4a;
+            --dorado: #c8a45c;
+            --dorado-claro: #d4b87a;
+            --dorado-oscuro: #a07830;
+            --blanco-roto: #f5f2ed;
+            --blanco-puro: #ffffff;
+            --gris-suave: #b0b0b0;
+            --rojo-acento: #b71c1c;
+            --verde-stock: #2e7d32;
+            --sombra-suave: 0 4px 20px rgba(0,0,0,0.3);
+            --sombra-media: 0 8px 35px rgba(0,0,0,0.6);
+            --sombra-dorada: 0 6px 25px rgba(200,164,92,0.2);
+            --transicion: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+            --transicion-suave: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--azul-noche);
+            background-image: radial-gradient(ellipse at 50% 30%, rgba(200,164,92,0.05) 0%, transparent 60%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* ========== NAVBAR ========== */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(7,14,26,0.9); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(200,164,92,0.2);
+            padding: 0 2rem; display: flex; align-items: center; justify-content: space-between;
+            height: 72px; animation: slideDown 0.7s ease forwards;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .navbar .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .navbar .logo-icon {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, var(--dorado) 0%, var(--dorado-oscuro) 100%);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; color: #0d0d0d; font-weight: 900;
+            font-family: 'Oswald', sans-serif; letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(200,164,92,0.5);
+            transition: var(--transicion); position: relative; overflow: hidden;
+        }
+        .navbar .logo-icon::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer { 0%,100% { transform: rotate(0deg); } 25% { transform: rotate(15deg); } 75% { transform: rotate(-15deg); } }
+        .navbar .logo:hover .logo-icon { transform: scale(1.08); box-shadow: 0 0 30px rgba(200,164,92,0.8); }
+        .navbar .logo-text {
+            font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700;
+            color: var(--blanco-roto); letter-spacing: 1px;
+        }
+        .navbar .logo-text span { color: var(--dorado); }
+        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-links a {
+            color: #cccccc; text-decoration: none; font-size: 0.9rem; font-weight: 500;
+            letter-spacing: 0.5px; transition: var(--transicion); position: relative; padding: 8px 0;
+            font-family: 'Oswald', sans-serif; text-transform: uppercase;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+            background: var(--dorado); transition: var(--transicion-suave); border-radius: 2px;
+        }
+        .nav-links a:hover { color: var(--dorado); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links .btn-nav {
+            background: linear-gradient(135deg, var(--dorado) 0%, var(--dorado-oscuro) 100%);
+            color: #0d0d0d !important; padding: 10px 22px !important; border-radius: 30px;
+            font-weight: 600; letter-spacing: 0.5px; transition: var(--transicion);
+            box-shadow: 0 4px 15px rgba(200,164,92,0.3);
+        }
+        .nav-links .btn-nav:hover {
+            transform: translateY(-2px); box-shadow: 0 8px 25px rgba(200,164,92,0.5);
+            color: #0d0d0d !important;
+        }
+        .nav-links .btn-nav::after { display: none; }
+
+        /* ========== CONTENEDOR PRINCIPAL ========== */
+        .main-container {
+            margin-top: 120px; margin-bottom: 60px; width: 90%; max-width: 1300px;
+            display: flex; flex-direction: column; gap: 40px;
+            animation: fadeInUp 0.9s ease forwards; animation-delay: 0.2s; opacity: 0;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            background: linear-gradient(135deg, #0d1a30 0%, #13233f 40%, #0b1628 100%);
+            border-radius: 16px; padding: 45px 50px;
+            display: flex; align-items: center; justify-content: space-between; gap: 40px;
+            box-shadow: var(--sombra-media); position: relative; overflow: hidden;
+            border: 1px solid rgba(200,164,92,0.15);
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -20%; right: -10%; width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(200,164,92,0.08) 0%, transparent 70%);
+            border-radius: 50%; pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; flex: 1; }
+        .hero-badge {
+            display: inline-block; background: rgba(200,164,92,0.15); color: var(--dorado);
+            padding: 5px 14px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;
+            border: 1px solid rgba(200,164,92,0.3);
+        }
+        .hero h1 {
+            font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700;
+            color: #ffffff; line-height: 1.2; margin-bottom: 12px;
+        }
+        .hero h1 span { color: var(--dorado); }
+        .hero p { color: #b0b8c4; font-size: 1rem; line-height: 1.6; margin-bottom: 24px; max-width: 500px; }
+        .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+        .hero-image {
+            position: relative; z-index: 1; flex: 0 0 260px; height: 190px;
+            background: rgba(200,164,92,0.05); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; font-size: 5rem;
+            border: 2px solid rgba(200,164,92,0.3);
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.3);
+            transition: var(--transicion-suave);
+        }
+        .hero-image:hover { border-color: var(--dorado); transform: translateY(-3px); box-shadow: inset 0 0 50px rgba(0,0,0,0.3), 0 0 30px rgba(200,164,92,0.3); }
+
+        /* ========== BOTONES ========== */
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 28px; border-radius: 30px;
+            font-family: 'Oswald', sans-serif; font-size: 0.9rem; font-weight: 600;
+            text-decoration: none; cursor: pointer; border: none;
+            letter-spacing: 1px; text-transform: uppercase;
+            transition: var(--transicion); position: relative; overflow: hidden; white-space: nowrap;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--dorado) 0%, var(--dorado-oscuro) 100%);
+            color: #0d0d0d; box-shadow: var(--sombra-dorada);
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(200,164,92,0.5); }
+        .btn-outline {
+            background: transparent; color: #ffffff;
+            border: 2px solid rgba(200,164,92,0.5);
+        }
+        .btn-outline:hover { background: rgba(200,164,92,0.08); border-color: var(--dorado); transform: translateY(-3px); }
+
+        /* ========== ESTADÍSTICAS ========== */
+        .stats-row {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px;
+        }
+        .stat-item {
+            background: rgba(255,255,255,0.03); backdrop-filter: blur(5px);
+            border-radius: 12px; padding: 20px; text-align: center;
+            box-shadow: var(--sombra-suave); border: 1px solid rgba(200,164,92,0.1);
+            transition: var(--transicion-suave); cursor: default;
+        }
+        .stat-item:hover { border-color: rgba(200,164,92,0.3); transform: translateY(-4px); }
+        .stat-number {
+            font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700;
+            color: #ffffff; line-height: 1;
+        }
+        .stat-number.gold { color: var(--dorado); }
+        .stat-label {
+            font-size: 0.78rem; color: var(--gris-suave); margin-top: 6px;
+            letter-spacing: 0.8px; text-transform: uppercase; font-family: 'Oswald', sans-serif;
+        }
+
+        /* ========== TABLA DE STOCK ========== */
+        .section-title {
+            font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 600;
+            color: #ffffff; margin-bottom: 6px;
+        }
+        .section-subtitle { color: #9e9e9e; font-size: 0.9rem; margin-bottom: 20px; }
+        .table-container {
+            background: rgba(255,255,255,0.02); border-radius: 12px; overflow: hidden;
+            box-shadow: var(--sombra-media); border: 1px solid rgba(200,164,92,0.1);
+        }
+        table {
+            width: 100%; border-collapse: collapse;
+        }
+        th {
+            text-align: left; padding: 14px 20px; background: rgba(0,0,0,0.3);
+            font-family: 'Oswald', sans-serif; text-transform: uppercase;
+            letter-spacing: 1px; font-size: 0.8rem; color: var(--dorado);
+            border-bottom: 2px solid rgba(200,164,92,0.2);
+        }
+        td {
+            padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem; color: #cccccc;
+        }
+        tr:hover td { background: rgba(200,164,92,0.05); }
+        .badge {
+            display: inline-block; padding: 4px 12px; border-radius: 12px;
+            font-family: 'Oswald', sans-serif; font-size: 0.7rem; font-weight: 600;
+            letter-spacing: 0.5px; text-transform: uppercase;
+        }
+        .badge-available { background: rgba(46,125,50,0.2); color: #81c784; border: 1px solid rgba(46,125,50,0.4); }
+        .badge-reserved { background: rgba(200,164,92,0.2); color: #e2c28a; border: 1px solid rgba(200,164,92,0.4); }
+        .badge-sold { background: rgba(183,28,28,0.2); color: #ef9a9a; border: 1px solid rgba(183,28,28,0.4); }
+
+        /* ========== FOOTER ========== */
+        .footer-bar {
+            text-align: center; padding: 20px; color: #5c5c5c; font-size: 0.8rem;
+            letter-spacing: 0.5px; border-top: 1px solid rgba(255,255,255,0.05);
+            width: 100%; margin-top: auto;
+        }
+
+        @media (max-width: 800px) {
+            .hero { flex-direction: column; text-align: center; padding: 30px; }
+            .hero-image { width: 100%; }
+            th, td { padding: 10px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <div class="logo-icon">F</div>
+            <span class="logo-text">Blue Oval <span>Classics</span></span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Inventario</a></li>
+            <li><a href="#">Clientes</a></li>
+            <li><a href="#">Equipo</a></li>
+            <li><a href="#">Fábrica</a></li>
+            <li><a href="#" class="btn-nav">Stock</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-container">
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="hero-badge">📊 Panel de Stock</span>
+                <h1>Vehículos <span>Disponibles</span></h1>
+                <p>Controlá el inventario en tiempo real. Unidades listas para entrega inmediata, reservadas y últimos ingresos al showroom.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="actualizarStock()">🔄 Actualizar</button>
+                    <button class="btn btn-outline" onclick="exportarStock()">📋 Exportar</button>
+                </div>
+            </div>
+            <div class="hero-image">🚘</div>
+        </section>
+
+        <!-- ESTADÍSTICAS -->
+        <div class="stats-row">
+            <div class="stat-item">
+                <div class="stat-number gold">23</div>
+                <div class="stat-label">En Stock</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Reservados</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number gold">4</div>
+                <div class="stat-label">En Tránsito</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Vendidos (Mes)</div>
+            </div>
+        </div>
+
+        <!-- TABLA DE STOCK -->
+        <div>
+            <h2 class="section-title">Listado de Stock Actual</h2>
+            <p class="section-subtitle">Última actualización: 09/06/2026 - 10:30 AM</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Modelo</th>
+                            <th>Año</th>
+                            <th>Kilometraje</th>
+                            <th>Precio</th>
+                            <th>Estado</th>
+                            <th>Ubicación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mustang Boss 429</td>
+                            <td>1969</td>
+                            <td>48,000 mi</td>
+                            <td style="color:var(--dorado);">$285,000</td>
+                            <td><span class="badge badge-available">Disponible</span></td>
+                            <td>Showroom A</td>
+                        </tr>
+                        <tr>
+                            <td>F-100 Custom Cab</td>
+                            <td>1956</td>
+                            <td>72,000 mi</td>
+                            <td style="color:var(--dorado);">$58,000</td>
+                            <td><span class="badge badge-available">Disponible</span></td>
+                            <td>Patio 2</td>
+                        </tr>
+                        <tr>
+                            <td>Galaxie 500 XL</td>
+                            <td>1965</td>
+                            <td>51,000 mi</td>
+                            <td style="color:var(--dorado);">$49,500</td>
+                            <td><span class="badge badge-reserved">Reservado</span></td>
+                            <td>Taller</td>
+                        </tr>
+                        <tr>
+                            <td>Thunderbird Conv.</td>
+                            <td>1962</td>
+                            <td>38,000 mi</td>
+                            <td style="color:var(--dorado);">$74,000</td>
+                            <td><span class="badge badge-sold">Vendido</span></td>
+                            <td>Entregado</td>
+                        </tr>
+                        <tr>
+                            <td>Fairlane 500</td>
+                            <td>1968</td>
+                            <td>55,000 mi</td>
+                            <td style="color:var(--dorado);">$36,800</td>
+                            <td><span class="badge badge-available">Disponible</span></td>
+                            <td>Showroom B</td>
+                        </tr>
+                        <tr>
+                            <td>Falcon Sprint</td>
+                            <td>1970</td>
+                            <td>62,000 mi</td>
+                            <td style="color:var(--dorado);">$42,500</td>
+                            <td><span class="badge badge-reserved">Reservado</span></td>
+                            <td>Patio 1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bar">© 2026 Blue Oval Classics · Gestión de Stock · Precios en USD</div>
+
+    <script>
+        function actualizarStock() {
+            mostrarNotificacion('🔄 Actualizando datos del inventario...', 'gold');
+        }
+        function exportarStock() {
+            mostrarNotificacion('📋 Generando reporte de stock en PDF...', 'dark');
+        }
+        function mostrarNotificacion(mensaje, tipo) {
+            const existente = document.querySelector('.toast-notificacion');
+            if (existente) existente.remove();
+            const toast = document.createElement('div');
+            toast.innerHTML = mensaje;
+            toast.style.cssText = `
+                position: fixed; bottom: 30px; right: 30px;
+                background: ${tipo==='gold'?'linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%)':'linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%)'};
+                color: #fafafa; padding: 16px 24px; border-radius: 12px;
+                font-family: 'Inter', sans-serif; font-size: 0.9rem;
+                z-index: 9999; box-shadow: 0 10px 35px rgba(0,0,0,0.5);
+                border: 1px solid ${tipo==='gold'?'rgba(200,164,92,0.5)':'rgba(255,255,255,0.15)'};
+                animation: slideInToast 0.5s ease forwards;
+                clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideOutToast 0.4s ease forwards';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

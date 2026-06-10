@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Oval Classics | Fábrica de Restauración</title>
+    <base href="/">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+        :root {
+            --azul-ford: #0b1d3d;
+            --azul-blueprint: #0f2847;
+            --azul-claro: #1e3a5f;
+            --naranja-taller: #e05a00;
+            --naranja-claro: #f07b2c;
+            --gris-acero: #2a2e33;
+            --gris-claro: #b0b5ba;
+            --blanco-puro: #ffffff;
+            --blanco-roto: #f0ede7;
+            --negro: #0a0a0a;
+            --sombra-suave: 0 2px 15px rgba(0,0,0,0.1);
+            --sombra-media: 0 8px 35px rgba(0,0,0,0.3);
+            --transicion: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+            --transicion-suave: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e8e5df;
+            background-image: 
+                linear-gradient(rgba(15,40,71,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15,40,71,0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: #141414;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* ========== NAVBAR (mismo estilo base) ========== */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(11, 29, 61, 0.92);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border-bottom: 2px solid rgba(200,200,210,0.2);
+            padding: 0 2rem;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 72px;
+            animation: slideDown 0.7s ease forwards;
+            box-shadow: 0 4px 35px rgba(0,0,0,0.4);
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .navbar .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .navbar .logo-icon {
+            width: 44px; height: 44px;
+            background: linear-gradient(160deg, #1a3a6e 0%, #0b1d3d 50%, #060f20 100%);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; color: #fff; font-weight: 900;
+            font-family: 'Oswald', sans-serif; letter-spacing: 1px;
+            box-shadow: 0 0 0 2px rgba(200,200,210,0.3), 0 0 25px rgba(20,50,120,0.5);
+            transition: var(--transicion); position: relative; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .navbar .logo-icon::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.08) 55%, transparent 60%);
+            animation: chromeSweep 4s infinite;
+        }
+        @keyframes chromeSweep {
+            0%,100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        .navbar .logo:hover .logo-icon {
+            transform: scale(1.07);
+            box-shadow: 0 0 0 3px rgba(200,200,210,0.5), 0 0 40px rgba(20,50,120,0.8);
+        }
+        .navbar .logo-text {
+            font-family: 'Oswald', sans-serif; font-size: 1.4rem; font-weight: 700;
+            color: #f5f2ed; letter-spacing: 1.5px; text-transform: uppercase;
+        }
+        .navbar .logo-text span { color: #5b9bd5; letter-spacing: 2px; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-links a {
+            color: #bbbbbb; text-decoration: none; font-size: 0.9rem; font-weight: 500;
+            letter-spacing: 1px; transition: var(--transicion); position: relative; padding: 8px 0;
+            font-family: 'Oswald', sans-serif; text-transform: uppercase;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+            background: #e05a00; transition: var(--transicion-suave); border-radius: 1px;
+        }
+        .nav-links a:hover { color: #ffffff; }
+        .nav-links a:hover::after { width: 100%; box-shadow: 0 0 10px rgba(224,90,0,0.6); }
+        .nav-links .btn-nav {
+            background: linear-gradient(160deg, #c41230 0%, #8b0e1e 100%);
+            color: #fff !important; padding: 10px 24px !important; border-radius: 4px;
+            font-weight: 600; letter-spacing: 1.2px; transition: var(--transicion);
+            box-shadow: 0 4px 18px rgba(196,18,48,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+            clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+        }
+        .nav-links .btn-nav:hover {
+            transform: translateY(-2px); box-shadow: 0 10px 28px rgba(196,18,48,0.6);
+            background: linear-gradient(160deg, #d41435 0%, #a01020 100%);
+        }
+        .nav-links .btn-nav::after { display: none; }
+
+        /* ========== CONTENEDOR PRINCIPAL ========== */
+        .main-container {
+            margin-top: 120px; margin-bottom: 60px; width: 90%; max-width: 1300px;
+            display: flex; flex-direction: column; gap: 40px;
+            animation: fadeInUp 0.9s ease forwards; animation-delay: 0.2s; opacity: 0;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== HERO ESTILO BLUEPRINT ========== */
+        .hero {
+            background: var(--azul-blueprint);
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 25px 25px;
+            border-radius: 4px; padding: 50px 60px;
+            display: flex; align-items: center; justify-content: space-between; gap: 40px;
+            box-shadow: var(--sombra-media), 0 0 0 1px rgba(255,255,255,0.05);
+            position: relative; overflow: hidden;
+            border: 1px solid rgba(224,90,0,0.3);
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 50px) 100%, 0 100%, 0 0);
+        }
+        .hero::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 70% 30%, rgba(224,90,0,0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; flex: 1; }
+        .hero-badge {
+            display: inline-block; background: rgba(224,90,0,0.2); color: #f07b2c;
+            padding: 6px 18px; border-radius: 3px; font-size: 0.78rem; font-weight: 700;
+            letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 18px;
+            border: 1px solid rgba(224,90,0,0.5); font-family: 'Space Mono', monospace;
+            clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+        }
+        .hero h1 {
+            font-family: 'Oswald', sans-serif; font-size: 3rem; font-weight: 700;
+            color: #ffffff; line-height: 1.1; margin-bottom: 14px;
+            letter-spacing: 1.5px; text-transform: uppercase;
+        }
+        .hero h1 span {
+            color: #f07b2c; position: relative; display: inline-block;
+            text-shadow: 0 0 35px rgba(240,123,44,0.5);
+        }
+        .hero p {
+            color: #b0b8c4; font-size: 1rem; line-height: 1.7; margin-bottom: 28px;
+            max-width: 500px;
+        }
+        .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+        .hero-image {
+            position: relative; z-index: 1; flex: 0 0 260px; height: 200px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 4px; display: flex; align-items: center; justify-content: center;
+            font-size: 5.5rem; border: 2px dashed rgba(224,90,0,0.4);
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.3);
+            transition: var(--transicion-suave);
+            clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+        }
+        .hero-image:hover {
+            border-color: #f07b2c; transform: translateY(-4px);
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.3), 0 0 40px rgba(224,90,0,0.2);
+        }
+
+        /* ========== BOTONES ========== */
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 13px 28px; border-radius: 3px;
+            font-family: 'Oswald', sans-serif; font-size: 0.9rem; font-weight: 600;
+            text-decoration: none; cursor: pointer; border: none;
+            letter-spacing: 1.2px; text-transform: uppercase;
+            transition: var(--transicion); position: relative; overflow: hidden;
+            white-space: nowrap;
+            clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+        }
+        .btn::before {
+            content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0;
+            background: rgba(255,255,255,0.2); border-radius: 50%;
+            transform: translate(-50%, -50%); transition: width 0.6s, height 0.6s;
+        }
+        .btn:active::before { width: 300px; height: 300px; }
+        .btn-primary {
+            background: linear-gradient(160deg, #e05a00 0%, #b04500 100%);
+            color: #ffffff; box-shadow: 0 6px 22px rgba(224,90,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px); box-shadow: 0 12px 35px rgba(224,90,0,0.5);
+            background: linear-gradient(160deg, #f06810 0%, #c04e00 100%);
+        }
+        .btn-outline {
+            background: transparent; color: #d0d0d0;
+            border: 2px solid rgba(224,90,0,0.5);
+        }
+        .btn-outline:hover {
+            background: rgba(224,90,0,0.06); border-color: #f07b2c;
+            transform: translateY(-3px); box-shadow: 0 8px 25px rgba(224,90,0,0.15);
+            color: #ffffff;
+        }
+        .btn-sm {
+            padding: 8px 16px; font-size: 0.78rem; letter-spacing: 1px;
+            clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+        }
+
+        /* ========== ESTADÍSTICAS ========== */
+        .section-title {
+            font-family: 'Oswald', sans-serif; font-size: 1.8rem; font-weight: 700;
+            color: #0b1d3d; margin-bottom: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+        }
+        .section-subtitle {
+            color: #5c5c5c; font-size: 0.9rem; margin-bottom: 28px;
+        }
+        .stats-row {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px;
+        }
+        .stat-item {
+            background: #ffffff; border-radius: 4px; padding: 22px 20px; text-align: center;
+            box-shadow: var(--sombra-suave); border: 1px solid rgba(0,0,0,0.05);
+            transition: var(--transicion-suave); cursor: default;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 6px), calc(100% - 25px) 100%, 0 100%, 0 0);
+            background-image: linear-gradient(rgba(15,40,71,0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .stat-item:hover {
+            border-color: rgba(224,90,0,0.4); transform: translateY(-4px);
+            box-shadow: var(--sombra-media);
+        }
+        .stat-number {
+            font-family: 'Space Mono', monospace; font-size: 2.2rem; font-weight: 700;
+            color: #0b1d3d; line-height: 1;
+        }
+        .stat-number.orange { color: #e05a00; }
+        .stat-label {
+            font-size: 0.75rem; color: #5c5c5c; margin-top: 6px;
+            letter-spacing: 1px; text-transform: uppercase; font-weight: 600;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        /* ========== TARJETAS DE PROYECTOS (estilo blueprint con líneas) ========== */
+        .cards-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;
+        }
+        .project-card {
+            background: #ffffff; border-radius: 4px; padding: 24px 20px;
+            box-shadow: var(--sombra-suave); border: 1px solid rgba(0,0,0,0.05);
+            transition: var(--transicion-suave); position: relative; overflow: hidden;
+            cursor: pointer; animation: fadeInUp 0.7s ease forwards; opacity: 0;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 30px) 100%, 0 100%, 0 0);
+            background-image: 
+                linear-gradient(rgba(15,40,71,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15,40,71,0.02) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .project-card:nth-child(1) { animation-delay: 0.35s; }
+        .project-card:nth-child(2) { animation-delay: 0.5s; }
+        .project-card:nth-child(3) { animation-delay: 0.65s; }
+        .project-card:nth-child(4) { animation-delay: 0.8s; }
+
+        .project-card:hover {
+            transform: translateY(-8px); box-shadow: var(--sombra-media);
+            border-color: rgba(224,90,0,0.3);
+        }
+        .project-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+            background: linear-gradient(180deg, #e05a00 0%, #b04500 100%);
+            transform: scaleY(0); transform-origin: top;
+            transition: transform 0.4s ease;
+        }
+        .project-card:hover::before { transform: scaleY(1); }
+
+        .project-header {
+            display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+        }
+        .project-icon {
+            width: 44px; height: 44px; background: rgba(224,90,0,0.08);
+            border-radius: 4px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; color: #e05a00;
+            clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+        }
+        .project-info h3 {
+            font-family: 'Oswald', sans-serif; font-size: 1.1rem; font-weight: 600;
+            color: #0b1d3d; letter-spacing: 0.8px; text-transform: uppercase;
+        }
+        .project-meta {
+            font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #e05a00;
+            letter-spacing: 0.5px; text-transform: uppercase;
+        }
+        .project-card p {
+            font-size: 0.85rem; color: #5c5c5c; line-height: 1.5; margin-bottom: 16px;
+        }
+        .progress-bar {
+            width: 100%; height: 6px; background: #e0e0e0; border-radius: 3px;
+            margin: 12px 0 18px; overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%; border-radius: 3px;
+            background: linear-gradient(90deg, #e05a00, #f07b2c);
+            width: var(--progress);
+            transition: width 0.8s ease;
+        }
+        .card-footer {
+            display: flex; align-items: center; justify-content: space-between;
+            font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #5c5c5c;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer-bar {
+            text-align: center; padding: 20px; color: #5c5c5c; font-size: 0.78rem;
+            letter-spacing: 0.8px; border-top: 1px solid rgba(0,0,0,0.06); width: 100%;
+            margin-top: auto; font-family: 'Oswald', sans-serif; text-transform: uppercase;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 900px) {
+            .hero { flex-direction: column; text-align: center; padding: 36px 28px; }
+            .hero p { max-width: 100%; }
+            .hero-buttons { justify-content: center; }
+            .hero-image { flex: 0 0 140px; width: 100%; font-size: 3.5rem; }
+            .hero h1 { font-size: 2rem; }
+            .nav-links { gap: 1rem; }
+            .nav-links a { font-size: 0.75rem; }
+            .navbar { padding: 0 1rem; }
+        }
+        @media (max-width: 600px) {
+            .hero { padding: 28px 18px; }
+            .hero h1 { font-size: 1.5rem; }
+            .hero-image { font-size: 2.5rem; height: 120px; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .btn { padding: 10px 18px; font-size: 0.8rem; }
+            .navbar .logo-text { font-size: 1.1rem; }
+            .section-title { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <div class="logo-icon">F</div>
+            <span class="logo-text">BLUE OVAL <span>CLASSICS</span></span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Inventario</a></li>
+            <li><a href="#">Clientes</a></li>
+            <li><a href="#">Equipo</a></li>
+            <li><a href="#" class="btn-nav">Fábrica</a></li>
+        </ul>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="main-container">
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="hero-badge">⚙️ Planta de Restauración</span>
+                <h1>Línea de <span>Montaje</span> Clásica</h1>
+                <p>
+                    Así funciona nuestra <strong>Fábrica de Sueños</strong>. Cada rincón está diseñado para devolver la vida a los Ford que marcaron una era. Supervisá los proyectos activos y el flujo de trabajo.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="verPlanos()">
+                        📐 Ver Planos
+                    </button>
+                    <button class="btn btn-outline" onclick="agregarProyecto()">
+                        ➕ Nuevo Proyecto
+                    </button>
+                </div>
+            </div>
+            <div class="hero-image">
+                🏭
+            </div>
+        </section>
+
+        <!-- ESTADÍSTICAS -->
+        <div>
+            <h2 class="section-title">Estado de la Planta</h2>
+            <p class="section-subtitle">Capacidad operativa y proyectos en curso.</p>
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-number orange">6</div>
+                    <div class="stat-label">Bahías Activas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Proyectos en Curso</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number orange">92%</div>
+                    <div class="stat-label">Eficiencia</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Próximos Ingresos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROYECTOS ACTIVOS -->
+        <div>
+            <h2 class="section-title">Proyectos en Línea</h2>
+            <p class="section-subtitle">Seguimiento visual de las restauraciones que están ocurriendo ahora mismo.</p>
+            <div class="cards-grid">
+                <!-- Proyecto 1 -->
+                <div class="project-card" onclick="verProyecto('Mustang Boss 302')" style="--progress: 75%;">
+                    <div class="project-header">
+                        <div class="project-icon">🔩</div>
+                        <div class="project-info">
+                            <h3>Mustang Boss 302 '70</h3>
+                            <div class="project-meta">Fase: Ensamblaje final</div>
+                        </div>
+                    </div>
+                    <p>Restauración completa de carrocería y motor. A la espera de tapicería y calibración de carburador.</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%;"></div>
+                    </div>
+                    <div class="card-footer">
+                        <span>ID: PR-045</span>
+                        <span>Entrega: 22/07/2026</span>
+                    </div>
+                </div>
+
+                <!-- Proyecto 2 -->
+                <div class="project-card" onclick="verProyecto('F-100 Custom Cab')" style="--progress: 40%;">
+                    <div class="project-header">
+                        <div class="project-icon">🪵</div>
+                        <div class="project-info">
+                            <h3>F-100 Custom Cab '56</h3>
+                            <div class="project-meta">Fase: Chapa y pintura</div>
+                        </div>
+                    </div>
+                    <p>Reemplazo de piso y estampado de caja. Pintura bitono original en proceso de secado.</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 40%;"></div>
+                    </div>
+                    <div class="card-footer">
+                        <span>ID: PR-052</span>
+                        <span>Entrega: 15/09/2026</span>
+                    </div>
+                </div>
+
+                <!-- Proyecto 3 -->
+                <div class="project-card" onclick="verProyecto('Galaxie 500 XL')" style="--progress: 20%;">
+                    <div class="project-header">
+                        <div class="project-icon">⚡</div>
+                        <div class="project-info">
+                            <h3>Galaxie 500 XL '65</h3>
+                            <div class="project-meta">Fase: Desarme y diagnóstico</div>
+                        </div>
+                    </div>
+                    <p>Evaluación de motor 390 y transmisión. Listado de piezas originales a reemplazar.</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 20%;"></div>
+                    </div>
+                    <div class="card-footer">
+                        <span>ID: PR-061</span>
+                        <span>Entrega: 30/11/2026</span>
+                    </div>
+                </div>
+
+                <!-- Proyecto 4 -->
+                <div class="project-card" onclick="verProyecto('Thunderbird Convertible')" style="--progress: 95%;">
+                    <div class="project-header">
+                        <div class="project-icon">✨</div>
+                        <div class="project-info">
+                            <h3>Thunderbird Conv. '62</h3>
+                            <div class="project-meta">Fase: Detallado final</div>
+                        </div>
+                    </div>
+                    <p>Últimos ajustes de capota eléctrica y cromados. Prueba de ruta programada para mañana.</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 95%;"></div>
+                    </div>
+                    <div class="card-footer">
+                        <span>ID: PR-038</span>
+                        <span>Entrega: 10/07/2026</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer-bar">
+        © 2026 Blue Oval Classics · Fábrica de Restauración · Donde los clásicos vuelven a rugir
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        function verPlanos() {
+            mostrarNotificacion('📐 Abriendo visor de planos y esquemas técnicos de la fábrica...', 'orange');
+        }
+        function agregarProyecto() {
+            mostrarNotificacion('➕ Formulario para ingresar un nuevo vehículo a la línea de restauración...', 'dark');
+        }
+        function verProyecto(nombre) {
+            mostrarNotificacion(`🔩 Accediendo al panel de control del proyecto <strong>${nombre}</strong>...`, 'orange');
+        }
+
+        function mostrarNotificacion(mensaje, tipo) {
+            const existente = document.querySelector('.toast-notificacion');
+            if (existente) existente.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-notificacion';
+            toast.innerHTML = mensaje;
+            toast.style.cssText = `
+                position: fixed; bottom: 30px; right: 30px;
+                background: ${tipo === 'orange'
+                    ? 'linear-gradient(160deg, #1c1c1c 0%, #0b0b0b 100%)'
+                    : 'linear-gradient(160deg, #121212 0%, #0a0a0a 100%)'};
+                color: #f0ede7; padding: 16px 26px; border-radius: 4px;
+                font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 500;
+                z-index: 9999; box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+                border: 1px solid ${tipo === 'orange' ? 'rgba(224,90,0,0.5)' : 'rgba(255,255,255,0.12)'};
+                animation: slideInToast 0.5s ease forwards;
+                pointer-events: none; letter-spacing: 0.3px;
+                clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+            `;
+
+            if (!document.getElementById('toast-keyframes')) {
+                const styleTag = document.createElement('style');
+                styleTag.id = 'toast-keyframes';
+                styleTag.textContent = `
+                    @keyframes slideInToast {
+                        from { opacity: 0; transform: translateX(100px) translateY(20px); }
+                        to { opacity: 1; transform: translateX(0) translateY(0); }
+                    }
+                    @keyframes slideOutToast {
+                        from { opacity: 1; transform: translateX(0) translateY(0); }
+                        to { opacity: 0; transform: translateX(100px) translateY(20px); }
+                    }
+                `;
+                document.head.appendChild(styleTag);
+            }
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideOutToast 0.4s ease forwards';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+
+        // Observador para estadísticas
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.stat-item').forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = `all 0.5s ease ${index * 0.1}s`;
+            observer.observe(item);
+        });
+
+        console.log('🏭 Blue Oval Classics — Fábrica de restauración cargada. Proyectos en marcha.');
+    </script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Oval Classics | Taller de Servicio</title>
+    <base href="/">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+        :root {
+            --gris-suelo: #1e1e1e;
+            --gris-chapa: #2a2a2a;
+            --gris-metal: #3a3a3a;
+            --naranja-seguridad: #e05a00;
+            --naranja-brillo: #f07b2c;
+            --blanco-sucio: #e8e5df;
+            --blanco-puro: #ffffff;
+            --negro-aceite: #121212;
+            --rojo-emergencia: #c41230;
+            --sombra-suave: 0 2px 15px rgba(0,0,0,0.4);
+            --sombra-media: 0 8px 35px rgba(0,0,0,0.6);
+            --transicion: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gris-suelo);
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.2) 10px, rgba(0,0,0,0.2) 11px),
+                radial-gradient(circle at 80% 20%, rgba(224,90,0,0.05) 0%, transparent 50%);
+            color: #cccccc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* ========== NAVBAR ========== */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(18,18,18,0.9); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(224,90,0,0.3);
+            padding: 0 2rem; display: flex; align-items: center; justify-content: space-between;
+            height: 72px; animation: slideDown 0.7s ease forwards;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .navbar .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .navbar .logo-icon {
+            width: 44px; height: 44px;
+            background: linear-gradient(160deg, #1a3a6e 0%, #0b1d3d 50%, #060f20 100%);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; color: #fff; font-weight: 900;
+            font-family: 'Oswald', sans-serif; letter-spacing: 1px;
+            box-shadow: 0 0 0 2px rgba(200,200,210,0.3), 0 0 25px rgba(20,50,120,0.5);
+            transition: var(--transicion); position: relative; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .navbar .logo-icon::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.08) 55%, transparent 60%);
+            animation: chromeSweep 4s infinite;
+        }
+        @keyframes chromeSweep {
+            0%,100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        .navbar .logo:hover .logo-icon { transform: scale(1.07); box-shadow: 0 0 0 3px rgba(200,200,210,0.5), 0 0 40px rgba(20,50,120,0.8); }
+        .navbar .logo-text {
+            font-family: 'Oswald', sans-serif; font-size: 1.4rem; font-weight: 700;
+            color: #f5f2ed; letter-spacing: 1.5px; text-transform: uppercase;
+        }
+        .navbar .logo-text span { color: #5b9bd5; letter-spacing: 2px; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-links a {
+            color: #bbbbbb; text-decoration: none; font-size: 0.9rem; font-weight: 500;
+            letter-spacing: 1px; transition: var(--transicion); position: relative; padding: 8px 0;
+            font-family: 'Oswald', sans-serif; text-transform: uppercase;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+            background: var(--naranja-seguridad); transition: 0.3s ease; border-radius: 1px;
+        }
+        .nav-links a:hover { color: #ffffff; }
+        .nav-links a:hover::after { width: 100%; box-shadow: 0 0 10px rgba(224,90,0,0.6); }
+        .nav-links .btn-nav {
+            background: linear-gradient(160deg, #c41230 0%, #8b0e1e 100%);
+            color: #fff !important; padding: 10px 24px !important; border-radius: 4px;
+            font-weight: 600; letter-spacing: 1.2px; transition: var(--transicion);
+            box-shadow: 0 4px 18px rgba(196,18,48,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+            clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+        }
+        .nav-links .btn-nav:hover {
+            transform: translateY(-2px); box-shadow: 0 10px 28px rgba(196,18,48,0.6);
+            background: linear-gradient(160deg, #d41435 0%, #a01020 100%);
+        }
+        .nav-links .btn-nav::after { display: none; }
+
+        /* ========== CONTENEDOR PRINCIPAL ========== */
+        .main-container {
+            margin-top: 120px; margin-bottom: 60px; width: 90%; max-width: 1300px;
+            display: flex; flex-direction: column; gap: 30px;
+            animation: fadeInUp 0.9s ease forwards; animation-delay: 0.2s; opacity: 0;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== HERO TALLER ========== */
+        .hero {
+            background: linear-gradient(160deg, #1e1e1e 0%, #2a2a2a 40%, #121212 100%);
+            border-radius: 6px; padding: 50px 60px;
+            display: flex; align-items: center; justify-content: space-between; gap: 40px;
+            box-shadow: var(--sombra-media); position: relative; overflow: hidden;
+            border-bottom: 3px solid var(--naranja-seguridad);
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 50px) 100%, 0 100%, 0 0);
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(224,90,0,0.04) 39px, rgba(224,90,0,0.04) 40px),
+                repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(224,90,0,0.03) 39px, rgba(224,90,0,0.03) 40px);
+            pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; flex: 1; }
+        .hero-badge {
+            display: inline-block; background: rgba(224,90,0,0.2); color: #f07b2c;
+            padding: 6px 18px; border-radius: 3px; font-size: 0.78rem; font-weight: 700;
+            letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 18px;
+            border: 1px solid rgba(224,90,0,0.5); font-family: 'Space Mono', monospace;
+            clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+        }
+        .hero h1 {
+            font-family: 'Oswald', sans-serif; font-size: 3rem; font-weight: 700;
+            color: #ffffff; line-height: 1.1; margin-bottom: 14px;
+            letter-spacing: 1.5px; text-transform: uppercase;
+        }
+        .hero h1 span { color: #f07b2c; text-shadow: 0 0 30px rgba(240,123,44,0.4); }
+        .hero p { color: #aaaaaa; font-size: 1rem; line-height: 1.7; margin-bottom: 28px; max-width: 500px; }
+        .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+        .hero-image {
+            position: relative; z-index: 1; flex: 0 0 260px; height: 200px;
+            background: rgba(255,255,255,0.02); border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 5.5rem; border: 2px solid rgba(224,90,0,0.4);
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.5);
+            transition: var(--transicion);
+            clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+        }
+        .hero-image:hover {
+            border-color: #f07b2c; transform: translateY(-4px);
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.5), 0 0 40px rgba(224,90,0,0.2);
+        }
+
+        /* ========== BOTONES ========== */
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 13px 28px; border-radius: 3px;
+            font-family: 'Oswald', sans-serif; font-size: 0.9rem; font-weight: 600;
+            text-decoration: none; cursor: pointer; border: none;
+            letter-spacing: 1.2px; text-transform: uppercase;
+            transition: var(--transicion); position: relative; overflow: hidden;
+            white-space: nowrap;
+            clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+        }
+        .btn-primary {
+            background: linear-gradient(160deg, #e05a00 0%, #b04500 100%);
+            color: #ffffff; box-shadow: 0 6px 22px rgba(224,90,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px); box-shadow: 0 12px 35px rgba(224,90,0,0.5);
+            background: linear-gradient(160deg, #f06810 0%, #c04e00 100%);
+        }
+        .btn-outline {
+            background: transparent; color: #e0e0e0;
+            border: 2px solid rgba(224,90,0,0.5);
+        }
+        .btn-outline:hover {
+            background: rgba(224,90,0,0.06); border-color: #f07b2c;
+            transform: translateY(-3px); box-shadow: 0 8px 25px rgba(224,90,0,0.15);
+            color: #ffffff;
+        }
+
+        /* ========== ESTADÍSTICAS ========== */
+        .stats-row {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px;
+        }
+        .stat-item {
+            background: #1e1e1e; border-radius: 4px; padding: 22px 20px; text-align: center;
+            box-shadow: var(--sombra-suave); border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transicion); cursor: default;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 6px), calc(100% - 25px) 100%, 0 100%, 0 0);
+        }
+        .stat-item:hover { border-color: rgba(224,90,0,0.4); transform: translateY(-4px); }
+        .stat-number {
+            font-family: 'Space Mono', monospace; font-size: 2.2rem; font-weight: 700;
+            color: #ffffff; line-height: 1;
+        }
+        .stat-number.orange { color: var(--naranja-seguridad); }
+        .stat-label {
+            font-size: 0.75rem; color: #9e9e9e; margin-top: 6px;
+            letter-spacing: 1px; text-transform: uppercase; font-weight: 600;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        /* ========== TABLA DE ÓRDENES ========== */
+        .section-title {
+            font-family: 'Oswald', sans-serif; font-size: 1.8rem; font-weight: 700;
+            color: #ffffff; margin-bottom: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+        }
+        .section-subtitle { color: #9e9e9e; font-size: 0.9rem; margin-bottom: 20px; }
+        .table-container {
+            background: #1e1e1e; border-radius: 4px; overflow: hidden;
+            box-shadow: var(--sombra-media); border: 1px solid rgba(255,255,255,0.05);
+        }
+        table {
+            width: 100%; border-collapse: collapse;
+        }
+        th {
+            text-align: left; padding: 14px 20px; background: rgba(0,0,0,0.3);
+            font-family: 'Oswald', sans-serif; text-transform: uppercase;
+            letter-spacing: 1px; font-size: 0.8rem; color: var(--naranja-seguridad);
+            border-bottom: 2px solid rgba(224,90,0,0.2);
+        }
+        td {
+            padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem; color: #cccccc;
+        }
+        tr:hover td { background: rgba(224,90,0,0.05); }
+        .status {
+            display: inline-block; padding: 4px 12px; border-radius: 3px;
+            font-family: 'Oswald', sans-serif; font-size: 0.7rem; font-weight: 600;
+            letter-spacing: 0.5px; text-transform: uppercase;
+            clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%);
+        }
+        .status-in-progress { background: rgba(224,90,0,0.2); color: #f07b2c; border: 1px solid rgba(224,90,0,0.4); }
+        .status-completed { background: rgba(46,125,50,0.2); color: #81c784; border: 1px solid rgba(46,125,50,0.4); }
+        .status-pending { background: rgba(251,192,45,0.2); color: #fbc02d; border: 1px solid rgba(251,192,45,0.4); }
+
+        /* ========== FOOTER ========== */
+        .footer-bar {
+            text-align: center; padding: 20px; color: #6b6b6b; font-size: 0.78rem;
+            letter-spacing: 0.8px; border-top: 1px solid rgba(255,255,255,0.05);
+            width: 100%; margin-top: auto; font-family: 'Oswald', sans-serif; text-transform: uppercase;
+        }
+
+        @media (max-width: 800px) {
+            .hero { flex-direction: column; text-align: center; padding: 30px; }
+            .hero-image { width: 100%; }
+            th, td { padding: 10px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <div class="logo-icon">F</div>
+            <span class="logo-text">BLUE OVAL <span>CLASSICS</span></span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Inventario</a></li>
+            <li><a href="#">Clientes</a></li>
+            <li><a href="#">Equipo</a></li>
+            <li><a href="#">Fábrica</a></li>
+            <li><a href="#" class="btn-nav">Taller</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-container">
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="hero-badge">🔧 Zona de Servicio</span>
+                <h1>Taller <span>Mecánico</span> Oficial</h1>
+                <p>
+                    Diagnósticos, mantenimiento y reparaciones especializadas para todos los modelos Ford clásicos. Trabajamos con piezas originales y las mejores manos calificadas.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="nuevaOrden()">➕ Nueva Orden</button>
+                    <button class="btn btn-outline" onclick="verCalendario()">📅 Calendario</button>
+                </div>
+            </div>
+            <div class="hero-image">🔩</div>
+        </section>
+
+        <!-- ESTADÍSTICAS -->
+        <div class="stats-row">
+            <div class="stat-item">
+                <div class="stat-number orange">8</div>
+                <div class="stat-label">Bahías Activas</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Órdenes Hoy</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number orange">3</div>
+                <div class="stat-label">En Espera</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">95%</div>
+                <div class="stat-label">Eficiencia</div>
+            </div>
+        </div>
+
+        <!-- TABLA DE ÓRDENES DE TALLER -->
+        <div>
+            <h2 class="section-title">Órdenes de Servicio Activas</h2>
+            <p class="section-subtitle">Última actualización: 09/06/2026 - 11:00 AM</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th># Orden</th>
+                            <th>Vehículo</th>
+                            <th>Cliente</th>
+                            <th>Servicio</th>
+                            <th>Mecánico</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>WO-1042</td>
+                            <td>Mustang Boss 429 '69</td>
+                            <td>Carlos Mendoza</td>
+                            <td>Afinación de carburador</td>
+                            <td>Miguel Torres</td>
+                            <td><span class="status status-in-progress">En Progreso</span></td>
+                        </tr>
+                        <tr>
+                            <td>WO-1041</td>
+                            <td>F-100 '56</td>
+                            <td>Roberto Silva</td>
+                            <td>Cambio de embrague</td>
+                            <td>Andrés Molina</td>
+                            <td><span class="status status-pending">Pendiente</span></td>
+                        </tr>
+                        <tr>
+                            <td>WO-1040</td>
+                            <td>Galaxie 500 XL '65</td>
+                            <td>Ana López</td>
+                            <td>Revisión eléctrica</td>
+                            <td>Lucía Fernández</td>
+                            <td><span class="status status-completed">Completado</span></td>
+                        </tr>
+                        <tr>
+                            <td>WO-1039</td>
+                            <td>Thunderbird '62</td>
+                            <td>María García</td>
+                            <td>Cambio de aceite y filtros</td>
+                            <td>Carmen Ruiz</td>
+                            <td><span class="status status-in-progress">En Progreso</span></td>
+                        </tr>
+                        <tr>
+                            <td>WO-1038</td>
+                            <td>Fairlane 500 '68</td>
+                            <td>Roberto Silva</td>
+                            <td>Alineación y balanceo</td>
+                            <td>Miguel Torres</td>
+                            <td><span class="status status-pending">Pendiente</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bar">© 2026 Blue Oval Classics · Taller Oficial · Motores que vuelven a rugir</div>
+
+    <script>
+        function nuevaOrden() {
+            mostrarNotificacion('➕ Abriendo formulario de nueva orden de servicio...', 'orange');
+        }
+        function verCalendario() {
+            mostrarNotificacion('📅 Cargando calendario de citas del taller...', 'dark');
+        }
+        function mostrarNotificacion(mensaje, tipo) {
+            const existente = document.querySelector('.toast-notificacion');
+            if (existente) existente.remove();
+            const toast = document.createElement('div');
+            toast.innerHTML = mensaje;
+            toast.style.cssText = `
+                position: fixed; bottom: 30px; right: 30px;
+                background: ${tipo === 'orange' ? 'linear-gradient(160deg, #1e1e1e 0%, #121212 100%)' : 'linear-gradient(160deg, #121212 0%, #0a0a0a 100%)'};
+                color: #f5f2ed; padding: 16px 26px; border-radius: 4px;
+                font-family: 'Inter', sans-serif; font-size: 0.9rem;
+                z-index: 9999; box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+                border: 1px solid ${tipo === 'orange' ? 'rgba(224,90,0,0.5)' : 'rgba(255,255,255,0.12)'};
+                animation: slideInToast 0.5s ease forwards;
+                clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideOutToast 0.4s ease forwards';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
