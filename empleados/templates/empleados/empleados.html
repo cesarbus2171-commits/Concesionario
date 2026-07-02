@@ -353,6 +353,168 @@
             .section-title { font-size: 1.3rem; }
         }
     </style>
+    
+    <style>
+    /* 1. Fondo y contenedor principal */
+    body {
+        background-color: #f4f7f6;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .gestion-section {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    /* 2. Cabecera */
+    .gestion-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+    }
+    .section-title {
+        margin: 0;
+        color: #2c3e50;
+    }
+    .badge-count {
+        background: #e8f4f8;
+        color: #007bff;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+
+    /* 3. Cuadrícula del formulario (Grid) */
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .campo {
+        display: flex;
+        flex-direction: column;
+    }
+    .full-width {
+        grid-column: 1 / -1; /* Hace que la dirección ocupe todo el ancho */
+    }
+    label {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #34495e;
+        font-size: 0.9rem;
+    }
+
+    /* 4. Inputs con los emojis */
+    .input-icon {
+        display: flex;
+        align-items: center;
+        border: 1px solid #ccd1d9;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #fff;
+        transition: border-color 0.3s;
+    }
+    .input-icon:focus-within {
+        border-color: #007bff;
+        box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
+    }
+    .input-icon .icon {
+        padding: 0.6rem 0.8rem;
+        background: #f8f9fa;
+        border-right: 1px solid #ccd1d9;
+        font-size: 1.1rem;
+    }
+    .input-icon input, 
+    .input-icon select {
+        flex: 1;
+        padding: 0.6rem;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+    }
+
+    /* 5. Botón de Enviar */
+    .btn-submit {
+        background-color: #a01025; /* Mantengo el rojo oscuro que tenías */
+        color: white;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.1s;
+        width: 100%;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .btn-submit:hover {
+        background-color: #7a0c1c;
+    }
+    .btn-submit:active {
+        transform: scale(0.98);
+    }
+
+    /* 6. Tabla de Clientes */
+    .tabla-wrapper {
+        overflow-x: auto;
+        margin-top: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .tabla-clientes {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        background: white;
+    }
+    .tabla-clientes th {
+        background-color: #2c3e50;
+        color: white;
+        padding: 1rem;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+    }
+    .tabla-clientes td {
+        padding: 1rem;
+        border-bottom: 1px solid #eee;
+        color: #555;
+    }
+    .tabla-clientes tr:hover td {
+        background-color: #f9fbfd;
+    }
+    
+    /* Etiquetas de la tabla (Píldoras) */
+    .tipo-badge {
+        padding: 0.3rem 0.8rem;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: bold;
+    }
+    .tipo-individual {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    .tipo-empresarial {
+        background-color: #cce5ff;
+        color: #004085;
+    }
+    
+    .tabla-vacia {
+        text-align: center;
+        padding: 2rem !important;
+        color: #7f8c8d !important;
+    }
+</style>
+
 </head>
 <body>
 
@@ -420,6 +582,94 @@
                 </div>
             </div>
         </div>
+
+<!-- ========== GESTIÓN DE empleados (FORMULARIO + TABLA) ========== -->
+<section class="gestion-section">
+    <div class="gestion-header">
+        <h2 class="section-title">👥 Gestión de Empleados</h2>
+        <span class="badge-count">📋 {{ empleados|length }} empleados registrados</span>
+    </div>
+
+    <!-- FORMULARIO -->
+    <form action="/empleados/nuevo/" method="POST" class="form-empleado">
+        {% csrf_token %}
+        <div class="form-grid">
+            <div class="campo">
+                <label for="nombre">Nombre</label>
+                <div class="input-icon">
+                    <span class="icon">👤</span>
+                    <input type="text" name="nombre" id="nombre" placeholder="Ej: Juan" required>
+                </div>
+            </div>
+            <div class="campo">
+                <label for="apellido">Apellido</label>
+                <div class="input-icon">
+                    <span class="icon">🧑</span>
+                    <input type="text" name="apellido" id="apellido" placeholder="Ej: Pérez" required>
+                </div>
+            </div>
+            <div class="campo">
+                <label for="puesto">Puesto</label>
+                <div class="input-icon">
+                    <span class="icon">💼</span>
+                    <input type="text" name="puesto" id="puesto" placeholder="Ej: Mecánico" required>
+                </div>
+            </div>
+            <div class="campo">
+                <label for="salario">Salario</label>
+                <div class="input-icon">
+                    <span class="icon">💰</span>
+                    <input type="number" name="salario" id="salario" placeholder="Ej: 50000.00" step="0.01" required>
+                </div>
+            </div>
+            <div class="campo">
+                <label for="fecha_contratacion">Fecha de Contratación</label>
+                <div class="input-icon">
+                    <span class="icon">📅</span>
+                    <input type="date" name="fecha_contratacion" id="fecha_contratacion" required>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-submit">➕ Agregar Empleado</button>
+    </form>
+
+    <!-- TABLA -->
+    <div class="tabla-wrapper">
+        <table class="tabla-empleados">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Puesto</th>
+                    <th>Salario</th>
+                    <th>Fecha de Contratación</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for empleado in empleados %}
+                <tr>
+                    <td><strong>{{ empleado.nombre }}</strong></td>
+                    <td>{{ empleado.apellido }}</td>
+                    <td>{{ empleado.puesto }}</td>
+                    <td>
+                        <span class="tipo-badge {% if empleado.salario %}tipo-individual{% else %}tipo-empresarial{% endif %}">
+                            {{ empleado.salario }}
+                        </span>
+                    </td>
+                    <td>{{ empleado.fecha_contratacion }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="tabla-vacia">
+                        <span>🚫</span>
+                        No hay empleados registrados. ¡Agrega el primero!
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
 
         <!-- TARJETAS DE EMPLEADOS -->
         <div>

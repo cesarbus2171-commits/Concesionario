@@ -1,6 +1,7 @@
 from django.urls import path
-from . import views
+from .views import listafabrica, crearfabrica   
 
 urlpatterns = [
-    path('form-fabrica', views.fabrica),
+    path('', listafabrica),
+    path('crear/', crearfabrica),
 ]

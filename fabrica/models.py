@@ -6,3 +6,5 @@ class fabrica(models.Model):
     capacidad_produccion = models.IntegerField()
     fecha_fundacion = models.DateField()
     procesos_activos = models.CharField(max_length=200)
+    class Meta:
+        db_table = 'fabricas_fabricas'

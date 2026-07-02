@@ -1,6 +1,7 @@
 from django.urls import path
-from . import views
+from .views import listaautos, crearauto
 
 urlpatterns = [
-    path('form-autos', views.autos),
+    path('',listaautos),
+    path('nuevo/',crearauto),
 ]
