@@ -1,6 +1,7 @@
 from django.urls import path
-from . import views
+from .views import crearproveedor, listaproveedores
 
 urlpatterns = [
-    path('form-proveedor', views.proveedor),
+    path('', listaproveedores),
+    path('nuevo/', crearproveedor),
 ]

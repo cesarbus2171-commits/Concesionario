@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blue Oval Classics | Ficha de Proveedor</title>
+    <title>Blue Oval Classics | Gestión de Proveedores</title>
     <base href="/">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Teko:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
@@ -152,53 +152,245 @@
             color: #ffffff;
         }
 
-        /* ========== CABECERA DEL PROVEEDOR ========== */
+        /* ========== GESTIÓN DE PROVEEDORES ========== */
+        .gestion-section {
+            background: #1c1c1c;
+            border-radius: 4px;
+            padding: 28px;
+            box-shadow: var(--sombra-media);
+            border: 1px solid rgba(255,255,255,0.05);
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 40px) 100%, 0 100%);
+            border-bottom: 3px solid #2e7d32;
+        }
+
+        .gestion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 12px;
+        }
+        .section-title {
+            font-family: 'Teko', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .badge-count {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.85rem;
+            color: #fbc02d;
+            background: rgba(251,192,45,0.12);
+            padding: 6px 16px;
+            border-radius: 2px;
+            clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+            border: 1px solid rgba(251,192,45,0.2);
+        }
+
+        /* ========== FORMULARIO ========== */
+        .form-proveedor {
+            background: rgba(255,255,255,0.02);
+            padding: 24px 18px;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.04);
+            margin-bottom: 30px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px 22px;
+        }
+        .campo {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .campo label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: #9e9e9e;
+        }
+        .input-icon {
+            display: flex;
+            align-items: center;
+            background: #121212;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 2px;
+            transition: var(--transicion);
+            clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+        }
+        .input-icon:focus-within {
+            border-color: #4caf50;
+            box-shadow: 0 0 0 3px rgba(76,175,80,0.2);
+        }
+        .input-icon .icon {
+            padding: 0 10px;
+            font-size: 1.1rem;
+            color: #9e9e9e;
+            user-select: none;
+        }
+        .input-icon input,
+        .input-icon select {
+            background: transparent;
+            border: none;
+            padding: 12px 12px 12px 0;
+            color: #f5f2ed;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            width: 100%;
+            outline: none;
+        }
+        .input-icon input::placeholder {
+            color: #5a5a5a;
+            font-weight: 300;
+        }
+        .btn-submit {
+            margin-top: 20px;
+            width: 100%;
+            justify-content: center;
+            padding: 14px;
+            font-size: 1rem;
+            clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+        }
+
+        /* ========== TABLA ========== */
+        .tabla-wrapper {
+            overflow-x: auto;
+            border-radius: 2px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .tabla-proveedores {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+        .tabla-proveedores thead {
+            background: #121212;
+            border-bottom: 2px solid rgba(76,175,80,0.3);
+        }
+        .tabla-proveedores th {
+            text-align: left;
+            padding: 16px 14px;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #fbc02d;
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+        .tabla-proveedores td {
+            padding: 14px 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            color: #ddd;
+            vertical-align: middle;
+        }
+        .tabla-proveedores tbody tr:hover td {
+            background: rgba(46,125,50,0.05);
+        }
+        .tabla-proveedores tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .tabla-vacia {
+            text-align: center;
+            padding: 40px 0 !important;
+            color: #9e9e9e;
+            font-style: italic;
+        }
+        .tabla-vacia span {
+            display: block;
+            font-size: 2.5rem;
+            margin-bottom: 6px;
+        }
+
+        /* ========== DETALLES ADICIONALES ========== */
         .supplier-header {
-            background: #1c1c1c; border-radius: 4px; padding: 30px;
-            box-shadow: var(--sombra-media); border: 1px solid rgba(255,255,255,0.05);
-            display: flex; flex-wrap: wrap; align-items: center; gap: 24px;
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 40px) 100%, 0 100%, 0 0);
+            background: #1c1c1c;
+            border-radius: 4px;
+            padding: 30px;
+            box-shadow: var(--sombra-media);
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 24px;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 40px) 100%, 0 100%);
             border-bottom: 3px solid #2e7d32;
         }
         .supplier-avatar {
-            width: 80px; height: 80px; background: rgba(46,125,50,0.1);
-            border-radius: 6px; display: flex; align-items: center; justify-content: center;
-            font-size: 2.8rem; color: #4caf50; flex-shrink: 0;
+            width: 80px; height: 80px;
+            background: rgba(46,125,50,0.1);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            color: #4caf50;
+            flex-shrink: 0;
             clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
             border: 2px solid rgba(46,125,50,0.4);
         }
         .supplier-title h2 {
-            font-family: 'Teko', sans-serif; font-size: 2.6rem; font-weight: 600;
-            color: #ffffff; letter-spacing: 1.5px; text-transform: uppercase; line-height: 1;
+            font-family: 'Teko', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            line-height: 1;
         }
         .supplier-title .category {
-            font-family: 'Oswald', sans-serif; font-size: 0.8rem; color: #fbc02d;
-            letter-spacing: 1px; text-transform: uppercase;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.8rem;
+            color: #fbc02d;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
         .supplier-actions {
-            margin-left: auto; display: flex; gap: 12px;
+            margin-left: auto;
+            display: flex;
+            gap: 12px;
         }
 
-        /* ========== CUERPO: DOS COLUMNAS ========== */
         .supplier-body {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
         }
         @media (max-width: 700px) {
             .supplier-body { grid-template-columns: 1fr; }
+            .gestion-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .form-grid { grid-template-columns: 1fr; }
         }
 
         .info-card {
-            background: #1c1c1c; border-radius: 4px; padding: 22px;
-            box-shadow: var(--sombra-suave); border: 1px solid rgba(255,255,255,0.05);
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 6px), calc(100% - 25px) 100%, 0 100%, 0 0);
+            background: #1c1c1c;
+            border-radius: 4px;
+            padding: 22px;
+            box-shadow: var(--sombra-suave);
+            border: 1px solid rgba(255,255,255,0.05);
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 6px), calc(100% - 25px) 100%, 0 100%);
         }
         .info-card h3 {
-            font-family: 'Teko', sans-serif; font-size: 1.6rem; font-weight: 600;
-            color: #4caf50; letter-spacing: 1px; text-transform: uppercase;
-            margin-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #4caf50;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 8px;
         }
         .info-row {
-            display: flex; justify-content: space-between; padding: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
             border-bottom: 1px dashed rgba(255,255,255,0.05);
             font-size: 0.9rem;
         }
@@ -206,33 +398,79 @@
         .info-row .value { color: #ffffff; font-weight: 600; }
         .rating-stars { color: #fbc02d; font-size: 1.2rem; }
 
-        /* Tabla de partes suministradas */
         .parts-table {
-            width: 100%; border-collapse: collapse; margin-top: 10px;
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
             font-size: 0.85rem;
         }
         .parts-table th {
-            text-align: left; padding: 10px 8px; color: #fbc02d;
-            font-family: 'Oswald', sans-serif; text-transform: uppercase;
-            letter-spacing: 1px; border-bottom: 2px solid rgba(255,255,255,0.1);
+            text-align: left;
+            padding: 10px 8px;
+            color: #fbc02d;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
         }
         .parts-table td {
-            padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
             color: #cccccc;
         }
         .parts-table tr:hover td { background: rgba(46,125,50,0.05); }
         .tag {
-            display: inline-block; background: rgba(46,125,50,0.2); color: #81c784;
-            padding: 2px 10px; border-radius: 2px; font-size: 0.7rem;
-            font-family: 'Oswald', sans-serif; letter-spacing: 0.5px; text-transform: uppercase;
+            display: inline-block;
+            background: rgba(46,125,50,0.2);
+            color: #81c784;
+            padding: 2px 10px;
+            border-radius: 2px;
+            font-size: 0.7rem;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
             clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%);
         }
 
-        /* ========== FOOTER ========== */
         .footer-bar {
-            text-align: center; padding: 20px; color: #9e9e9e; font-size: 0.78rem;
-            letter-spacing: 0.8px; border-top: 1px solid rgba(255,255,255,0.05);
-            width: 100%; margin-top: auto; font-family: 'Oswald', sans-serif; text-transform: uppercase;
+            text-align: center;
+            padding: 20px;
+            color: #9e9e9e;
+            font-size: 0.78rem;
+            letter-spacing: 0.8px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            width: 100%;
+            margin-top: auto;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+        }
+
+        /* ========== TOAST ========== */
+        .toast-notificacion {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(160deg, #1c1c1c 0%, #0e0e0e 100%);
+            color: #f5f2ed;
+            padding: 16px 26px;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 500;
+            z-index: 9999;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+            border: 1px solid rgba(46,125,50,0.5);
+            animation: slideInToast 0.5s ease forwards;
+            pointer-events: none;
+            clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+        }
+        @keyframes slideInToast {
+            from { opacity: 0; transform: translateX(100px) translateY(20px); }
+            to { opacity: 1; transform: translateX(0) translateY(0); }
+        }
+        @keyframes slideOutToast {
+            from { opacity: 1; transform: translateX(0) translateY(0); }
+            to { opacity: 0; transform: translateX(100px) translateY(20px); }
         }
     </style>
 </head>
@@ -254,7 +492,7 @@
     </nav>
 
     <div class="main-container">
-        <!-- CABECERA DEL PROVEEDOR -->
+        <!-- CABECERA DEL PROVEEDOR (EJEMPLO) -->
         <div class="supplier-header">
             <div class="supplier-avatar">🏭</div>
             <div class="supplier-title">
@@ -267,88 +505,113 @@
             </div>
         </div>
 
-        <!-- INFORMACIÓN DETALLADA -->
-        <div class="supplier-body">
-            <!-- Columna Izquierda: Datos Generales -->
-            <div class="info-card">
-                <h3>📋 Datos Generales</h3>
-                <div class="info-row">
-                    <span class="label">ID Proveedor</span>
-                    <span class="value">SUP-008</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">Contacto Principal</span>
-                    <span class="value">Robert Kowalski</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">Teléfono</span>
-                    <span class="value">+1 (313) 555-0192</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">Email</span>
-                    <span class="value">orders@detroitmuscle.com</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">Dirección</span>
-                    <span class="value">1420 Woodward Ave, Detroit, MI</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">Tiempo de Entrega Promedio</span>
-                    <span class="value">5 días hábiles</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">Calificación</span>
-                    <span class="rating-stars">★★★★★</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">Condiciones de Pago</span>
-                    <span class="value">Neto 30 días</span>
-                </div>
+        <!-- ========== GESTIÓN DE PROVEEDORES (FORM + TABLA) ========== -->
+        <section class="gestion-section">
+            <div class="gestion-header">
+                <h2 class="section-title">👥 Gestión de Proveedores</h2>
+                <span class="badge-count">📋 {{ proveedores|length }} proveedores registrados</span>
             </div>
 
-            <!-- Columna Derecha: Catálogo de Partes Suministradas -->
-            <div class="info-card">
-                <h3>📦 Partes Suministradas</h3>
-                <table class="parts-table">
+            <!-- FORMULARIO -->
+            <form action="/proveedor/nuevo/" method="POST" class="form-proveedor">
+                {% csrf_token %}
+                <div class="form-grid">
+                    <div class="campo">
+                        <label for="nombre">Nombre</label>
+                        <div class="input-icon">
+                            <span class="icon">👤</span>
+                            <input type="text" name="nombre" id="nombre" placeholder="Ej: Juan Pérez" required>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label for="direccion">Dirección</label>
+                        <div class="input-icon">
+                            <span class="icon">🏠</span>
+                            <input type="text" name="direccion" id="direccion" placeholder="Ej: Calle Falsa 123" required>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label for="telefono">Teléfono</label>
+                        <div class="input-icon">
+                            <span class="icon">📞</span>
+                            <input type="text" name="telefono" id="telefono" placeholder="Ej: 123-456-7890" required>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label for="email">Email</label>
+                        <div class="input-icon">
+                            <span class="icon">✉️</span>
+                            <input type="email" name="email" id="email" placeholder="Ej: juan@example.com" required>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label for="productos_suministrados">Productos Suministrados</label>
+                        <div class="input-icon">
+                            <span class="icon">🔧</span>
+                            <input type="text" name="productos_suministrados" id="productos_suministrados" placeholder="Ej: Filtros, Neumáticos" required>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-submit">➕ Agregar Proveedor</button>
+            </form>
+
+            <!-- TABLA -->
+            <div class="tabla-wrapper">
+                <table class="tabla-proveedores">
                     <thead>
                         <tr>
-                            <th>Pieza</th>
-                            <th>Compatibilidad</th>
-                            <th>Stock</th>
-                            <th></th>
+                            <th>Nombre</th>
+                            <th>Dirección</th>
+                            <th>Teléfono</th>
+                            <th>Email</th>
+                            <th>Productos</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for proveedor in proveedores %}
                         <tr>
-                            <td>Bloque 390 FE</td>
-                            <td>Mustang '67-70</td>
-                            <td><span class="tag">Alto</span></td>
-                            <td>$3,200</td>
+                            <td><strong>{{ proveedor.nombre }}</strong></td>
+                            <td>{{ proveedor.direccion }}</td>
+                            <td>{{ proveedor.telefono }}</td>
+                            <td>{{ proveedor.email }}</td>
+                            <td>{{ proveedor.productos_suministrados }}</td>
                         </tr>
+                        {% empty %}
                         <tr>
-                            <td>Transmisión C6</td>
-                            <td>Galaxie, Thunderbird</td>
-                            <td><span class="tag">Medio</span></td>
-                            <td>$1,450</td>
+                            <td colspan="5" class="tabla-vacia">
+                                <span>🚫</span>
+                                No hay proveedores registrados. ¡Agrega el primero!
+                            </td>
                         </tr>
-                        <tr>
-                            <td>Carburador Holley 780</td>
-                            <td>Boss 429, 428 Cobra Jet</td>
-                            <td><span class="tag">Bajo</span></td>
-                            <td>$680</td>
-                        </tr>
-                        <tr>
-                            <td>Colector de Escape</td>
-                            <td>Fairlane, Falcon V8</td>
-                            <td><span class="tag">Alto</span></td>
-                            <td>$240</td>
-                        </tr>
-                        <tr>
-                            <td>Kit de juntas completo</td>
-                            <td>Serie FE 390-428</td>
-                            <td><span class="tag">Medio</span></td>
-                            <td>$115</td>
-                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- INFORMACIÓN DETALLADA DEL PROVEEDOR (EJEMPLO ESTÁTICO) -->
+        <div class="supplier-body">
+            <div class="info-card">
+                <h3>📋 Datos Generales</h3>
+                <div class="info-row"><span class="label">ID Proveedor</span><span class="value">SUP-008</span></div>
+                <div class="info-row"><span class="label">Contacto Principal</span><span class="value">Robert Kowalski</span></div>
+                <div class="info-row"><span class="label">Teléfono</span><span class="value">+1 (313) 555-0192</span></div>
+                <div class="info-row"><span class="label">Email</span><span class="value">orders@detroitmuscle.com</span></div>
+                <div class="info-row"><span class="label">Dirección</span><span class="value">1420 Woodward Ave, Detroit, MI</span></div>
+                <div class="info-row"><span class="label">Tiempo de Entrega</span><span class="value">5 días hábiles</span></div>
+                <div class="info-row"><span class="label">Calificación</span><span class="rating-stars">★★★★★</span></div>
+                <div class="info-row"><span class="label">Condiciones de Pago</span><span class="value">Neto 30 días</span></div>
+            </div>
+            <div class="info-card">
+                <h3>📦 Partes Suministradas</h3>
+                <table class="parts-table">
+                    <thead><tr><th>Pieza</th><th>Compatibilidad</th><th>Stock</th><th>Precio</th></tr></thead>
+                    <tbody>
+                        <tr><td>Bloque 390 FE</td><td>Mustang '67-70</td><td><span class="tag">Alto</span></td><td>$3,200</td></tr>
+                        <tr><td>Transmisión C6</td><td>Galaxie, Thunderbird</td><td><span class="tag">Medio</span></td><td>$1,450</td></tr>
+                        <tr><td>Carburador Holley 780</td><td>Boss 429, 428 Cobra Jet</td><td><span class="tag">Bajo</span></td><td>$680</td></tr>
+                        <tr><td>Colector de Escape</td><td>Fairlane, Falcon V8</td><td><span class="tag">Alto</span></td><td>$240</td></tr>
+                        <tr><td>Kit de juntas completo</td><td>Serie FE 390-428</td><td><span class="tag">Medio</span></td><td>$115</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -356,7 +619,7 @@
     </div>
 
     <div class="footer-bar">
-        © 2026 Blue Oval Classics · Ficha de Proveedor · Detroit Muscle Parts
+        © 2026 Blue Oval Classics · Gestión de Proveedores · Detroit Muscle Parts
     </div>
 
     <script>
@@ -373,33 +636,9 @@
 
             const toast = document.createElement('div');
             toast.className = 'toast-notificacion';
-            toast.innerHTML = mensaje;
-            toast.style.cssText = `
-                position: fixed; bottom: 30px; right: 30px;
-                background: ${tipo === 'green' ? 'linear-gradient(160deg, #1c1c1c 0%, #0e0e0e 100%)' : 'linear-gradient(160deg, #121212 0%, #0a0a0a 100%)'};
-                color: #f5f2ed; padding: 16px 26px; border-radius: 4px;
-                font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 500;
-                z-index: 9999; box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-                border: 1px solid ${tipo === 'green' ? 'rgba(46,125,50,0.5)' : 'rgba(255,255,255,0.12)'};
-                animation: slideInToast 0.5s ease forwards;
-                pointer-events: none;
-                clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-            `;
-
-            if (!document.getElementById('toast-keyframes')) {
-                const styleTag = document.createElement('style');
-                styleTag.id = 'toast-keyframes';
-                styleTag.textContent = `
-                    @keyframes slideInToast {
-                        from { opacity: 0; transform: translateX(100px) translateY(20px); }
-                        to { opacity: 1; transform: translateX(0) translateY(0); }
-                    }
-                    @keyframes slideOutToast {
-                        from { opacity: 1; transform: translateX(0) translateY(0); }
-                        to { opacity: 0; transform: translateX(100px) translateY(20px); }
-                    }
-                `;
-                document.head.appendChild(styleTag);
+            toast.textContent = mensaje;
+            if (tipo === 'dark') {
+                toast.style.borderColor = 'rgba(255,255,255,0.12)';
             }
             document.body.appendChild(toast);
             setTimeout(() => {
@@ -407,7 +646,6 @@
                 setTimeout(() => toast.remove(), 400);
             }, 3000);
         }
-        console.log('📁 Ficha de proveedor cargada: Detroit Muscle Parts.');
     </script>
 </body>
 </html>
