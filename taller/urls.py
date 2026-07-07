@@ -1,6 +1,7 @@
 from django.urls import path
-from . import views
+from .views import creartaller, listataller
 
 urlpatterns = [
-    path('form-taller', views.taller),
+    path('', listataller),
+    path('nuevo/', creartaller),
 ]

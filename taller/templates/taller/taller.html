@@ -39,6 +39,46 @@
             overflow-x: hidden;
         }
 
+/* Fondo oscuro para el formulario y sus campos */
+.form-taller {
+    background: #1e1e1e !important;
+    border-color: rgba(255,255,255,0.08) !important;
+}
+
+.input-icon {
+    background: #121212 !important;
+    border-color: rgba(255,255,255,0.08) !important;
+}
+
+.input-icon input,
+.input-icon select {
+    color: #f5f2ed !important;
+    background: transparent !important;
+}
+
+.input-icon input::placeholder {
+    color: #5a5a5a !important;
+}
+
+.campo label {
+    color: #9e9e9e !important;
+}
+
+/* Tabla oscura */
+.tabla-taller thead {
+    background: rgba(0,0,0,0.4) !important;
+}
+
+.tabla-taller td {
+    color: #dddddd !important;
+    border-color: rgba(255,255,255,0.04) !important;
+}
+
+/* Ajuste del badge y títulos */
+.gestion-section {
+    background: #1e1e1e !important;
+}
+
         /* ========== NAVBAR ========== */
         .navbar {
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
@@ -119,8 +159,8 @@
         /* ========== HERO TALLER ========== */
         .hero {
             background: linear-gradient(160deg, #1e1e1e 0%, #2a2a2a 40%, #121212 100%);
-            border-radius: 6px; padding: 50px 60px;
-            display: flex; align-items: center; justify-content: space-between; gap: 40px;
+            border-radius: 6px; padding: 45px 50px;
+            display: flex; align-items: center; justify-content: space-between; gap: 30px;
             box-shadow: var(--sombra-media); position: relative; overflow: hidden;
             border-bottom: 3px solid var(--naranja-seguridad);
             clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 50px) 100%, 0 100%, 0 0);
@@ -136,23 +176,23 @@
         .hero-badge {
             display: inline-block; background: rgba(224,90,0,0.2); color: #f07b2c;
             padding: 6px 18px; border-radius: 3px; font-size: 0.78rem; font-weight: 700;
-            letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 18px;
+            letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 16px;
             border: 1px solid rgba(224,90,0,0.5); font-family: 'Space Mono', monospace;
             clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
         }
         .hero h1 {
-            font-family: 'Oswald', sans-serif; font-size: 3rem; font-weight: 700;
-            color: #ffffff; line-height: 1.1; margin-bottom: 14px;
+            font-family: 'Oswald', sans-serif; font-size: 2.8rem; font-weight: 700;
+            color: #ffffff; line-height: 1.1; margin-bottom: 12px;
             letter-spacing: 1.5px; text-transform: uppercase;
         }
         .hero h1 span { color: #f07b2c; text-shadow: 0 0 30px rgba(240,123,44,0.4); }
-        .hero p { color: #aaaaaa; font-size: 1rem; line-height: 1.7; margin-bottom: 28px; max-width: 500px; }
-        .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+        .hero p { color: #aaaaaa; font-size: 1rem; line-height: 1.6; margin-bottom: 24px; max-width: 480px; }
+        .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
         .hero-image {
-            position: relative; z-index: 1; flex: 0 0 260px; height: 200px;
+            position: relative; z-index: 1; flex: 0 0 220px; height: 180px;
             background: rgba(255,255,255,0.02); border-radius: 4px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 5.5rem; border: 2px solid rgba(224,90,0,0.4);
+            font-size: 5rem; border: 2px solid rgba(224,90,0,0.4);
             box-shadow: inset 0 0 60px rgba(0,0,0,0.5);
             transition: var(--transicion);
             clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
@@ -165,12 +205,11 @@
         /* ========== BOTONES ========== */
         .btn {
             display: inline-flex; align-items: center; gap: 8px;
-            padding: 13px 28px; border-radius: 3px;
-            font-family: 'Oswald', sans-serif; font-size: 0.9rem; font-weight: 600;
+            padding: 12px 26px; border-radius: 3px;
+            font-family: 'Oswald', sans-serif; font-size: 0.85rem; font-weight: 600;
             text-decoration: none; cursor: pointer; border: none;
             letter-spacing: 1.2px; text-transform: uppercase;
-            transition: var(--transicion); position: relative; overflow: hidden;
-            white-space: nowrap;
+            transition: var(--transicion); white-space: nowrap;
             clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
         }
         .btn-primary {
@@ -194,71 +233,248 @@
 
         /* ========== ESTADÍSTICAS ========== */
         .stats-row {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px;
         }
         .stat-item {
-            background: #1e1e1e; border-radius: 4px; padding: 22px 20px; text-align: center;
+            background: #1e1e1e; border-radius: 4px; padding: 20px 18px; text-align: center;
             box-shadow: var(--sombra-suave); border: 1px solid rgba(255,255,255,0.05);
             transition: var(--transicion); cursor: default;
             clip-path: polygon(0 0, 100% 0, 100% calc(100% - 6px), calc(100% - 25px) 100%, 0 100%, 0 0);
         }
         .stat-item:hover { border-color: rgba(224,90,0,0.4); transform: translateY(-4px); }
         .stat-number {
-            font-family: 'Space Mono', monospace; font-size: 2.2rem; font-weight: 700;
+            font-family: 'Space Mono', monospace; font-size: 2rem; font-weight: 700;
             color: #ffffff; line-height: 1;
         }
         .stat-number.orange { color: var(--naranja-seguridad); }
         .stat-label {
-            font-size: 0.75rem; color: #9e9e9e; margin-top: 6px;
+            font-size: 0.72rem; color: #9e9e9e; margin-top: 4px;
             letter-spacing: 1px; text-transform: uppercase; font-weight: 600;
             font-family: 'Oswald', sans-serif;
         }
 
-        /* ========== TABLA DE ÓRDENES ========== */
+        /* ========== GESTIÓN DE TALLER (FORM + TABLA) ========== */
+        .gestion-section {
+            background: #1e1e1e;
+            border-radius: 4px;
+            padding: 28px;
+            box-shadow: var(--sombra-media);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 3px solid var(--naranja-seguridad);
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 40px) 100%, 0 100%, 0 0);
+        }
+        .gestion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 12px;
+        }
         .section-title {
-            font-family: 'Oswald', sans-serif; font-size: 1.8rem; font-weight: 700;
-            color: #ffffff; margin-bottom: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
         }
-        .section-subtitle { color: #9e9e9e; font-size: 0.9rem; margin-bottom: 20px; }
-        .table-container {
-            background: #1e1e1e; border-radius: 4px; overflow: hidden;
-            box-shadow: var(--sombra-media); border: 1px solid rgba(255,255,255,0.05);
+        .section-title span { color: var(--naranja-seguridad); }
+        .badge-count {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.85rem;
+            color: var(--naranja-seguridad);
+            background: rgba(224,90,0,0.12);
+            padding: 6px 16px;
+            border-radius: 3px;
+            border: 1px solid rgba(224,90,0,0.2);
+            clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
         }
-        table {
-            width: 100%; border-collapse: collapse;
+
+        /* ========== FORMULARIO ========== */
+        .form-taller {
+            background: rgba(255,255,255,0.02);
+            padding: 22px 16px;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.04);
+            margin-bottom: 28px;
         }
-        th {
-            text-align: left; padding: 14px 20px; background: rgba(0,0,0,0.3);
-            font-family: 'Oswald', sans-serif; text-transform: uppercase;
-            letter-spacing: 1px; font-size: 0.8rem; color: var(--naranja-seguridad);
-            border-bottom: 2px solid rgba(224,90,0,0.2);
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 14px 20px;
         }
-        td {
-            padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-size: 0.9rem; color: #cccccc;
+        .campo {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
-        tr:hover td { background: rgba(224,90,0,0.05); }
+        .campo label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: #9e9e9e;
+        }
+        .input-icon {
+            display: flex;
+            align-items: center;
+            background: #121212;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 3px;
+            transition: var(--transicion);
+            clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+        }
+        .input-icon:focus-within {
+            border-color: var(--naranja-seguridad);
+            box-shadow: 0 0 0 3px rgba(224,90,0,0.25);
+        }
+        .input-icon .icon {
+            padding: 0 10px;
+            font-size: 1.1rem;
+            color: #9e9e9e;
+            user-select: none;
+        }
+        .input-icon input {
+            background: transparent;
+            border: none;
+            padding: 12px 12px 12px 0;
+            color: #f5f2ed;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            width: 100%;
+            outline: none;
+        }
+        .input-icon input::placeholder {
+            color: #5a5a5a;
+            font-weight: 300;
+        }
+        .btn-submit {
+            margin-top: 18px;
+            width: 100%;
+            justify-content: center;
+            padding: 14px;
+            font-size: 1rem;
+            clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+            background: linear-gradient(160deg, #e05a00 0%, #b04500 100%);
+            color: #fff;
+            border: none;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: var(--transicion);
+            box-shadow: 0 6px 22px rgba(224,90,0,0.3);
+        }
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(224,90,0,0.5);
+            background: linear-gradient(160deg, #f06810 0%, #c04e00 100%);
+        }
+
+        /* ========== TABLA ========== */
+        .tabla-wrapper {
+            overflow-x: auto;
+            border-radius: 3px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .tabla-taller {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+        .tabla-taller thead {
+            background: rgba(0,0,0,0.3);
+            border-bottom: 2px solid rgba(224,90,0,0.3);
+        }
+        .tabla-taller th {
+            text-align: left;
+            padding: 14px 16px;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--naranja-seguridad);
+            font-weight: 500;
+            font-size: 0.78rem;
+        }
+        .tabla-taller td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            color: #ddd;
+            vertical-align: middle;
+        }
+        .tabla-taller tbody tr:hover td {
+            background: rgba(224,90,0,0.05);
+        }
+        .tabla-taller tbody tr:last-child td { border-bottom: none; }
+        .tabla-vacia {
+            text-align: center;
+            padding: 40px 0 !important;
+            color: #9e9e9e;
+            font-style: italic;
+        }
+        .tabla-vacia span {
+            display: block;
+            font-size: 2.5rem;
+            margin-bottom: 6px;
+        }
         .status {
-            display: inline-block; padding: 4px 12px; border-radius: 3px;
-            font-family: 'Oswald', sans-serif; font-size: 0.7rem; font-weight: 600;
-            letter-spacing: 0.5px; text-transform: uppercase;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 3px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
             clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%);
         }
         .status-in-progress { background: rgba(224,90,0,0.2); color: #f07b2c; border: 1px solid rgba(224,90,0,0.4); }
         .status-completed { background: rgba(46,125,50,0.2); color: #81c784; border: 1px solid rgba(46,125,50,0.4); }
         .status-pending { background: rgba(251,192,45,0.2); color: #fbc02d; border: 1px solid rgba(251,192,45,0.4); }
 
+        /* ========== TOAST ========== */
+        .toast-notificacion {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(160deg, #1e1e1e 0%, #121212 100%);
+            color: #f5f2ed;
+            padding: 14px 24px;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 500;
+            z-index: 9999;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+            border: 1px solid rgba(224,90,0,0.5);
+            animation: slideInToast 0.5s ease forwards;
+            pointer-events: none;
+            clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+        }
+        @keyframes slideInToast {
+            from { opacity: 0; transform: translateX(100px) translateY(20px); }
+            to { opacity: 1; transform: translateX(0) translateY(0); }
+        }
+        @keyframes slideOutToast {
+            from { opacity: 1; transform: translateX(0) translateY(0); }
+            to { opacity: 0; transform: translateX(100px) translateY(20px); }
+        }
+
         /* ========== FOOTER ========== */
         .footer-bar {
-            text-align: center; padding: 20px; color: #6b6b6b; font-size: 0.78rem;
+            text-align: center; padding: 18px; color: #6b6b6b; font-size: 0.78rem;
             letter-spacing: 0.8px; border-top: 1px solid rgba(255,255,255,0.05);
             width: 100%; margin-top: auto; font-family: 'Oswald', sans-serif; text-transform: uppercase;
         }
 
-        @media (max-width: 800px) {
-            .hero { flex-direction: column; text-align: center; padding: 30px; }
-            .hero-image { width: 100%; }
-            th, td { padding: 10px; font-size: 0.8rem; }
+        @media (max-width: 768px) {
+            .hero { flex-direction: column; text-align: center; padding: 28px; }
+            .hero-image { width: 100%; height: auto; padding: 20px; }
+            .hero p { margin: 0 auto 18px; }
+            .form-grid { grid-template-columns: 1fr; }
+            .gestion-header { flex-direction: column; align-items: flex-start; gap: 8px; }
         }
     </style>
 </head>
@@ -315,16 +531,73 @@
             </div>
         </div>
 
-        <!-- TABLA DE ÓRDENES DE TALLER -->
-        <div>
-            <h2 class="section-title">Órdenes de Servicio Activas</h2>
-            <p class="section-subtitle">Última actualización: 09/06/2026 - 11:00 AM</p>
-            <div class="table-container">
-                <table>
+        <!-- ========== GESTIÓN DE TALLER (FORM + TABLA) ========== -->
+        <section class="gestion-section">
+            <div class="gestion-header">
+                <h2 class="section-title">🔧 <span>Gestión</span> de Taller</h2>
+                <span class="badge-count">📋 {{ talleres|length }} órdenes registradas</span>
+            </div>
+
+            <!-- FORMULARIO -->
+            <form action="/taller/nuevo/" method="POST" class="form-taller">
+                {% csrf_token %}
+                <div class="form-grid">
+                    <div class="campo">
+                        <label for="orden_reparacion">Orden de Reparación</label>
+                        <div class="input-icon">
+                            <span class="icon">🔧</span>
+                            <input type="text" name="orden_reparacion" id="orden_reparacion" placeholder="Ej: OR-001" required>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label for="nombre_auto">Nombre del Auto</label>
+                        <div class="input-icon">
+                            <span class="icon">🚗</span>
+                            <input type="text" name="nombre_auto" id="nombre_auto" placeholder="Ej: Mustang GT" required>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label for="cliente">Cliente</label>
+                        <div class="input-icon">
+                            <span class="icon">👤</span>
+                            <input type="text" name="cliente" id="cliente" placeholder="Ej: Juan Pérez" required>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label for="servicio">Servicio</label>
+                        <div class="input-icon">
+                            <span class="icon">⚙️</span>
+                            <input type="text" name="servicio" id="servicio" placeholder="Ej: Cambio de aceite" required>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label for="mecanico">Mecánico</label>
+                        <div class="input-icon">
+                            <span class="icon">👨‍🔧</span>
+                            <input type="text" name="mecanico" id="mecanico" placeholder="Ej: Carlos Rodríguez" required>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label for="estado">Estado</label>
+                        <div class="input-icon">
+                            <span class="icon">📊</span>
+                            <select name="estado" id="estado" required>
+                                <option value="En proceso">En proceso</option>
+                                <option value="Finalizado">Finalizado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit">➕ Agregar Orden</button>
+            </form>
+
+            <!-- TABLA -->
+            <div class="tabla-wrapper">
+                <table class="tabla-taller">
                     <thead>
                         <tr>
-                            <th># Orden</th>
-                            <th>Vehículo</th>
+                            <th>Orden de Reparación</th>
+                            <th>Nombre del Auto</th>
                             <th>Cliente</th>
                             <th>Servicio</th>
                             <th>Mecánico</th>
@@ -332,50 +605,31 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for taller in talleres %}
                         <tr>
-                            <td>WO-1042</td>
-                            <td>Mustang Boss 429 '69</td>
-                            <td>Carlos Mendoza</td>
-                            <td>Afinación de carburador</td>
-                            <td>Miguel Torres</td>
-                            <td><span class="status status-in-progress">En Progreso</span></td>
+                            <td><strong>{{ taller.orden_reparacion }}</strong></td>
+                            <td>{{ taller.nombre_auto }}</td>
+                            <td>{{ taller.cliente }}</td>
+                            <td>{{ taller.servicio }}</td>
+                            <td>{{ taller.mecanico }}</td>
+                            <td>
+                                <span class="status {% if taller.estado == 'En proceso' %}status-in-progress{% else %}status-completed{% endif %}">
+                                    {{ taller.estado }}
+                                </span>
+                            </td>
                         </tr>
+                        {% empty %}
                         <tr>
-                            <td>WO-1041</td>
-                            <td>F-100 '56</td>
-                            <td>Roberto Silva</td>
-                            <td>Cambio de embrague</td>
-                            <td>Andrés Molina</td>
-                            <td><span class="status status-pending">Pendiente</span></td>
+                            <td colspan="6" class="tabla-vacia">
+                                <span>🔧</span>
+                                No hay órdenes de servicio registradas. ¡Agregá una nueva usando el formulario de arriba!
+                            </td>
                         </tr>
-                        <tr>
-                            <td>WO-1040</td>
-                            <td>Galaxie 500 XL '65</td>
-                            <td>Ana López</td>
-                            <td>Revisión eléctrica</td>
-                            <td>Lucía Fernández</td>
-                            <td><span class="status status-completed">Completado</span></td>
-                        </tr>
-                        <tr>
-                            <td>WO-1039</td>
-                            <td>Thunderbird '62</td>
-                            <td>María García</td>
-                            <td>Cambio de aceite y filtros</td>
-                            <td>Carmen Ruiz</td>
-                            <td><span class="status status-in-progress">En Progreso</span></td>
-                        </tr>
-                        <tr>
-                            <td>WO-1038</td>
-                            <td>Fairlane 500 '68</td>
-                            <td>Roberto Silva</td>
-                            <td>Alineación y balanceo</td>
-                            <td>Miguel Torres</td>
-                            <td><span class="status status-pending">Pendiente</span></td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
-        </div>
+        </section>
     </div>
 
     <div class="footer-bar">© 2026 Blue Oval Classics · Taller Oficial · Motores que vuelven a rugir</div>
@@ -391,17 +645,12 @@
             const existente = document.querySelector('.toast-notificacion');
             if (existente) existente.remove();
             const toast = document.createElement('div');
-            toast.innerHTML = mensaje;
-            toast.style.cssText = `
-                position: fixed; bottom: 30px; right: 30px;
-                background: ${tipo === 'orange' ? 'linear-gradient(160deg, #1e1e1e 0%, #121212 100%)' : 'linear-gradient(160deg, #121212 0%, #0a0a0a 100%)'};
-                color: #f5f2ed; padding: 16px 26px; border-radius: 4px;
-                font-family: 'Inter', sans-serif; font-size: 0.9rem;
-                z-index: 9999; box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-                border: 1px solid ${tipo === 'orange' ? 'rgba(224,90,0,0.5)' : 'rgba(255,255,255,0.12)'};
-                animation: slideInToast 0.5s ease forwards;
-                clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-            `;
+            toast.className = 'toast-notificacion';
+            toast.textContent = mensaje;
+            if (tipo === 'orange') {
+                toast.style.borderColor = 'rgba(224,90,0,0.7)';
+                toast.style.boxShadow = '0 12px 40px rgba(224,90,0,0.3)';
+            }
             document.body.appendChild(toast);
             setTimeout(() => {
                 toast.style.animation = 'slideOutToast 0.4s ease forwards';
