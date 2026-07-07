@@ -1038,17 +1038,17 @@
                 </tr>
             </thead>
             <tbody>
-                {% for cliente in clientes %}
+                {% for Cliente in clientes %}
                 <tr>
-                    <td><strong>{{ cliente.nombre }}</strong></td>
-                    <td>{{ cliente.apellido }}</td>
-                    <td>{{ cliente.sexo }}</td>
+                    <td><strong>{{ Cliente.nombre }}</strong></td>
+                    <td>{{ Cliente.apellido }}</td>
+                    <td>{{ Cliente.sexo }}</td>
                     <td>
-                        <span class="tipo-badge {% if cliente.tipo == 'individual' %}tipo-individual{% else %}tipo-empresarial{% endif %}">
-                            {{ cliente.tipo }}
+                        <span class="tipo-badge {% if Cliente.tipo == 'individual' %}tipo-individual{% else %}tipo-empresarial{% endif %}">
+                            {{ Cliente.tipo }}
                         </span>
                     </td>
-                    <td>{{ cliente.direccion }}</td>
+                    <td>{{ Cliente.direccion }}</td>
                 </tr>
                 {% empty %}
                 <tr>

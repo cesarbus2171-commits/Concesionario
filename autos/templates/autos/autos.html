@@ -1021,101 +1021,89 @@
             </div>
         </section>
 
-        <!-- ========== GESTIÓN DE CLIENTES (FORMULARIO + TABLA) ========== -->
+        <!-- ========== GESTIÓN DE AUTOS (FORMULARIO + TABLA) ========== -->
         <section class="gestion-section">
             <div class="gestion-header">
-                <h2 class="section-title">👥 Gestión de Clientes</h2>
-                <span class="badge-count">📋 {{ clientes|length }} clientes registrados</span>
+                <h2 class="section-title">👥 Gestión de Autos</h2>
+                <span class="badge-count">📋 {{ autos|length }} autos registrados</span>
             </div>
 
             <!-- FORMULARIO MEJORADO -->
-            <form action="/clientes/nuevo/" method="POST" class="form-cliente">
+            <form action="/autos/nuevo/" method="POST" class="form-cliente">
                 {% csrf_token %}
                 <div class="form-grid">
                     <!-- Nombre -->
                     <div class="campo">
-                        <label for="nombre">Nombre</label>
+                        <label for="modelo">modelo</label>
                         <div class="input-icon">
-                            <span class="icon">👤</span>
-                            <input type="text" name="nombre" id="nombre" placeholder="Ej: Juan" required>
+                            <span class="icon">🚗</span>
+                            <input type="text" id="modelo" name="modelo" placeholder="Ej: Mustang GT 1967" required>
                         </div>
                     </div>
-                    <!-- Apellido -->
+                    <!-- Marca -->
                     <div class="campo">
-                        <label for="apellido">Apellido</label>
+                        <label for="marca">marca</label>
                         <div class="input-icon">
-                            <span class="icon">🧑</span>
-                            <input type="text" name="apellido" id="apellido" placeholder="Ej: Pérez" required>
+                            <span class="icon">🚗</span>
+                            <input type="text" id="marca" name="marca" placeholder="Ej: Ford" required>
                         </div>
                     </div>
-                    <!-- Sexo (select) -->
+                    <!-- Año -->
                     <div class="campo">
-                        <label for="sexo">Sexo</label>
+                        <label for="anio">año</label>
                         <div class="input-icon">
-                            <span class="icon">⚥</span>
-                            <select name="sexo" id="sexo" required>
-                                <option value="">Seleccionar</option>
-                                <option value="M">Masculino</option>
-                                <option value="F">Femenino</option>
-                            </select>
+                            <span class="icon">📅</span>
+                            <input type="number" id="anio" name="anio" placeholder="Ej: 1967" required>
                         </div>
                     </div>
-                    <!-- Tipo de Cliente (select) -->
+                    <!-- Precio -->
                     <div class="campo">
-                        <label for="tipo">Tipo de Cliente</label>
+                        <label for="precio">precio</label>
                         <div class="input-icon">
-                            <span class="icon">🏢</span>
-                            <select name="tipo" id="tipo" required>
-                                <option value="">Seleccionar</option>
-                                <option value="individual">Individual</option>
-                                <option value="empresarial">Empresarial</option>
-                            </select>
+                            <span class="icon">💰</span>
+                            <input type="number" id="precio" name="precio" placeholder="Ej: 50000" required>
                         </div>
                     </div>
-                    <!-- Dirección (ocupa toda la fila) -->
-                    <div class="campo full-width">
-                        <label for="direccion">Dirección</label>
+                    <!-- Edición -->
+                    <div class="campo">
+                        <label for="edicion">edición</label>
                         <div class="input-icon">
-                            <span class="icon">📍</span>
-                            <input type="text" name="direccion" id="direccion" placeholder="Ej: Calle 123, Colonia Centro" required>
+                            <span class="icon">🎨</span>
+                            <input type="text" id="edicion" name="edicion" placeholder="Ej: Limited Edition" required>
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-submit">➕ Agregar Cliente</button>
+                <button type="submit" class="btn btn-primary btn-submit">➕ Agregar Auto</button>
             </form>
 
             <!-- TABLA MEJORADA -->
             <div class="tabla-wrapper">
-                <table class="tabla-clientes">
+                <table class="tabla-autos">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Sexo</th>
-                            <th>Tipo</th>
-                            <th>Dirección</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Año</th>
+                            <th>Precio</th>
+                            <th>Edición</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% if clientes %}
-                            {% for cliente in clientes %}
+                        {% if autos %}
+                            {% for Auto in autos %}
                             <tr>
-                                <td><strong>{{ cliente.nombre }}</strong></td>
-                                <td>{{ cliente.apellido }}</td>
-                                <td>{{ cliente.sexo }}</td>
-                                <td>
-                                    <span class="tipo-badge {% if cliente.tipo == 'individual' %}tipo-individual{% else %}tipo-empresarial{% endif %}">
-                                        {{ cliente.tipo }}
-                                    </span>
-                                </td>
-                                <td>{{ cliente.direccion }}</td>
+                                <td><strong>{{ Auto.marca }}</strong></td>
+                                <td>{{ Auto.modelo }}</td>
+                                <td>{{ Auto.anio }}</td>
+                                <td>${{ Auto.precio|floatformat:2 }}</td>
+                                <td>{{ Auto.edicion }}</td>
                             </tr>
                             {% endfor %}
                         {% else %}
                             <tr>
                                 <td colspan="5" class="tabla-vacia">
                                     <span>🚫</span>
-                                    No hay clientes registrados. ¡Agrega el primero!
+                                    No hay autos registrados. ¡Agrega el primero!
                                 </td>
                             </tr>
                         {% endif %}
