@@ -39,46 +39,6 @@
             overflow-x: hidden;
         }
 
-/* Fondo oscuro para el formulario y sus campos */
-.form-taller {
-    background: #1e1e1e !important;
-    border-color: rgba(255,255,255,0.08) !important;
-}
-
-.input-icon {
-    background: #121212 !important;
-    border-color: rgba(255,255,255,0.08) !important;
-}
-
-.input-icon input,
-.input-icon select {
-    color: #f5f2ed !important;
-    background: transparent !important;
-}
-
-.input-icon input::placeholder {
-    color: #5a5a5a !important;
-}
-
-.campo label {
-    color: #9e9e9e !important;
-}
-
-/* Tabla oscura */
-.tabla-taller thead {
-    background: rgba(0,0,0,0.4) !important;
-}
-
-.tabla-taller td {
-    color: #dddddd !important;
-    border-color: rgba(255,255,255,0.04) !important;
-}
-
-/* Ajuste del badge y títulos */
-.gestion-section {
-    background: #1e1e1e !important;
-}
-
         /* ========== NAVBAR ========== */
         .navbar {
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
@@ -336,7 +296,8 @@
             color: #9e9e9e;
             user-select: none;
         }
-        .input-icon input {
+        .input-icon input,
+        .input-icon select {
             background: transparent;
             border: none;
             padding: 12px 12px 12px 0;
@@ -345,6 +306,10 @@
             font-size: 0.9rem;
             width: 100%;
             outline: none;
+        }
+        .input-icon select option {
+            background: #1c1c1c;
+            color: #f5f2ed;
         }
         .input-icon input::placeholder {
             color: #5a5a5a;
@@ -550,17 +515,25 @@
                         </div>
                     </div>
                     <div class="campo">
-                        <label for="nombre_auto">Nombre del Auto</label>
+                        <label for="auto">Auto</label>
                         <div class="input-icon">
                             <span class="icon">🚗</span>
-                            <input type="text" name="nombre_auto" id="nombre_auto" placeholder="Ej: Mustang GT" required>
+                            <select name="auto" id="auto" required>
+                                {% for a in autos %}
+                                    <option value="{{ a.id }}">{{ a.marca }} {{ a.modelo }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
                     <div class="campo">
                         <label for="cliente">Cliente</label>
                         <div class="input-icon">
                             <span class="icon">👤</span>
-                            <input type="text" name="cliente" id="cliente" placeholder="Ej: Juan Pérez" required>
+                            <select name="cliente" id="cliente" required>
+                                {% for c in clientes %}
+                                    <option value="{{ c.id }}">{{ c.nombre }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
                     <div class="campo">
@@ -597,7 +570,7 @@
                     <thead>
                         <tr>
                             <th>Orden de Reparación</th>
-                            <th>Nombre del Auto</th>
+                            <th>Modelo del Auto</th>
                             <th>Cliente</th>
                             <th>Servicio</th>
                             <th>Mecánico</th>
@@ -608,8 +581,8 @@
                         {% for taller in talleres %}
                         <tr>
                             <td><strong>{{ taller.orden_reparacion }}</strong></td>
-                            <td>{{ taller.nombre_auto }}</td>
-                            <td>{{ taller.cliente }}</td>
+                            <td>{{ taller.auto.modelo }}</td>
+                            <td>{{ taller.cliente.nombre }}</td>
                             <td>{{ taller.servicio }}</td>
                             <td>{{ taller.mecanico }}</td>
                             <td>
