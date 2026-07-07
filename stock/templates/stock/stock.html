@@ -279,11 +279,14 @@
             width: 100%;
             outline: none;
         }
+        .input-icon select option {
+            background: #1c1c1c;
+            color: #f5f2ed;
+        }
         .input-icon input::placeholder {
             color: #5a5a5a;
             font-weight: 300;
         }
-        .input-icon select option { background: #1c1c1c; color: #f5f2ed; }
         .btn-submit {
             margin-top: 18px;
             width: 100%;
@@ -366,7 +369,7 @@
         .badge-reserved { background: rgba(200,164,92,0.2); color: #e2c28a; border: 1px solid rgba(200,164,92,0.4); }
         .badge-sold { background: rgba(183,28,28,0.2); color: #ef9a9a; border: 1px solid rgba(183,28,28,0.4); }
 
-        /* ========== TOAST NOTIFICATIONS ========== */
+        /* ========== TOAST ========== */
         .toast-notificacion {
             position: fixed;
             bottom: 30px;
@@ -463,7 +466,7 @@
         <!-- ========== GESTIÓN DE STOCK (FORM + TABLA) ========== -->
         <section class="gestion-section">
             <div class="gestion-header">
-                <h2 class="section-title">🏁 <span>Gestión</span> de Stock</h2>
+                <h2 class="section-title">📦 <span>Gestión</span> de Stock</h2>
                 <span class="badge-count">📋 {{ stocks|length }} unidades registradas</span>
             </div>
 
@@ -472,24 +475,43 @@
                 {% csrf_token %}
                 <div class="form-grid">
                     <div class="campo">
-                        <label for="modelo_auto">Modelo del Auto</label>
+                        <label for="auto_id">Auto</label>
                         <div class="input-icon">
                             <span class="icon">🚗</span>
-                            <input type="text" name="modelo_auto" id="modelo_auto" placeholder="Ej: Mustang GT" required>
+                            <select name="auto_id" id="auto_id" required>
+                                {% for a in autos %}
+                                    <option value="{{ a.id }}">{{ a.marca }} {{ a.modelo }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label for="fabrica_id">Fábrica</label>
+                        <div class="input-icon">
+                            <span class="icon">🏭</span>
+                            <select name="fabrica_id" id="fabrica_id" required>
+                                {% for f in fabricas %}
+                                    <option value="{{ f.id }}">{{ f.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label for="proveedor_id">Proveedor</label>
+                        <div class="input-icon">
+                            <span class="icon">🔗</span>
+                            <select name="proveedor_id" id="proveedor_id" required>
+                                {% for p in proveedores %}
+                                    <option value="{{ p.id }}">{{ p.nombre }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
                     <div class="campo">
                         <label for="cantidad">Cantidad</label>
                         <div class="input-icon">
                             <span class="icon">🔢</span>
-                            <input type="number" name="cantidad" id="cantidad" placeholder="Ej: 10" required>
-                        </div>
-                    </div>
-                    <div class="campo">
-                        <label for="sucursal">Sucursal</label>
-                        <div class="input-icon">
-                            <span class="icon">📍</span>
-                            <input type="text" name="sucursal" id="sucursal" placeholder="Ej: Mendoza" required>
+                            <input type="number" name="cantidad" id="cantidad" placeholder="Ej: 5" required>
                         </div>
                     </div>
                     <div class="campo">
@@ -500,10 +522,17 @@
                         </div>
                     </div>
                     <div class="campo">
+                        <label for="ubicacion_bodega">Ubicación Bodega</label>
+                        <div class="input-icon">
+                            <span class="icon">📍</span>
+                            <input type="text" name="ubicacion_bodega" id="ubicacion_bodega" placeholder="Ej: Estante A3" required>
+                        </div>
+                    </div>
+                    <div class="campo">
                         <label for="disponibilidad">Disponibilidad</label>
                         <div class="input-icon">
                             <span class="icon">✅</span>
-                            <select name="disponibilidad" id="disponibilidad">
+                            <select name="disponibilidad" id="disponibilidad" required>
                                 <option value="Sí">Sí</option>
                                 <option value="No">No</option>
                             </select>
@@ -520,27 +549,33 @@
                         <tr>
                             <th>Modelo</th>
                             <th>Cantidad</th>
-                            <th>Sucursal</th>
+                            <th>Fábrica</th>
                             <th>Fecha de Ingreso</th>
+                            <th>Ubicación</th>
                             <th>Disponibilidad</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for stock in stocks %}
                         <tr>
-                            <td><strong>{{ stock.modelo_auto }}</strong></td>
+                            <td><strong>{{ stock.auto.modelo }}</strong></td>
                             <td>{{ stock.cantidad }}</td>
-                            <td>{{ stock.sucursal }}</td>
+                            <td>{{ stock.fabrica.nombre }}</td>
                             <td>{{ stock.fecha_ingreso }}</td>
+                            <td>{{ stock.ubicacion_bodega }}</td>
                             <td>
-                                <span class="badge-estado {% if stock.disponibilidad == 'Sí' %}badge-available{% else %}badge-reserved{% endif %}">
-                                    {{ stock.disponibilidad }}
-                                </span>
+                                {% if stock.disponibilidad == "Sí" %}
+                                    <span class="badge-estado badge-available">Disponible</span>
+                                {% elif stock.disponibilidad == "No" %}
+                                    <span class="badge-estado badge-reserved">Reservado</span>
+                                {% else %}
+                                    <span class="badge-estado badge-sold">Vendido</span>
+                                {% endif %}
                             </td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="5" class="tabla-vacia">
+                            <td colspan="6" class="tabla-vacia">
                                 <span>📦</span>
                                 No hay unidades en stock. ¡Agregá la primera!
                             </td>

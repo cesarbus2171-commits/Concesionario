@@ -3,10 +3,8 @@ from .models import Auto
 
 def listaautos(request):
     consultarautos = Auto.objects.all()
-    # CAMBIO AQUÍ: Cambiamos 'consultarautos' por 'autos' para que coincida con tu {% for auto in autos %}
     return render(request, 'autos/autos.html', {'autos': consultarautos})
 
-# Tu función de crear se queda exactamente igual a como la tienes
 def crearauto(request):
     if request.method == 'POST':
         marca = request.POST['marca']

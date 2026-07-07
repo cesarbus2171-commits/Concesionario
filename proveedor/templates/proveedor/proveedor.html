@@ -568,13 +568,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for proveedor in proveedores %}
+                        {% for Proveedor in proveedores %}
                         <tr>
-                            <td><strong>{{ proveedor.nombre }}</strong></td>
-                            <td>{{ proveedor.direccion }}</td>
-                            <td>{{ proveedor.telefono }}</td>
-                            <td>{{ proveedor.email }}</td>
-                            <td>{{ proveedor.productos_suministrados }}</td>
+                            <td><strong>{{ Proveedor.nombre }}</strong></td>
+                            <td>{{ Proveedor.direccion }}</td>
+                            <td>{{ Proveedor.telefono }}</td>
+                            <td>{{ Proveedor.email }}</td>
+                            <td>{{ Proveedor.productos_suministrados }}</td>
                         </tr>
                         {% empty %}
                         <tr>

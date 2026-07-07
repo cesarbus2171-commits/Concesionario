@@ -642,13 +642,13 @@
                 </tr>
             </thead>
             <tbody>
-                {% for fabrica in fabricas %}
+                {% for Fabrica in fabricas %}
                 <tr>
-                    <td><strong>{{ fabrica.nombre }}</strong></td>
-                    <td>{{ fabrica.ubicacion }}</td>
-                    <td>{{ fabrica.capacidad_produccion }}</td>
-                    <td>{{ fabrica.fecha_fundacion }}</td>
-                    <td>{{ fabrica.procesos_activos }}</td>
+                    <td><strong>{{ Fabrica.nombre }}</strong></td>
+                    <td>{{ Fabrica.ubicacion }}</td>
+                    <td>{{ Fabrica.capacidad_produccion }}</td>
+                    <td>{{ Fabrica.fecha_fundacion }}</td>
+                    <td>{{ Fabrica.procesos_activos }}</td>
                 </tr>
                 {% empty %}
                 <tr>

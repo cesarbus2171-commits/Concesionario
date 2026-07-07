@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect
-from fabrica.models import fabrica
+from fabrica.models import Fabrica
 
 def listafabrica(request):
-    fabricas = fabrica.objects.all()
+    fabricas = Fabrica.objects.all()
     return render(request, 'fabrica/fabrica.html', {'fabricas': fabricas})
 
 def crearfabrica(request):
@@ -13,6 +13,6 @@ def crearfabrica(request):
         fecha_fundacion = request.POST['fecha_fundacion']
         procesos_activos = request.POST['procesos_activos']
 
-        nueva_fabrica = fabrica(nombre=nombre, ubicacion=ubicacion, capacidad_produccion=capacidad_produccion, fecha_fundacion=fecha_fundacion, procesos_activos=procesos_activos)
+        nueva_fabrica = Fabrica(nombre=nombre, ubicacion=ubicacion, capacidad_produccion=capacidad_produccion, fecha_fundacion=fecha_fundacion, procesos_activos=procesos_activos)
         nueva_fabrica.save()
         return redirect('/fabrica/')
