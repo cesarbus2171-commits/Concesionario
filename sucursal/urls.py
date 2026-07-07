@@ -1,6 +1,7 @@
 from django.urls import path
-from . import views
+from .views import crearsucursal, listasucursal
 
 urlpatterns = [
-    path('form-sucursal', views.sucursal),
+    path('', listasucursal),
+    path('nuevo/', crearsucursal),
 ]
