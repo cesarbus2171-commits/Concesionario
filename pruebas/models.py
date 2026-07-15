@@ -1,11 +1,13 @@
 from django.db import models
 
-class prueba(models.Model):
+class Prueba(models.Model):
     nombre_cliente = models.CharField(max_length=100)
     fecha_prueba = models.DateField()
-    modelo_vehiculo = models.CharField(max_length=100)
-    empleado_encargado = models.CharField(max_length=100)
-    mecanico_asignado = models.CharField(max_length=100)
+    autos = models.ManyToManyField('autos.Auto', related_name='pruebas')
+    empleado_encargado = models.ForeignKey('empleados.Empleado', on_delete=models.SET_NULL, null=True)
+    taller_asignado = models.ForeignKey('taller.Taller', on_delete=models.SET_NULL, null=True, related_name='pruebas')
+    sucursal = models.ForeignKey('sucursal.Sucursal', on_delete=models.CASCADE, null=True)
+    estatus = models.CharField(max_length=20, default='Programada')
 
-    class Meta:
-        db_table = 'pruebas_pruebas'
+    def __str__(self):
+        return f"Prueba de {self.nombre_cliente} - {self.fecha_prueba}"

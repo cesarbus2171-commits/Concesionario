@@ -1,575 +1,127 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blue Oval Classics | Nuestra Sucursal</title>
-    <base href="/">
+    <title>Blue Oval Classics | Sucursales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'clientes/css/estilos.css' %}">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap');
-
-        :root {
-            --blanco: #ffffff;
-            --gris-claro: #f5f7fa;
-            --gris-medio: #e1e5eb;
-            --gris-texto: #6b7280;
-            --azul-corp: #1e3a5f;
-            --azul-claro: #3a5f8a;
-            --turquesa: #00a6a6;
-            --turquesa-claro: #b2ecec;
-            --oro: #c8a45c;
-            --rojo-detalle: #c41230;
-            --sombra-suave: 0 4px 20px rgba(0,0,0,0.06);
-            --sombra-media: 0 10px 35px rgba(0,0,0,0.1);
-            --transicion: 0.3s ease;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            background-image: radial-gradient(circle at 50% 0%, rgba(0,166,166,0.04) 0%, transparent 60%);
-            color: #1f2937;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-        }
-
-        /* ========== NAVBAR CORPORATIVA (común a todas las vistas) ========== */
-        .navbar {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between;
-            height: 70px; animation: slideDown 0.7s ease forwards;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.04);
-        }
-        @keyframes slideDown {
-            from { transform: translateY(-100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .navbar .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .navbar .logo-icon {
-            width: 42px; height: 42px;
-            background: var(--azul-corp);
-            border-radius: 10px; display: flex; align-items: center; justify-content: center;
-            font-size: 1.4rem; color: #fff; font-weight: 800;
-            font-family: 'Montserrat', sans-serif;
-            box-shadow: 0 4px 12px rgba(30,58,95,0.3);
-            transition: var(--transicion);
-        }
-        .navbar .logo:hover .logo-icon { transform: scale(1.05); }
-        .navbar .logo-text {
-            font-family: 'Montserrat', sans-serif; font-size: 1.3rem; font-weight: 700;
-            color: var(--azul-corp); letter-spacing: -0.5px;
-        }
-        .navbar .logo-text span { color: var(--turquesa); }
-        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
-        .nav-links a {
-            color: #4b5563; text-decoration: none; font-size: 0.9rem; font-weight: 500;
-            letter-spacing: 0.3px; transition: var(--transicion); position: relative; padding: 8px 0;
-            font-family: 'Montserrat', sans-serif;
-        }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
-            background: var(--turquesa); transition: 0.3s ease; border-radius: 2px;
-        }
-        .nav-links a:hover { color: var(--azul-corp); }
-        .nav-links a:hover::after { width: 100%; }
-        .nav-links .btn-nav {
-            background: var(--turquesa); color: white !important;
-            padding: 10px 22px !important; border-radius: 30px;
-            font-weight: 600; letter-spacing: 0.5px; transition: var(--transicion);
-            box-shadow: 0 4px 12px rgba(0,166,166,0.3);
-        }
-        .nav-links .btn-nav:hover {
-            background: #008b8b; transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,166,166,0.5);
-        }
-        .nav-links .btn-nav::after { display: none; }
-
-        /* ========== CONTENEDOR PRINCIPAL ========== */
-        .main-container {
-            margin-top: 110px; margin-bottom: 50px; width: 90%; max-width: 1200px;
-            display: flex; flex-direction: column; gap: 35px;
-            animation: fadeInUp 0.9s ease forwards; animation-delay: 0.2s; opacity: 0;
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ========== HERO CORPORATIVO ========== */
-        .hero {
-            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
-            border-radius: 20px; padding: 40px 45px;
-            display: flex; align-items: center; justify-content: space-between; gap: 30px;
-            box-shadow: var(--sombra-suave); border: 1px solid #e5e7eb;
-        }
-        .hero-content { flex: 1; }
-        .hero-badge {
-            display: inline-block; background: #e0f2fe; color: var(--azul-corp);
-            padding: 4px 14px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;
-            letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 14px;
-            font-family: 'Montserrat', sans-serif;
-        }
-        .hero h1 {
-            font-family: 'Montserrat', sans-serif; font-size: 2.4rem; font-weight: 700;
-            color: var(--azul-corp); line-height: 1.2; margin-bottom: 10px;
-        }
-        .hero h1 span { color: var(--turquesa); }
-        .hero p { color: #64748b; font-size: 1rem; line-height: 1.6; margin-bottom: 20px; max-width: 480px; }
-        .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
-        .hero-image {
-            flex: 0 0 240px; height: 180px;
-            background: linear-gradient(135deg, #f0f4ff 0%, #e0f2fe 100%);
-            border-radius: 16px; display: flex; align-items: center; justify-content: center;
-            font-size: 4.5rem; border: 2px dashed #93c5fd;
-        }
-
-        /* ========== BOTONES ========== */
-        .btn {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 10px 24px; border-radius: 30px;
-            font-family: 'Montserrat', sans-serif; font-size: 0.85rem; font-weight: 600;
-            text-decoration: none; cursor: pointer; border: none;
-            letter-spacing: 0.5px; transition: var(--transicion); white-space: nowrap;
-        }
-        .btn-primary {
-            background: var(--turquesa); color: white;
-            box-shadow: 0 4px 14px rgba(0,166,166,0.3);
-        }
-        .btn-primary:hover { background: #008b8b; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,166,166,0.4); }
-        .btn-outline {
-            background: transparent; color: var(--azul-corp);
-            border: 2px solid #93c5fd;
-        }
-        .btn-outline:hover { background: #f0f4ff; border-color: var(--turquesa); transform: translateY(-3px); }
-
-        /* ========== GESTIÓN DE SUCURSALES (form + tabla) ========== */
-        .gestion-section {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 28px;
-            box-shadow: var(--sombra-media);
-            border: 1px solid #e5e7eb;
-        }
-        .gestion-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 22px;
-            border-bottom: 1px solid #e5e7eb;
-            padding-bottom: 12px;
-        }
-        .section-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--azul-corp);
-        }
-        .section-title span { color: var(--turquesa); }
-        .badge-count {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.8rem;
-            color: var(--turquesa);
-            background: #e0f2fe;
-            padding: 6px 16px;
-            border-radius: 20px;
-            border: 1px solid rgba(0,166,166,0.2);
-        }
-
-        /* ========== FORMULARIO ========== */
-        .form-sucursal {
-            background: #fafbfc;
-            padding: 20px 16px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            margin-bottom: 28px;
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-            gap: 14px 20px;
-        }
-        .campo {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .campo label {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.75rem;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #4b5563;
-        }
-        .input-icon {
-            display: flex;
-            align-items: center;
-            background: #ffffff;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            transition: var(--transicion);
-        }
-        .input-icon:focus-within {
-            border-color: var(--turquesa);
-            box-shadow: 0 0 0 3px rgba(0,166,166,0.2);
-        }
-        .input-icon .icon {
-            padding: 0 10px;
-            font-size: 1.1rem;
-            color: #6b7280;
-            user-select: none;
-        }
-        .input-icon input {
-            background: transparent;
-            border: none;
-            padding: 12px 12px 12px 0;
-            color: #1f2937;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            width: 100%;
-            outline: none;
-        }
-        .input-icon input::placeholder {
-            color: #9ca3af;
-            font-weight: 300;
-        }
-        .btn-submit {
-            margin-top: 18px;
-            width: 100%;
-            justify-content: center;
-            padding: 14px;
-            font-size: 1rem;
-            border-radius: 30px;
-            background: var(--turquesa);
-            color: white;
-            border: none;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: var(--transicion);
-            box-shadow: 0 4px 14px rgba(0,166,166,0.3);
-        }
-        .btn-submit:hover {
-            background: #008b8b;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,166,166,0.4);
-        }
-
-        /* ========== TABLA ========== */
-        .tabla-wrapper {
-            overflow-x: auto;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-        }
-        .tabla-sucursal {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.88rem;
-        }
-        .tabla-sucursal thead {
-            background: #f8fafc;
-            border-bottom: 2px solid #e5e7eb;
-        }
-        .tabla-sucursal th {
-            text-align: left;
-            padding: 14px 16px;
-            font-family: 'Montserrat', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #374151;
-            font-weight: 600;
-            font-size: 0.78rem;
-        }
-        .tabla-sucursal td {
-            padding: 14px 16px;
-            border-bottom: 1px solid #f1f5f9;
-            color: #1f2937;
-            vertical-align: middle;
-        }
-        .tabla-sucursal tbody tr:hover td {
-            background: #fafbfc;
-        }
-        .tabla-sucursal tbody tr:last-child td { border-bottom: none; }
-        .tabla-vacia {
-            text-align: center;
-            padding: 40px 0 !important;
-            color: #6b7280;
-            font-style: italic;
-        }
-        .tabla-vacia span {
-            display: block;
-            font-size: 2.5rem;
-            margin-bottom: 6px;
-        }
-
-        /* ========== INFORMACIÓN DE LA SUCURSAL ========== */
-        .branch-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-        }
-        @media (max-width: 800px) { .branch-grid { grid-template-columns: 1fr; } }
-        .card {
-            background: white; border-radius: 16px; padding: 24px;
-            box-shadow: var(--sombra-suave); border: 1px solid #e5e7eb;
-            transition: var(--transicion);
-        }
-        .card:hover { transform: translateY(-4px); box-shadow: var(--sombra-media); }
-        .card h3 {
-            font-family: 'Montserrat', sans-serif; color: var(--azul-corp);
-            margin-bottom: 16px; font-size: 1.3rem;
-        }
-        .info-line {
-            display: flex; align-items: center; gap: 10px; padding: 10px 0;
-            border-bottom: 1px solid #f1f5f9; font-size: 0.95rem; color: #475569;
-        }
-        .info-line i { font-style: normal; font-size: 1.2rem; width: 24px; text-align: center; }
-        .map-placeholder {
-            height: 200px; background: #eef2f6; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 2.5rem; color: #64748b; border: 2px dashed #cbd5e1;
-        }
-
-        /* ========== EQUIPO EN SUCURSAL ========== */
-        .team-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;
-        }
-        .team-member {
-            background: white; border-radius: 14px; padding: 18px; text-align: center;
-            box-shadow: var(--sombra-suave); border: 1px solid #e5e7eb;
-            transition: var(--transicion);
-        }
-        .team-member:hover { transform: translateY(-4px); }
-        .team-avatar {
-            width: 60px; height: 60px; background: #e0f2fe; border-radius: 50%;
-            margin: 0 auto 12px; display: flex; align-items: center; justify-content: center;
-            font-size: 1.8rem; color: var(--azul-corp);
-        }
-        .team-member h4 { font-family: 'Montserrat', sans-serif; color: var(--azul-corp); margin-bottom: 4px; }
-        .team-member span { font-size: 0.8rem; color: var(--turquesa); font-weight: 600; }
-
-        /* ========== TOAST ========== */
-        .toast-notificacion {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #1e293b;
-            color: white;
-            padding: 14px 22px;
-            border-radius: 12px;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            z-index: 9999;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 1px solid rgba(0,166,166,0.5);
-            animation: slideInToast 0.5s ease forwards;
-        }
-        @keyframes slideInToast {
-            from { opacity: 0; transform: translateX(100px) translateY(20px); }
-            to { opacity: 1; transform: translateX(0) translateY(0); }
-        }
-        @keyframes slideOutToast {
-            from { opacity: 1; transform: translateX(0) translateY(0); }
-            to { opacity: 0; transform: translateX(100px) translateY(20px); }
-        }
-
-        /* ========== FOOTER ========== */
-        .footer-bar {
-            text-align: center; padding: 18px; color: #9ca3af; font-size: 0.8rem;
-            border-top: 1px solid #e5e7eb; width: 100%; margin-top: auto;
-        }
-
-        @media (max-width: 768px) {
-            .hero { flex-direction: column; text-align: center; padding: 25px; }
-            .hero-image { width: 100%; height: auto; padding: 20px; }
-            .hero p { margin: 0 auto 18px; }
-            .form-grid { grid-template-columns: 1fr; }
-            .gestion-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-        }
+        .alert { padding: 15px; margin-bottom: 20px; border-radius: 4px; font-weight: bold; }
+        .alert-success { background-color: #D4EDDA; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-error { background-color: #F8D7DA; color: #721C24; border: 1px solid #f5c6cb; }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="#" class="logo">
-            <div class="logo-icon">F</div>
-            <span class="logo-text">BlueOval <span>Classics</span></span>
-        </a>
-        <ul class="nav-links">
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Inventario</a></li>
-            <li><a href="#">Clientes</a></li>
-            <li><a href="#">Equipo</a></li>
-            <li><a href="#">Fábrica</a></li>
-            <li><a href="#" class="btn-nav">Sucursales</a></li>
-        </ul>
-    </nav>
+    <header class="vintage-header">
+        <div class="header-content">
+            <h1>Blue Oval Classics</h1>
+            <h2>Nuestras Sedes y Puntos de Venta</h2>
+        </div>
+    </header>
 
-    <div class="main-container">
-        <!-- HERO -->
-        <section class="hero">
-            <div class="hero-content">
-                <span class="hero-badge">📍 Visítanos</span>
-                <h1>Sucursal <span>Detroit</span></h1>
-                <p>
-                    Nuestra casa matriz y showroom principal. Más de 2,000 m² dedicados a la exhibición y restauración de los clásicos Ford más exclusivos.
-                </p>
-                <div class="hero-buttons">
-                    <button class="btn btn-primary" onclick="agendarVisita()">📅 Agendar Visita</button>
-                    <button class="btn btn-outline" onclick="verEnMapa()">🗺️ Ver en Mapa</button>
-                </div>
+    <main class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <section class="card form-section">
+            <div class="card-header">
+                {% if sucursal_edit %}
+                    <h3>Modificando Sede: {{ sucursal_edit.nombre }}</h3>
+                {% else %}
+                    <h3>Aperturar Nueva Sucursal</h3>
+                {% endif %}
             </div>
-            <div class="hero-image">🏢</div>
-        </section>
-
-        <!-- ========== GESTIÓN DE SUCURSALES (FORM + TABLA) ========== -->
-        <section class="gestion-section">
-            <div class="gestion-header">
-                <h2 class="section-title">🏢 <span>Gestión</span> de Sucursales</h2>
-                <span class="badge-count">📋 {{ sucursales|length }} sucursales registradas</span>
-            </div>
-
-            <!-- FORMULARIO -->
-            <form action="/sucursal/nuevo/" method="POST" class="form-sucursal">
+            <form action="{% if sucursal_edit %}/sucursal/editar/{{ sucursal_edit.id }}/{% else %}/sucursal/nuevo/{% endif %}" method="POST" class="vintage-form">
                 {% csrf_token %}
                 <div class="form-grid">
-                    <div class="campo">
-                        <label for="nombre">Nombre de la Sucursal</label>
-                        <div class="input-icon">
-                            <span class="icon">🏢</span>
-                            <input type="text" name="nombre" id="nombre" placeholder="Ej: Detroit" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="nombre">Nombre de la Sede</label>
+                        <input type="text" name="nombre" id="nombre" value="{{ sucursal_edit.nombre|default:'' }}" required>
                     </div>
-                    <div class="campo">
-                        <label for="direccion">Dirección</label>
-                        <div class="input-icon">
-                            <span class="icon">📍</span>
-                            <input type="text" name="direccion" id="direccion" placeholder="Ej: Av. Siempre Viva 123" required>
-                        </div>
-                    </div>
-                    <div class="campo">
+                    
+                    <div class="form-group">
                         <label for="ciudad">Ciudad</label>
-                        <div class="input-icon">
-                            <span class="icon">🏙️</span>
-                            <input type="text" name="ciudad" id="ciudad" placeholder="Ej: Mendoza" required>
-                        </div>
+                        <input type="text" name="ciudad" id="ciudad" value="{{ sucursal_edit.ciudad|default:'' }}" required>
                     </div>
-                    <div class="campo">
-                        <label for="telefono">Teléfono</label>
-                        <div class="input-icon">
-                            <span class="icon">📞</span>
-                            <input type="text" name="telefono" id="telefono" placeholder="Ej: 011-12345678" required>
-                        </div>
+
+                    <div class="form-group">
+                        <label for="telefono">Teléfono de Contacto</label>
+                        <input type="text" name="telefono" id="telefono" value="{{ sucursal_edit.telefono|default:'' }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estatus">Estatus Operativo</label>
+                        <select name="estatus" id="estatus" required>
+                            <option value="Activa" {% if sucursal_edit.estatus == 'Activa' %}selected{% endif %}>Activa</option>
+                            <option value="En Remodelacion" {% if sucursal_edit.estatus == 'En Remodelacion' %}selected{% endif %}>En Remodelación</option>
+                            <option value="Cerrada" {% if sucursal_edit.estatus == 'Cerrada' %}selected{% endif %}>Cerrada Temporalmente</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="direccion">Dirección Completa</label>
+                        <input type="text" name="direccion" id="direccion" value="{{ sucursal_edit.direccion|default:'' }}" required>
                     </div>
                 </div>
-                <button type="submit" class="btn-submit">➕ Agregar Sucursal</button>
+                
+                <div class="form-actions">
+                    {% if sucursal_edit %}
+                        <a href="/sucursal/" class="btn btn-outline" style="margin-right: 15px;">Cancelar</a>
+                        <button type="submit" class="btn btn-edit">Actualizar Datos</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-primary">Registrar Sucursal</button>
+                    {% endif %}
+                </div>
             </form>
+        </section>
 
-            <!-- TABLA -->
-            <div class="tabla-wrapper">
-                <table class="tabla-sucursal">
+        <section class="card table-section">
+            <div class="card-header">
+                <h3>Red de Sucursales</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="vintage-table">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Dirección</th>
+                            <th>Sede</th>
                             <th>Ciudad</th>
+                            <th>Dirección</th>
                             <th>Teléfono</th>
+                            <th>Estatus</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for sucursal in sucursales %}
                         <tr>
                             <td><strong>{{ sucursal.nombre }}</strong></td>
-                            <td>{{ sucursal.direccion }}</td>
                             <td>{{ sucursal.ciudad }}</td>
+                            <td>{{ sucursal.direccion }}</td>
                             <td>{{ sucursal.telefono }}</td>
+                            <td>
+                                <span class="badge {% if sucursal.estatus == 'Activa' %}badge-active{% else %}badge-inactive{% endif %}">
+                                    {{ sucursal.estatus }}
+                                </span>
+                            </td>
+                            <td class="actions">
+                                <a href="/sucursal/editar/{{ sucursal.id }}/" class="btn btn-edit">Modificar</a>
+                                <a href="/sucursal/eliminar/{{ sucursal.id }}/" class="btn btn-delete" onclick="return confirm('¿Seguro que deseas eliminar permanentemente {{ sucursal.nombre }}?');">Cerrar</a>
+                            </td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="4" class="tabla-vacia">
-                                <span>📍</span>
-                                No hay sucursales registradas. ¡Agregá una nueva usando el formulario de arriba!
-                            </td>
+                            <td colspan="6" class="empty-state">No hay sucursales aperturadas en el sistema.</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
         </section>
-
-        <!-- INFORMACIÓN ADICIONAL DE LA SUCURSAL -->
-        <div class="branch-grid">
-            <div class="card">
-                <h3>📞 Contacto Directo</h3>
-                <div class="info-line"><i>📍</i> 1420 Woodward Ave, Detroit, MI 48226</div>
-                <div class="info-line"><i>📞</i> +1 (313) 555-0192</div>
-                <div class="info-line"><i>✉️</i> detroit@blueovalclassics.com</div>
-                <div class="info-line"><i>🕒</i> Lun-Vie 9:00-18:00 | Sáb 10:00-14:00</div>
-            </div>
-            <div class="card">
-                <div class="map-placeholder">
-                    🗺️ Mapa Interactivo
-                </div>
-            </div>
-        </div>
-
-        <!-- EQUIPO EN SUCURSAL -->
-        <div>
-            <h3 style="font-family: 'Montserrat', sans-serif; color: var(--azul-corp); margin-bottom: 16px;">👥 Equipo en esta Sucursal</h3>
-            <div class="team-grid">
-                <div class="team-member">
-                    <div class="team-avatar">👨‍💼</div>
-                    <h4>James Carter</h4>
-                    <span>Gerente General</span>
-                </div>
-                <div class="team-member">
-                    <div class="team-avatar">👩‍💼</div>
-                    <h4>Elena Rossi</h4>
-                    <span>Asesora de Ventas</span>
-                </div>
-                <div class="team-member">
-                    <div class="team-avatar">🔧</div>
-                    <h4>Mike Thompson</h4>
-                    <span>Jefe de Taller</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer-bar">© 2026 Blue Oval Classics · Sucursal Detroit · Tradición sobre ruedas</div>
-
-    <script>
-        function agendarVisita() {
-            mostrarNotificacion('📅 Abriendo calendario para coordinar tu visita a la sucursal...', 'info');
-        }
-        function verEnMapa() {
-            mostrarNotificacion('🗺️ Cargando mapa interactivo de la ubicación...', 'info');
-        }
-        function mostrarNotificacion(mensaje, tipo) {
-            const existente = document.querySelector('.toast-notificacion');
-            if (existente) existente.remove();
-            const toast = document.createElement('div');
-            toast.className = 'toast-notificacion';
-            toast.textContent = mensaje;
-            if (tipo === 'info') {
-                toast.style.borderColor = 'rgba(0,166,166,0.7)';
-                toast.style.boxShadow = '0 10px 30px rgba(0,166,166,0.25)';
-            }
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.style.animation = 'slideOutToast 0.4s ease forwards';
-                setTimeout(() => toast.remove(), 400);
-            }, 3000);
-        }
-    </script>
+    </main>
 </body>
 </html>

@@ -6,6 +6,7 @@ class Auto(models.Model):
     anio = models.IntegerField()
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     edicion = models.CharField(max_length=100)
+    estatus = models.CharField(max_length=20, default='Disponible')
 
     class Meta:
         db_table = 'autos_auto'

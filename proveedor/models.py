@@ -6,5 +6,10 @@ class Proveedor(models.Model):
     telefono = models.CharField(max_length=20)
     email = models.EmailField()
     productos_suministrados = models.TextField()
+    estatus = models.CharField(max_length=20, default='Activo')
+
     class Meta:
         db_table = 'proveedor_proveedor'
+
+    def __str__(self):
+        return self.nombre

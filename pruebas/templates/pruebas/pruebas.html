@@ -1,495 +1,171 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blue Oval Classics | Agendar Prueba de Manejo</title>
-    <base href="/">
+    <title>Blue Oval Classics | Test Drive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'clientes/css/estilos.css' %}">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Racing+Sans+One&display=swap');
-
-        :root {
-            --negro-asfalto: #0a0a0a;
-            --gris-oscuro: #1c1c1c;
-            --gris-medio: #3a3a3a;
-            --blanco-puro: #ffffff;
-            --rojo-carreras: #c41230;
-            --rojo-vivo: #e63946;
-            --dorado-check: #f4c542;
-            --plata-brillo: #c0c0c0;
-            --sombra-suave: 0 2px 15px rgba(0,0,0,0.3);
-            --sombra-media: 0 8px 35px rgba(0,0,0,0.6);
-            --transicion: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2);
-            --transicion-suave: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: radial-gradient(ellipse at 50% 30%, #1a1a1a 0%, #0a0a0a 70%);
-            background-attachment: fixed;
-            color: #e0e0e0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-        }
-
-        /* ========== NAVBAR ========== */
-        .navbar {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            background: rgba(10,10,10,0.85); backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-            border-bottom: 2px solid rgba(196,18,48,0.3);
-            padding: 0 2rem; display: flex; align-items: center; justify-content: space-between;
-            height: 72px; animation: slideDown 0.7s ease forwards;
-            box-shadow: 0 4px 35px rgba(196,18,48,0.3);
-        }
-        @keyframes slideDown {
-            from { transform: translateY(-100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .navbar .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .navbar .logo-icon {
-            width: 44px; height: 44px;
-            background: linear-gradient(160deg, #1a3a6e 0%, #0b1d3d 50%, #060f20 100%);
-            border-radius: 8px; display: flex; align-items: center; justify-content: center;
-            font-size: 1.6rem; color: #fff; font-weight: 900;
-            font-family: 'Oswald', sans-serif; letter-spacing: 1px;
-            box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 0 25px rgba(20,50,120,0.5);
-            transition: var(--transicion); position: relative; overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.15);
-        }
-        .navbar .logo-icon::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.08) 55%, transparent 60%);
-            animation: chromeSweep 4s infinite;
-        }
-        @keyframes chromeSweep {
-            0%,100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-        .navbar .logo:hover .logo-icon {
-            transform: scale(1.07);
-            box-shadow: 0 0 0 3px rgba(255,255,255,0.3), 0 0 40px rgba(20,50,120,0.8);
-        }
-        .navbar .logo-text {
-            font-family: 'Oswald', sans-serif; font-size: 1.4rem; font-weight: 700;
-            color: #ffffff; letter-spacing: 1.5px; text-transform: uppercase;
-        }
-        .navbar .logo-text span { color: #5b9bd5; letter-spacing: 2px; }
-        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
-        .nav-links a {
-            color: #bbbbbb; text-decoration: none; font-size: 0.9rem; font-weight: 500;
-            letter-spacing: 1px; transition: var(--transicion); position: relative; padding: 8px 0;
-            font-family: 'Oswald', sans-serif; text-transform: uppercase;
-        }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
-            background: #f4c542; transition: var(--transicion-suave); border-radius: 1px;
-        }
-        .nav-links a:hover { color: #ffffff; }
-        .nav-links a:hover::after { width: 100%; box-shadow: 0 0 10px rgba(244,197,66,0.7); }
-        .nav-links .btn-nav {
-            background: linear-gradient(160deg, #c41230 0%, #8b0e1e 100%);
-            color: #fff !important; padding: 10px 24px !important; border-radius: 4px;
-            font-weight: 600; letter-spacing: 1.2px; transition: var(--transicion);
-            box-shadow: 0 4px 18px rgba(196,18,48,0.5);
-            border: 1px solid rgba(255,255,255,0.1);
-            clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-        }
-        .nav-links .btn-nav:hover {
-            transform: translateY(-2px); box-shadow: 0 10px 28px rgba(196,18,48,0.7);
-            background: linear-gradient(160deg, #d41435 0%, #a01020 100%);
-        }
-        .nav-links .btn-nav::after { display: none; }
-
-        /* ========== CONTENEDOR PRINCIPAL ========== */
-        .main-container {
-            margin-top: 120px; margin-bottom: 60px; width: 90%; max-width: 1100px;
-            display: flex; flex-direction: column; gap: 30px;
-            animation: fadeInUp 0.9s ease forwards; animation-delay: 0.2s; opacity: 0;
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ========== HERO ========== */
-        .hero {
-            background: linear-gradient(160deg, #0a0a0a 0%, #1c1c1c 40%, #0a0a0a 100%);
-            border-radius: 4px; padding: 40px 30px;
-            text-align: center;
-            box-shadow: var(--sombra-media), 0 0 0 1px rgba(196,18,48,0.2);
-            position: relative; overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 50px) 100%, 0 100%, 0 0);
-        }
-        .hero::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                repeating-conic-gradient(rgba(196,18,48,0.1) 0% 25%, rgba(0,0,0,0) 0% 50%) 0 0 / 40px 40px;
-            opacity: 0.15; pointer-events: none;
-        }
-        .hero h1 {
-            font-family: 'Racing Sans One', cursive; font-size: 2.8rem; color: #ffffff;
-            text-transform: uppercase; letter-spacing: 3px; margin-bottom: 6px;
-            text-shadow: 0 0 30px rgba(196,18,48,0.7);
-        }
-        .hero h1 span { color: #f4c542; }
-        .hero p {
-            color: #b0b0b0; font-size: 1rem; max-width: 600px; margin: 0 auto;
-        }
-
-        /* ========== GESTIÓN DE PRUEBAS ========== */
-        .gestion-section {
-            background: #1c1c1c;
-            border-radius: 4px;
-            padding: 28px;
-            box-shadow: var(--sombra-media);
-            border: 1px solid rgba(255,255,255,0.05);
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 40px) 100%, 0 100%);
-            border-bottom: 3px solid #c41230;
-        }
-
-        .gestion-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 22px;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            padding-bottom: 12px;
-        }
-        .section-title {
-            font-family: 'Racing Sans One', cursive;
-            font-size: 2.2rem;
-            font-weight: 400;
-            color: #ffffff;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-        .section-title span { color: #f4c542; }
-        .badge-count {
-            font-family: 'Oswald', sans-serif;
-            font-size: 0.85rem;
-            color: #f4c542;
-            background: rgba(244,197,66,0.12);
-            padding: 6px 16px;
-            border-radius: 2px;
-            clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
-            border: 1px solid rgba(244,197,66,0.2);
-        }
-
-        /* ========== FORMULARIO ========== */
-        .form-prueba {
-            background: rgba(255,255,255,0.02);
-            padding: 24px 18px;
-            border-radius: 4px;
-            border: 1px solid rgba(255,255,255,0.04);
-            margin-bottom: 30px;
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 16px 22px;
-        }
-        .campo {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .campo label {
-            font-family: 'Oswald', sans-serif;
-            font-size: 0.75rem;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-            color: #9e9e9e;
-        }
-        .input-icon {
-            display: flex;
-            align-items: center;
-            background: #121212;
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 2px;
-            transition: var(--transicion);
-            clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
-        }
-        .input-icon:focus-within {
-            border-color: #c41230;
-            box-shadow: 0 0 0 3px rgba(196,18,48,0.25);
-        }
-        .input-icon .icon {
-            padding: 0 10px;
-            font-size: 1.1rem;
-            color: #9e9e9e;
-            user-select: none;
-        }
-        .input-icon input,
-        .input-icon select {
-            background: transparent;
-            border: none;
-            padding: 12px 12px 12px 0;
-            color: #f5f2ed;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            width: 100%;
-            outline: none;
-        }
-        .input-icon input::placeholder {
-            color: #5a5a5a;
-            font-weight: 300;
-        }
-        .btn-submit {
-            margin-top: 20px;
-            width: 100%;
-            justify-content: center;
-            padding: 14px;
-            font-size: 1rem;
-            clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-            background: linear-gradient(160deg, #c41230 0%, #8b0e1e 100%);
-            color: #fff;
-            border: none;
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            transition: var(--transicion);
-            box-shadow: 0 4px 18px rgba(196,18,48,0.4);
-        }
-        .btn-submit:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(196,18,48,0.6);
-            background: linear-gradient(160deg, #e63946 0%, #a01020 100%);
-        }
-
-        /* ========== TABLA ========== */
-        .tabla-wrapper {
-            overflow-x: auto;
-            border-radius: 2px;
-            border: 1px solid rgba(255,255,255,0.06);
-        }
-        .tabla-pruebas {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.88rem;
-        }
-        .tabla-pruebas thead {
-            background: #121212;
-            border-bottom: 2px solid rgba(196,18,48,0.4);
-        }
-        .tabla-pruebas th {
-            text-align: left;
-            padding: 16px 14px;
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #f4c542;
-            font-weight: 500;
-            font-size: 0.8rem;
-        }
-        .tabla-pruebas td {
-            padding: 14px 14px;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            color: #ddd;
-            vertical-align: middle;
-        }
-        .tabla-pruebas tbody tr:hover td {
-            background: rgba(196,18,48,0.05);
-        }
-        .tabla-pruebas tbody tr:last-child td {
-            border-bottom: none;
-        }
-        .tabla-vacia {
-            text-align: center;
-            padding: 40px 0 !important;
-            color: #9e9e9e;
-            font-style: italic;
-        }
-        .tabla-vacia span {
-            display: block;
-            font-size: 2.5rem;
-            margin-bottom: 6px;
-        }
-
-        /* ========== TOAST NOTIFICATIONS ========== */
-        .toast-notificacion {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(160deg, #1c1c1c 0%, #0a0a0a 100%);
-            color: #f5f2ed;
-            padding: 16px 26px;
-            border-radius: 4px;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.88rem;
-            font-weight: 500;
-            z-index: 9999;
-            box-shadow: 0 12px 40px rgba(196,18,48,0.4);
-            border: 1px solid rgba(244,197,66,0.5);
-            animation: slideInToast 0.5s ease forwards;
-            pointer-events: none;
-            clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-        }
-        @keyframes slideInToast {
-            from { opacity: 0; transform: translateX(100px) translateY(20px); }
-            to { opacity: 1; transform: translateX(0) translateY(0); }
-        }
-        @keyframes slideOutToast {
-            from { opacity: 1; transform: translateX(0) translateY(0); }
-            to { opacity: 0; transform: translateX(100px) translateY(20px); }
-        }
-
-        /* ========== FOOTER ========== */
-        .footer-bar {
-            text-align: center; padding: 20px; color: #6b6b6b; font-size: 0.78rem;
-            letter-spacing: 0.8px; border-top: 1px solid rgba(255,255,255,0.05);
-            width: 100%; margin-top: auto; font-family: 'Oswald', sans-serif; text-transform: uppercase;
-        }
+        .alert { padding: 15px; margin-bottom: 20px; border-radius: 4px; font-weight: bold; }
+        .alert-success { background-color: #D4EDDA; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-error { background-color: #F8D7DA; color: #721C24; border: 1px solid #f5c6cb; }
+        .multiselect { height: 100px !important; }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="#" class="logo">
-            <div class="logo-icon">F</div>
-            <span class="logo-text">BLUE OVAL <span>CLASSICS</span></span>
-        </a>
-        <ul class="nav-links">
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Inventario</a></li>
-            <li><a href="#">Clientes</a></li>
-            <li><a href="#">Equipo</a></li>
-            <li><a href="#">Fábrica</a></li>
-            <li><a href="#" class="btn-nav">Pruebas</a></li>
-        </ul>
-    </nav>
-
-    <div class="main-container">
-        <div class="hero">
-            <h1>Agendá tu <span>Test Drive</span></h1>
-            <p>Sentí el rugido de un clásico Ford. Completá el formulario y coordinamos tu experiencia al volante de una leyenda.</p>
+    <header class="vintage-header">
+        <div class="header-content">
+            <h1>Blue Oval Classics</h1>
+            <h2>Experiencia Test Drive</h2>
         </div>
+    </header>
 
-        <!-- ========== GESTIÓN DE PRUEBAS (FORM + TABLA) ========== -->
-        <section class="gestion-section">
-            <div class="gestion-header">
-                <h2 class="section-title">🏁 <span>Gestión</span> de Pruebas</h2>
-                <span class="badge-count">📋 {{ pruebas|length }} pruebas registradas</span>
+    <main class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <section class="card form-section">
+            <div class="card-header">
+                {% if prueba_edit %}
+                    <h3>Reprogramar Prueba: {{ prueba_edit.nombre_cliente }}</h3>
+                {% else %}
+                    <h3>Agendar Nuevo Test Drive</h3>
+                {% endif %}
             </div>
-
-            <!-- FORMULARIO -->
-            <form action="/pruebas/nuevo/" method="POST" class="form-prueba">
+            
+            <form action="{% if prueba_edit %}/pruebas/editar/{{ prueba_edit.id }}/{% else %}/pruebas/nuevo/{% endif %}" method="POST" class="vintage-form">
                 {% csrf_token %}
                 <div class="form-grid">
-                    <div class="campo">
+                    <div class="form-group">
                         <label for="nombre_cliente">Nombre del Cliente</label>
-                        <div class="input-icon">
-                            <span class="icon">👤</span>
-                            <input type="text" name="nombre_cliente" id="nombre_cliente" placeholder="Ej: Juan Pérez" required>
-                        </div>
+                        <input type="text" name="nombre_cliente" id="nombre_cliente" value="{{ prueba_edit.nombre_cliente|default:'' }}" required>
                     </div>
-                    <div class="campo">
+                    
+                    <div class="form-group">
                         <label for="fecha_prueba">Fecha de la Prueba</label>
-                        <div class="input-icon">
-                            <span class="icon">📅</span>
-                            <input type="date" name="fecha_prueba" id="fecha_prueba" required>
-                        </div>
+                        <input type="date" name="fecha_prueba" id="fecha_prueba" value="{{ prueba_edit.fecha_prueba|date:'Y-m-d'|default:'' }}" required>
                     </div>
-                    <div class="campo">
-                        <label for="modelo_vehiculo">Modelo del Vehículo</label>
-                        <div class="input-icon">
-                            <span class="icon">🚗</span>
-                            <input type="text" name="modelo_vehiculo" id="modelo_vehiculo" placeholder="Ej: Mustang GT" required>
-                        </div>
+
+                    <div class="form-group">
+                        <label for="sucursal_id">Sucursal</label>
+                        <select name="sucursal_id" id="sucursal_id" required>
+                            <option value="">Seleccionar sede...</option>
+                            {% for sucursal in sucursales %}
+                                <option value="{{ sucursal.id }}" {% if prueba_edit and prueba_edit.sucursal.id == sucursal.id %}selected{% endif %}>{{ sucursal.nombre }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
-                    <div class="campo">
-                        <label for="empleado_encargado">Empleado Encargado</label>
-                        <div class="input-icon">
-                            <span class="icon">👔</span>
-                            <input type="text" name="empleado_encargado" id="empleado_encargado" placeholder="Ej: María García" required>
-                        </div>
+
+                    <div class="form-group">
+                        <label for="estatus">Estatus</label>
+                        <select name="estatus" id="estatus" required>
+                            <option value="Programada" {% if prueba_edit.estatus == 'Programada' %}selected{% endif %}>Programada</option>
+                            <option value="Completada" {% if prueba_edit.estatus == 'Completada' %}selected{% endif %}>Completada</option>
+                            <option value="Cancelada" {% if prueba_edit.estatus == 'Cancelada' %}selected{% endif %}>Cancelada</option>
+                        </select>
                     </div>
-                    <div class="campo">
-                        <label for="mecanico_asignado">Mecánico Asignado</label>
-                        <div class="input-icon">
-                            <span class="icon">🔧</span>
-                            <input type="text" name="mecanico_asignado" id="mecanico_asignado" placeholder="Ej: Carlos López" required>
-                        </div>
+
+                    <div class="form-group">
+                        <label for="empleado_encargado_id">Asesor de Ventas</label>
+                        <select name="empleado_encargado_id" id="empleado_encargado_id" required>
+                            <option value="">Asignar asesor...</option>
+                            {% for empleado in empleados %}
+                                <option value="{{ empleado.id }}" {% if prueba_edit and prueba_edit.empleado_encargado.id == empleado.id %}selected{% endif %}>{{ empleado.nombre }} {{ empleado.apellido }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="taller_asignado_id">Taller de Soporte</label>
+                        <select name="taller_asignado_id" id="taller_asignado_id" required>
+                            <option value="">Seleccionar taller...</option>
+                            {% for taller in talleres %}
+                                <option value="{{ taller.id }}" {% if prueba_edit.taller_asignado.id == taller.id %}selected{% endif %}>
+                                    {{ taller.nombre }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="autos">Vehículos a Probar (Selección Múltiple)</label>
+                        <small style="color: #666; margin-bottom: 5px; display:block;">Mantén presionada la tecla Ctrl (o Cmd) para elegir varios autos.</small>
+                        <select name="autos" id="autos" class="multiselect" multiple required>
+                            {% for auto in autos %}
+                                <option value="{{ auto.id }}" 
+                                    {% if prueba_edit and auto in prueba_edit.autos.all %}selected{% endif %}>
+                                    {{ auto.marca }} {{ auto.modelo }} ({{ auto.anio }})
+                                </option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
-                <button type="submit" class="btn-submit">➕ Agendar Prueba</button>
+                
+                <div class="form-actions">
+                    {% if prueba_edit %}
+                        <a href="/pruebas/" class="btn btn-outline" style="margin-right: 15px;">Cancelar</a>
+                        <button type="submit" class="btn btn-edit">Actualizar Test Drive</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-primary">Agendar Test Drive</button>
+                    {% endif %}
+                </div>
             </form>
+        </section>
 
-            <!-- TABLA -->
-            <div class="tabla-wrapper">
-                <table class="tabla-pruebas">
+        <section class="card table-section">
+            <div class="card-header">
+                <h3>Agenda de Test Drives</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="vintage-table">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
+                            <th>Cliente</th>
                             <th>Fecha</th>
-                            <th>Modelo</th>
-                            <th>Empleado</th>
-                            <th>Mecánico</th>
+                            <th>Vehículos</th>
+                            <th>Asesor</th>
+                            <th>Sucursal</th>
+                            <th>Estatus</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for prueba in pruebas %}
                         <tr>
                             <td><strong>{{ prueba.nombre_cliente }}</strong></td>
-                            <td>{{ prueba.fecha_prueba }}</td>
-                            <td>{{ prueba.modelo_vehiculo }}</td>
-                            <td>{{ prueba.empleado_encargado }}</td>
-                            <td>{{ prueba.mecanico_asignado }}</td>
+                            <td>{{ prueba.fecha_prueba|date:"d/m/Y" }}</td>
+                            <td>
+                                <!-- Iteramos sobre la relación Muchos a Muchos -->
+                                {% for auto in prueba.autos.all %}
+                                    &bull; {{ auto.modelo }}<br>
+                                {% endfor %}
+                            </td>
+                            <td>{{ prueba.empleado_encargado.nombre }}</td>
+                            <td>{{ prueba.sucursal.nombre }}</td>
+                            <td>
+                                <span class="badge {% if prueba.estatus == 'Completada' %}badge-active{% elif prueba.estatus == 'Programada' %}badge-pending{% else %}badge-inactive{% endif %}">
+                                    {{ prueba.estatus }}
+                                </span>
+                            </td>
+                            <td class="actions">
+                                <a href="/pruebas/editar/{{ prueba.id }}/" class="btn btn-edit">Editar</a>
+                                <a href="/pruebas/eliminar/{{ prueba.id }}/" class="btn btn-delete" onclick="return confirm('¿Seguro que deseas cancelar la prueba de {{ prueba.nombre_cliente }}?');">Eliminar</a>
+                            </td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="5" class="tabla-vacia">
-                                <span>🏁</span>
-                                No hay pruebas registradas. ¡Agenda la primera!
-                            </td>
+                            <td colspan="7" class="empty-state">No hay pruebas de manejo programadas.</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
         </section>
-    </div>
-
-    <div class="footer-bar">© 2026 Blue Oval Classics · Pruebas de Manejo · La experiencia Ford definitiva</div>
-
-    <script>
-        // Notificación al enviar el formulario (se ejecuta tras el envío real, pero aquí es solo ejemplo)
-        document.querySelector('.form-prueba')?.addEventListener('submit', function(e) {
-            // Si quieres mostrar notificación sin recargar, puedes descomentar y usar e.preventDefault()
-            // pero lo dejamos para que funcione el POST real.
-            // Solo mostramos notificación si el formulario es válido (campos llenos)
-            const inputs = this.querySelectorAll('input[required]');
-            let valid = true;
-            inputs.forEach(inp => { if (!inp.value) valid = false; });
-            if (valid) {
-                const nombre = document.getElementById('nombre_cliente').value || 'Cliente';
-                mostrarNotificacion(`🏁 ¡Solicitud enviada, ${nombre}! Te confirmaremos la cita pronto.`, 'race');
-            }
-        });
-
-        function mostrarNotificacion(mensaje, tipo) {
-            const existente = document.querySelector('.toast-notificacion');
-            if (existente) existente.remove();
-            const toast = document.createElement('div');
-            toast.className = 'toast-notificacion';
-            toast.textContent = mensaje;
-            if (tipo === 'race') {
-                toast.style.borderColor = 'rgba(244,197,66,0.7)';
-                toast.style.boxShadow = '0 12px 40px rgba(196,18,48,0.5)';
-            }
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.style.animation = 'slideOutToast 0.4s ease forwards';
-                setTimeout(() => toast.remove(), 400);
-            }, 3000);
-        }
-    </script>
+    </main>
 </body>
 </html>

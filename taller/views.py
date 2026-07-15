@@ -1,26 +1,31 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Taller
-from autos.models import Auto
-from clientes.models import Cliente
-
 
 def listataller(request):
-    talleres = Taller.objects.all()
-    autos = Auto.objects.all()
-    clientes = Cliente.objects.all()
-    return render(request, 'Taller/taller.html', {'talleres': talleres, 'autos': autos, 'clientes': clientes})
+    return render(request, 'taller/taller.html', {'talleres': Taller.objects.all()})
 
 def creartaller(request):
     if request.method == 'POST':
-        auto_obj = Auto.objects.get(id=request.POST['auto'])
-        cliente_obj = Cliente.objects.get(id=request.POST['cliente'])
-    
         Taller.objects.create(
+            nombre=request.POST['nombre'],
             orden_reparacion=request.POST['orden_reparacion'],
-            auto=auto_obj,        # Asignas el objeto completo
-            cliente=cliente_obj,  # Asignas el objeto completo
             servicio=request.POST['servicio'],
-            mecanico=request.POST['mecanico'],
             estado=request.POST['estado']
         )
         return redirect('/taller/')
+    return redirect('/taller/')
+
+def editartaller(request, id):
+    taller_edit = get_object_or_404(Taller, id=id)
+    if request.method == 'POST':
+        taller_edit.nombre = request.POST['nombre']
+        taller_edit.orden_reparacion = request.POST['orden_reparacion']
+        taller_edit.servicio = request.POST['servicio']
+        taller_edit.estado = request.POST['estado']
+        taller_edit.save()
+        return redirect('/taller/')
+    return render(request, 'taller/taller.html', {'talleres': Taller.objects.all(), 'taller_edit': taller_edit})
+
+def eliminartaller(request, id):
+    get_object_or_404(Taller, id=id).delete()
+    return redirect('/taller/')

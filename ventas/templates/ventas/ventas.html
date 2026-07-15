@@ -1,550 +1,144 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blue Oval Classics | Ventas</title>
-    <base href="/">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
-
-        :root {
-            --esmeralda-oscuro: #0a2e2e;
-            --esmeralda: #0b3d3d;
-            --esmeralda-claro: #1a5c5c;
-            --dorado: #c8a45c;
-            --dorado-claro: #d4b87a;
-            --blanco: #ffffff;
-            --gris-claro: #e8ecf0;
-            --gris-texto: #6b7b83;
-            --rojo-error: #c41230;
-            --sombra-suave: 0 2px 15px rgba(0,0,0,0.08);
-            --sombra-media: 0 8px 35px rgba(0,0,0,0.15);
-            --transicion: 0.3s ease;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f4f7f9;
-            background-image: radial-gradient(ellipse at 50% 20%, rgba(11,61,61,0.04) 0%, transparent 60%);
-            color: #1e293b;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-        }
-
-        /* ========== NAVBAR CORPORATIVA ========== */
-        .navbar {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            background: rgba(255,255,255,0.95); backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between;
-            height: 70px; animation: slideDown 0.7s ease forwards;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.04);
-        }
-        @keyframes slideDown {
-            from { transform: translateY(-100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .navbar .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .navbar .logo-icon {
-            width: 42px; height: 42px;
-            background: var(--esmeralda);
-            border-radius: 10px; display: flex; align-items: center; justify-content: center;
-            font-size: 1.4rem; color: #fff; font-weight: 800;
-            font-family: 'Montserrat', sans-serif;
-            box-shadow: 0 4px 12px rgba(11,61,61,0.3);
-            transition: var(--transicion);
-        }
-        .navbar .logo:hover .logo-icon { transform: scale(1.05); }
-        .navbar .logo-text {
-            font-family: 'Montserrat', sans-serif; font-size: 1.3rem; font-weight: 700;
-            color: var(--esmeralda); letter-spacing: -0.5px;
-        }
-        .navbar .logo-text span { color: var(--dorado); }
-        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
-        .nav-links a {
-            color: #4b5563; text-decoration: none; font-size: 0.9rem; font-weight: 500;
-            letter-spacing: 0.3px; transition: var(--transicion); position: relative; padding: 8px 0;
-            font-family: 'Montserrat', sans-serif;
-        }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
-            background: var(--dorado); transition: 0.3s ease; border-radius: 2px;
-        }
-        .nav-links a:hover { color: var(--esmeralda); }
-        .nav-links a:hover::after { width: 100%; }
-        .nav-links .btn-nav {
-            background: var(--esmeralda); color: white !important;
-            padding: 10px 22px !important; border-radius: 30px;
-            font-weight: 600; letter-spacing: 0.5px; transition: var(--transicion);
-            box-shadow: 0 4px 12px rgba(11,61,61,0.3);
-        }
-        .nav-links .btn-nav:hover {
-            background: #092a2a; transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(11,61,61,0.5);
-        }
-        .nav-links .btn-nav::after { display: none; }
-
-        /* ========== CONTENEDOR PRINCIPAL ========== */
-        .main-container {
-            margin-top: 110px; margin-bottom: 50px; width: 90%; max-width: 1300px;
-            display: flex; flex-direction: column; gap: 35px;
-            animation: fadeInUp 0.9s ease forwards; animation-delay: 0.2s; opacity: 0;
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ========== HERO DE VENTAS ========== */
-        .hero {
-            background: linear-gradient(135deg, #0a2e2e 0%, #0b3d3d 40%, #0a2e2e 100%);
-            border-radius: 20px; padding: 45px 50px;
-            display: flex; align-items: center; justify-content: space-between; gap: 40px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2); position: relative; overflow: hidden;
-            border: 1px solid rgba(200,164,92,0.2);
-        }
-        .hero::before {
-            content: ''; position: absolute; top: -30%; right: -10%; width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(200,164,92,0.08) 0%, transparent 70%);
-            border-radius: 50%; pointer-events: none;
-        }
-        .hero-content { position: relative; z-index: 1; flex: 1; }
-        .hero-badge {
-            display: inline-block; background: rgba(200,164,92,0.15); color: var(--dorado);
-            padding: 5px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;
-            letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 16px;
-            border: 1px solid rgba(200,164,92,0.3);
-        }
-        .hero h1 {
-            font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700;
-            color: #ffffff; line-height: 1.2; margin-bottom: 12px;
-        }
-        .hero h1 span { color: var(--dorado); }
-        .hero p { color: #b0b8c4; font-size: 1rem; line-height: 1.6; margin-bottom: 24px; max-width: 500px; }
-        .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
-        .hero-image {
-            flex: 0 0 260px; height: 190px;
-            background: rgba(255,255,255,0.03); border-radius: 12px;
-            display: flex; align-items: center; justify-content: center; font-size: 5rem;
-            border: 2px solid rgba(200,164,92,0.3);
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.3);
-            transition: var(--transicion);
-        }
-        .hero-image:hover { border-color: var(--dorado); transform: translateY(-3px); box-shadow: inset 0 0 50px rgba(0,0,0,0.3), 0 0 30px rgba(200,164,92,0.3); }
-
-        /* ========== BOTONES ========== */
-        .btn {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 12px 26px; border-radius: 30px;
-            font-family: 'Montserrat', sans-serif; font-size: 0.9rem; font-weight: 600;
-            text-decoration: none; cursor: pointer; border: none;
-            letter-spacing: 0.5px; transition: var(--transicion); white-space: nowrap;
-        }
-        .btn-primary {
-            background: var(--dorado); color: #0a2e2e;
-            box-shadow: 0 4px 14px rgba(200,164,92,0.3);
-        }
-        .btn-primary:hover { background: #d4b87a; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(200,164,92,0.4); }
-        .btn-outline {
-            background: transparent; color: white;
-            border: 2px solid rgba(200,164,92,0.6);
-        }
-        .btn-outline:hover { background: rgba(200,164,92,0.08); border-color: var(--dorado); transform: translateY(-3px); }
-
-        /* ========== ESTADÍSTICAS ========== */
-        .stats-row {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px;
-        }
-        .stat-item {
-            background: white; border-radius: 16px; padding: 22px 18px; text-align: center;
-            box-shadow: var(--sombra-suave); border: 1px solid #e2e8f0;
-            transition: var(--transicion); cursor: default;
-        }
-        .stat-item:hover { border-color: var(--dorado); transform: translateY(-4px); box-shadow: var(--sombra-media); }
-        .stat-number {
-            font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700;
-            color: var(--esmeralda); line-height: 1;
-        }
-        .stat-number.gold { color: var(--dorado); }
-        .stat-label {
-            font-size: 0.78rem; color: var(--gris-texto); margin-top: 6px;
-            letter-spacing: 0.8px; text-transform: uppercase; font-family: 'Montserrat', sans-serif;
-        }
-
-        /* ========== GESTIÓN DE VENTAS (FORM + TABLA) ========== */
-        .gestion-section {
-            background: white;
-            border-radius: 16px;
-            padding: 28px;
-            box-shadow: var(--sombra-media);
-            border: 1px solid #e2e8f0;
-        }
-        .gestion-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 22px;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 12px;
-        }
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--esmeralda);
-        }
-        .section-title span { color: var(--dorado); }
-        .badge-count {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.8rem;
-            color: var(--esmeralda);
-            background: #f0f5f5;
-            padding: 6px 16px;
-            border-radius: 20px;
-            border: 1px solid rgba(11,61,61,0.15);
-        }
-
-        /* ========== FORMULARIO ========== */
-        .form-ventas {
-            background: #fafbfc;
-            padding: 20px 16px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            margin-bottom: 28px;
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-            gap: 14px 20px;
-        }
-        .campo {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .campo label {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.75rem;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #4b5563;
-        }
-        .input-icon {
-            display: flex;
-            align-items: center;
-            background: #ffffff;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            transition: var(--transicion);
-        }
-        .input-icon:focus-within {
-            border-color: var(--dorado);
-            box-shadow: 0 0 0 3px rgba(200,164,92,0.2);
-        }
-        .input-icon .icon {
-            padding: 0 10px;
-            font-size: 1.1rem;
-            color: #6b7280;
-            user-select: none;
-        }
-        .input-icon input,
-        .input-icon select {
-            background: transparent;
-            border: none;
-            padding: 12px 12px 12px 0;
-            color: #1f2937;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            width: 100%;
-            outline: none;
-        }
-        .input-icon input::placeholder {
-            color: #9ca3af;
-            font-weight: 300;
-        }
-        .btn-submit {
-            margin-top: 18px;
-            width: 100%;
-            justify-content: center;
-            padding: 14px;
-            font-size: 1rem;
-            border-radius: 30px;
-            background: var(--esmeralda);
-            color: white;
-            border: none;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: var(--transicion);
-            box-shadow: 0 4px 14px rgba(11,61,61,0.3);
-        }
-        .btn-submit:hover {
-            background: #092a2a;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(11,61,61,0.4);
-        }
-
-        /* ========== TABLA ========== */
-        .tabla-wrapper {
-            overflow-x: auto;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-        }
-        .tabla-ventas {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.88rem;
-        }
-        .tabla-ventas thead {
-            background: #f8fafc;
-            border-bottom: 2px solid #e2e8f0;
-        }
-        .tabla-ventas th {
-            text-align: left;
-            padding: 14px 16px;
-            font-family: 'Montserrat', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--esmeralda);
-            font-weight: 600;
-            font-size: 0.78rem;
-        }
-        .tabla-ventas td {
-            padding: 14px 16px;
-            border-bottom: 1px solid #f1f5f9;
-            color: #1f2937;
-            vertical-align: middle;
-        }
-        .tabla-ventas tbody tr:hover td {
-            background: #fafbfc;
-        }
-        .tabla-ventas tbody tr:last-child td { border-bottom: none; }
-        .tabla-vacia {
-            text-align: center;
-            padding: 40px 0 !important;
-            color: #6b7280;
-            font-style: italic;
-        }
-        .tabla-vacia span {
-            display: block;
-            font-size: 2.5rem;
-            margin-bottom: 6px;
-        }
-
-        /* ========== TOAST ========== */
-        .toast-notificacion {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #1e293b;
-            color: white;
-            padding: 14px 22px;
-            border-radius: 12px;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            z-index: 9999;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 1px solid rgba(200,164,92,0.5);
-            animation: slideInToast 0.5s ease forwards;
-        }
-        @keyframes slideInToast {
-            from { opacity: 0; transform: translateX(100px) translateY(20px); }
-            to { opacity: 1; transform: translateX(0) translateY(0); }
-        }
-        @keyframes slideOutToast {
-            from { opacity: 1; transform: translateX(0) translateY(0); }
-            to { opacity: 0; transform: translateX(100px) translateY(20px); }
-        }
-
-        /* ========== FOOTER ========== */
-        .footer-bar {
-            text-align: center; padding: 20px; color: #9ca3af; font-size: 0.8rem;
-            border-top: 1px solid #e5e7eb; width: 100%; margin-top: auto;
-        }
-
-        @media (max-width: 800px) {
-            .hero { flex-direction: column; text-align: center; padding: 30px; }
-            .hero-image { width: 100%; }
-            .form-grid { grid-template-columns: 1fr; }
-            .gestion-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-            th, td { padding: 10px; font-size: 0.8rem; }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;600&display=stylesheet">
+    <link rel="stylesheet" href="{% static 'clientes/css/estilos.css' %}">
 </head>
 <body>
-    <nav class="navbar">
-        <a href="#" class="logo">
-            <div class="logo-icon">F</div>
-            <span class="logo-text">BlueOval <span>Classics</span></span>
-        </a>
-        <ul class="nav-links">
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Inventario</a></li>
-            <li><a href="#">Clientes</a></li>
-            <li><a href="#">Equipo</a></li>
-            <li><a href="#">Fábrica</a></li>
-            <li><a href="#" class="btn-nav">Ventas</a></li>
-        </ul>
-    </nav>
-
-    <div class="main-container">
-        <!-- HERO -->
-        <section class="hero">
-            <div class="hero-content">
-                <span class="hero-badge">💰 Panel de Ventas</span>
-                <h1>Transacciones <span>Premium</span></h1>
-                <p>
-                    Gestión integral de operaciones comerciales, facturación y cierre de tratos. Cada cifra refleja la confianza de nuestros coleccionistas.
-                </p>
-                <div class="hero-buttons">
-                    <button class="btn btn-primary" onclick="nuevaVenta()">📄 Nueva Venta</button>
-                    <button class="btn btn-outline" onclick="exportarReporte()">📊 Reporte</button>
-                </div>
-            </div>
-            <div class="hero-image">💵</div>
-        </section>
-
-        <!-- KPIs -->
-        <div class="stats-row">
-            <div class="stat-item">
-                <div class="stat-number gold">$1.2M</div>
-                <div class="stat-label">Ventas del Mes</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">18</div>
-                <div class="stat-label">Unidades Vendidas</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number gold">5</div>
-                <div class="stat-label">Reservas Activas</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">92%</div>
-                <div class="stat-label">Tasa de Cierre</div>
-            </div>
+    <header class="vintage-header">
+        <div class="header-content">
+            <h1>Blue Oval Classics</h1>
+            <h2>Registro de Transacciones</h2>
         </div>
+    </header>
 
-        <!-- ========== GESTIÓN DE VENTAS (FORM + TABLA) ========== -->
-        <section class="gestion-section">
-            <div class="gestion-header">
-                <h2 class="section-title">💎 <span>Gestión</span> de Ventas</h2>
-                <span class="badge-count">📋 {{ ventas|length }} ventas registradas</span>
+    <main class="container">
+        <!-- FORMULARIO DINÁMICO -->
+        <section class="card form-section">
+            <div class="card-header">
+                {% if venta_edit %}
+                    <h3>Modificando Venta ID: {{ venta_edit.id }}</h3>
+                {% else %}
+                    <h3>Registrar Nueva Venta</h3>
+                {% endif %}
             </div>
-
-            <!-- FORMULARIO -->
-            <form action="/ventas/nuevo/" method="POST" class="form-ventas">
+            
+            <form action="{% if venta_edit %}/ventas/editar/{{ venta_edit.id }}/{% else %}/ventas/nuevo/{% endif %}" method="POST" class="vintage-form">
                 {% csrf_token %}
                 <div class="form-grid">
-                    <div class="campo">
-                        <label for="modelo_auto">Modelo del Auto</label>
-                        <div class="input-icon">
-                            <span class="icon">🚗</span>
-                            <input type="text" name="modelo_auto" id="modelo_auto" placeholder="Ej: Ford Mustang 1967" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="auto_id">Auto</label>
+                        <select name="auto_id" id="auto_id" required>
+                            <option value="">Seleccionar...</option>
+                            {% for a in autos %}
+                                <option value="{{ a.id }}" {% if venta_edit.auto.id == a.id %}selected{% endif %}>{{ a.marca }} {{ a.modelo }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
-                    <div class="campo">
+
+                    <div class="form-group">
+                        <label for="cliente_id">Cliente</label>
+                        <select name="cliente_id" id="cliente_id" required>
+                            <option value="">Seleccionar...</option>
+                            {% for c in clientes %}
+                                <option value="{{ c.id }}" {% if venta_edit.cliente.id == c.id %}selected{% endif %}>{{ c.nombre }} {{ c.apellido }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sucursal_id">Sucursal</label>
+                        <select name="sucursal_id" id="sucursal_id" required>
+                            <option value="">Seleccionar...</option>
+                            {% for s in sucursales %}
+                                <option value="{{ s.id }}" {% if venta_edit.sucursal.id == s.id %}selected{% endif %}>{{ s.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vendedor_id">Vendedor</label>
+                        <select name="vendedor_id" id="vendedor_id">
+                            <option value="">Sin vendedor asignado</option>
+                            {% for e in empleados %}
+                                <option value="{{ e.id }}" {% if venta_edit.vendedor.id == e.id %}selected{% endif %}>{{ e.nombre }} {{ e.apellido }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="cantidad">Cantidad</label>
-                        <div class="input-icon">
-                            <span class="icon">📦</span>
-                            <input type="number" name="cantidad" id="cantidad" placeholder="Ej: 1" required>
-                        </div>
+                        <input type="number" name="cantidad" id="cantidad" value="{{ venta_edit.cantidad|default:'1' }}" required>
                     </div>
-                    <div class="campo">
-                        <label for="sucursal">Sucursal</label>
-                        <div class="input-icon">
-                            <span class="icon">🏢</span>
-                            <input type="text" name="sucursal" id="sucursal" placeholder="Ej: Sucursal Central" required>
-                        </div>
-                    </div>
-                    <div class="campo">
+
+                    <div class="form-group">
                         <label for="fecha_venta">Fecha de Venta</label>
-                        <div class="input-icon">
-                            <span class="icon">📅</span>
-                            <input type="date" name="fecha_venta" id="fecha_venta" required>
-                        </div>
+                        <input type="date" name="fecha_venta" id="fecha_venta" value="{{ venta_edit.fecha_venta|date:'Y-m-d'|default:'' }}" required>
                     </div>
-                    <div class="campo">
-                        <label for="vendedor">Vendedor</label>
-                        <div class="input-icon">
-                            <span class="icon">💼</span>
-                            <input type="text" name="vendedor" id="vendedor" placeholder="Ej: María López" required>
-                        </div>
+
+                    <div class="form-group full-width">
+                        <label for="estatus">Estatus</label>
+                        <select name="estatus" id="estatus" required>
+                            <option value="Completada" {% if venta_edit.estatus == 'Completada' %}selected{% endif %}>Completada</option>
+                            <option value="Pendiente" {% if venta_edit.estatus == 'Pendiente' %}selected{% endif %}>Pendiente</option>
+                        </select>
                     </div>
                 </div>
-                <button type="submit" class="btn-submit">➕ Agregar Venta</button>
+                
+                <div class="form-actions">
+                    {% if venta_edit %}
+                        <a href="/ventas/" class="btn btn-outline" style="margin-right: 15px;">Cancelar</a>
+                        <button type="submit" class="btn btn-edit">Guardar Cambios</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-primary">Registrar Venta</button>
+                    {% endif %}
+                </div>
             </form>
+        </section>
 
-            <!-- TABLA -->
-            <div class="tabla-wrapper">
-                <table class="tabla-ventas">
+        <!-- TABLA DE VENTAS -->
+        <section class="card table-section">
+            <div class="card-header">
+                <h3>Registro de Ventas</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="vintage-table">
                     <thead>
                         <tr>
-                            <th>Modelo</th>
-                            <th>Cantidad</th>
+                            <th>Auto</th>
+                            <th>Cliente</th>
                             <th>Sucursal</th>
-                            <th>Fecha de Venta</th>
-                            <th>Vendedor</th>
+                            <th>Fecha</th>
+                            <th>Estatus</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for venta in ventas %}
+                        {% for v in ventas %}
                         <tr>
-                            <td><strong>{{ venta.modelo_auto }}</strong></td>
-                            <td>{{ venta.cantidad }}</td>
-                            <td>{{ venta.sucursal }}</td>
-                            <td>{{ venta.fecha_venta }}</td>
-                            <td>{{ venta.vendedor }}</td>
+                            <td><strong>{{ v.auto.modelo }}</strong></td>
+                            <td>{{ v.cliente.nombre }}</td>
+                            <td>{{ v.sucursal.nombre }}</td>
+                            <td>{{ v.fecha_venta|date:"d/m/Y" }}</td>
+                            <td><span class="badge">{{ v.estatus }}</span></td>
+                            <td class="actions">
+                                <a href="/ventas/editar/{{ v.id }}/" class="btn btn-edit">Modificar</a>
+                                <a href="/ventas/eliminar/{{ v.id }}/" class="btn btn-delete" onclick="return confirm('¿Eliminar esta venta?');">Eliminar</a>
+                            </td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="5" class="tabla-vacia">
-                                <span>💎</span>
-                                No hay ventas registradas. ¡Agregá una nueva usando el formulario de arriba!
-                            </td>
+                            <td colspan="6" class="empty-state">No hay registros de ventas.</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
         </section>
-    </div>
-
-    <div class="footer-bar">© 2026 Blue Oval Classics · Módulo de Ventas · Lujo, tradición y confianza</div>
-
-    <script>
-        function nuevaVenta() {
-            mostrarNotificacion('📄 Abriendo formulario de nueva transacción...', 'gold');
-        }
-        function exportarReporte() {
-            mostrarNotificacion('📊 Generando reporte financiero...', 'dark');
-        }
-        function mostrarNotificacion(mensaje, tipo) {
-            const existente = document.querySelector('.toast-notificacion');
-            if (existente) existente.remove();
-            const toast = document.createElement('div');
-            toast.className = 'toast-notificacion';
-            toast.textContent = mensaje;
-            if (tipo === 'gold') {
-                toast.style.borderColor = 'rgba(200,164,92,0.7)';
-                toast.style.boxShadow = '0 10px 30px rgba(200,164,92,0.25)';
-            }
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.style.animation = 'slideOutToast 0.4s ease forwards';
-                setTimeout(() => toast.remove(), 400);
-            }, 3000);
-        }
-    </script>
+    </main>
 </body>
 </html>

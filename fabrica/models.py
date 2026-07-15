@@ -6,5 +6,12 @@ class Fabrica(models.Model):
     capacidad_produccion = models.IntegerField()
     fecha_fundacion = models.DateField()
     procesos_activos = models.CharField(max_length=200)
+    
+    # NUEVO CAMPO: Estatus
+    estatus = models.CharField(max_length=20, default='Activo')
+
     class Meta:
         db_table = 'fabricas_fabricas'
+
+    def __str__(self):
+        return self.nombre
