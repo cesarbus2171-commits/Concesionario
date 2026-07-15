@@ -5,52 +5,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blue Oval Classics | Proveedores</title>
-    <!-- Fuentes Vintage -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Reutilizamos el CSS Azul Ford Vintage de Clientes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{% static 'clientes/css/estilos.css' %}">
-    <style>
-        /* Alertas de sistema */
-        .alert { padding: 15px; margin-bottom: 20px; border-radius: 4px; font-weight: bold; }
-        .alert-success { background-color: #D4EDDA; color: #155724; border: 1px solid #c3e6cb; }
-        .alert-error { background-color: #F8D7DA; color: #721C24; border: 1px solid #f5c6cb; }
-    </style>
 </head>
 <body>
-    <header class="vintage-header">
-        <div class="header-content">
-            <h1>Blue Oval Classics</h1>
-            <h2>Directorio de Proveedores y Refacciones</h2>
+    <header class="hero" style="background: linear-gradient(135deg, rgba(10,43,78,0.75) 0%, rgba(5,28,51,0.8) 100%), url ('https://images.unsplash.com/photo-1566314815468-b7100b73c4f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Blue Oval <span class="text-red">Classics</span></h1>
+            <p class="hero-subtitle">Directorio de Proveedores y Refacciones</p>
+            <a href="#proveedores" class="btn btn-hero">Ver proveedores <i class="fas fa-arrow-down"></i></a>
         </div>
     </header>
 
-    <main class="container">
-        <!-- ALERTAS DE MENSAJES -->
+    <nav class="modern-navbar">
+        <a href="/autos/" class="logo">BLUE OVAL <span class="text-red">CLASSICS</span></a>
+        <div class="nav-links">
+            <a href="/autos/" class="nav-btn active">Autos</a>
+            <a href="/clientes/" class="nav-btn">Clientes</a>
+            <a href="/empleados/" class="nav-btn">Equipo</a>
+            <a href="/fabrica/" class="nav-btn">Fábricas</a>
+            <a href="/sucursal/" class="nav-btn">Sucursales</a>
+            <a href="/proveedor/" class="nav-btn">Proveedores</a>
+            <a href="/taller/" class="nav-btn">Taller</a>
+            <a href="/ventas/" class="nav-btn">Ventas</a>
+            <a href="/stock/" class="nav-btn">Inventario</a>
+            <a href="/pruebas/" class="nav-btn btn-highlight">Test Drive</a>
+        </div>
+    </nav>
+
+    <main class="container" id="proveedores">
         {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }}">
+                    <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
                     {{ message }}
                 </div>
             {% endfor %}
         {% endif %}
 
-        <!-- SECCIÓN DE FORMULARIO DINÁMICO (Crea o Edita) -->
         <section class="card form-section">
             <div class="card-header">
-                {% if proveedor_edit %}
-                    <h3>Modificando a: {{ proveedor_edit.nombre }}</h3>
-                {% else %}
-                    <h3>Registrar Nuevo Proveedor</h3>
-                {% endif %}
+                <h3>
+                    {% if proveedor_edit %}
+                        <i class="fas fa-edit"></i> Modificando a: {{ proveedor_edit.nombre }}
+                    {% else %}
+                        <i class="fas fa-truck-loading"></i> Registrar Nuevo Proveedor
+                    {% endif %}
+                </h3>
             </div>
             
-            <!-- La acción cambia dependiendo de si estamos editando o creando -->
             <form action="{% if proveedor_edit %}/proveedor/editar/{{ proveedor_edit.id }}/{% else %}/proveedor/nuevo/{% endif %}" method="POST" class="vintage-form">
                 {% csrf_token %}
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="nombre">Nombre de la Empresa</label>
-                        <!-- Usamos el valor si existe, si no, se queda en blanco -->
                         <input type="text" name="nombre" id="nombre" value="{{ proveedor_edit.nombre|default:'' }}" required>
                     </div>
                     
@@ -86,8 +96,8 @@
                 
                 <div class="form-actions">
                     {% if proveedor_edit %}
-                        <a href="/proveedor/" class="btn btn-outline" style="margin-right: 15px;">Cancelar</a>
-                        <button type="submit" class="btn btn-edit">Guardar Cambios</button>
+                        <a href="/proveedor/" class="btn btn-outline">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                     {% else %}
                         <button type="submit" class="btn btn-primary">Registrar Proveedor</button>
                     {% endif %}
@@ -95,10 +105,9 @@
             </form>
         </section>
 
-        <!-- SECCIÓN DE TABLA -->
         <section class="card table-section">
             <div class="card-header">
-                <h3>Lista de Proveedores</h3>
+                <h3><i class="fas fa-handshake"></i> Lista de Proveedores</h3>
             </div>
             <div class="table-responsive">
                 <table class="vintage-table">
@@ -117,24 +126,27 @@
                         <tr>
                             <td><strong>{{ proveedor.nombre }}</strong></td>
                             <td>
-                                Tel: {{ proveedor.telefono }}<br>
-                                <small>{{ proveedor.email }}</small>
+                                <i class="fas fa-phone-alt" style="color: var(--primary-blue); margin-right: 5px;"></i> {{ proveedor.telefono }}<br>
+                                <i class="fas fa-envelope" style="color: var(--primary-blue); margin-right: 5px;"></i> <small>{{ proveedor.email }}</small>
                             </td>
                             <td>{{ proveedor.productos_suministrados }}</td>
                             <td>{{ proveedor.direccion }}</td>
                             <td>
-                                <span class="badge {% if proveedor.estatus == 'Activo' %}badge-active{% else %}badge-inactive{% endif %}">
+                                <span class="badge {% if proveedor.estatus == 'Activo' %}badge-active{% elif proveedor.estatus == 'Suspendido' %}badge-warning{% else %}badge-inactive{% endif %}">
                                     {{ proveedor.estatus }}
                                 </span>
                             </td>
                             <td class="actions">
-                                <a href="/proveedor/editar/{{ proveedor.id }}/" class="btn btn-edit">Editar</a>
-                                <a href="/proveedor/eliminar/{{ proveedor.id }}/" class="btn btn-delete" onclick="return confirm('¿Seguro que deseas eliminar a {{ proveedor.nombre }} de tu lista de proveedores?');">Eliminar</a>
+                                <a href="/proveedor/editar/{{ proveedor.id }}/" class="btn btn-edit btn-sm"><i class="fas fa-pen"></i> Editar</a>
+                                <a href="/proveedor/eliminar/{{ proveedor.id }}/" class="btn btn-delete btn-sm"
+                                   onclick="return confirm('¿Eliminar a {{ proveedor.nombre }} de la lista de proveedores?');">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </a>
                             </td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="6" class="empty-state">No hay proveedores registrados en tu base de datos.</td>
+                            <td colspan="6" class="empty-state">No hay proveedores registrados en la base de datos.</td>
                         </tr>
                         {% endfor %}
                     </tbody>

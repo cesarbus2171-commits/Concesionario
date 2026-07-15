@@ -5,26 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blue Oval Classics | Ventas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;600&display=stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{% static 'clientes/css/estilos.css' %}">
 </head>
 <body>
-    <header class="vintage-header">
-        <div class="header-content">
-            <h1>Blue Oval Classics</h1>
-            <h2>Registro de Transacciones</h2>
+    <header class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Blue Oval <span class="text-red">Classics</span></h1>
+            <p class="hero-subtitle">Registro de Transacciones</p>
+            <a href="#ventas" class="btn btn-hero">Ver ventas <i class="fas fa-arrow-down"></i></a>
         </div>
     </header>
 
-    <main class="container">
-        <!-- FORMULARIO DINÁMICO -->
+    <nav class="modern-navbar">
+        <a href="/autos/" class="logo">BLUE OVAL <span class="text-red">CLASSICS</span></a>
+        <div class="nav-links">
+            <a href="/autos/" class="nav-btn active">Autos</a>
+            <a href="/clientes/" class="nav-btn">Clientes</a>
+            <a href="/empleados/" class="nav-btn">Equipo</a>
+            <a href="/fabrica/" class="nav-btn">Fábricas</a>
+            <a href="/sucursal/" class="nav-btn">Sucursales</a>
+            <a href="/proveedor/" class="nav-btn">Proveedores</a>
+            <a href="/taller/" class="nav-btn">Taller</a>
+            <a href="/ventas/" class="nav-btn">Ventas</a>
+            <a href="/stock/" class="nav-btn">Inventario</a>
+            <a href="/pruebas/" class="nav-btn btn-highlight">Test Drive</a>
+        </div>
+    </nav>
+
+    <main class="container" id="ventas">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
         <section class="card form-section">
             <div class="card-header">
-                {% if venta_edit %}
-                    <h3>Modificando Venta ID: {{ venta_edit.id }}</h3>
-                {% else %}
-                    <h3>Registrar Nueva Venta</h3>
-                {% endif %}
+                <h3>
+                    {% if venta_edit %}
+                        <i class="fas fa-edit"></i> Modificando Venta ID: {{ venta_edit.id }}
+                    {% else %}
+                        <i class="fas fa-cash-register"></i> Registrar Nueva Venta
+                    {% endif %}
+                </h3>
             </div>
             
             <form action="{% if venta_edit %}/ventas/editar/{{ venta_edit.id }}/{% else %}/ventas/nuevo/{% endif %}" method="POST" class="vintage-form">
@@ -91,8 +120,8 @@
                 
                 <div class="form-actions">
                     {% if venta_edit %}
-                        <a href="/ventas/" class="btn btn-outline" style="margin-right: 15px;">Cancelar</a>
-                        <button type="submit" class="btn btn-edit">Guardar Cambios</button>
+                        <a href="/ventas/" class="btn btn-outline">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                     {% else %}
                         <button type="submit" class="btn btn-primary">Registrar Venta</button>
                     {% endif %}
@@ -100,10 +129,9 @@
             </form>
         </section>
 
-        <!-- TABLA DE VENTAS -->
         <section class="card table-section">
             <div class="card-header">
-                <h3>Registro de Ventas</h3>
+                <h3><i class="fas fa-receipt"></i> Registro de Ventas</h3>
             </div>
             <div class="table-responsive">
                 <table class="vintage-table">
@@ -124,10 +152,17 @@
                             <td>{{ v.cliente.nombre }}</td>
                             <td>{{ v.sucursal.nombre }}</td>
                             <td>{{ v.fecha_venta|date:"d/m/Y" }}</td>
-                            <td><span class="badge">{{ v.estatus }}</span></td>
+                            <td>
+                                <span class="badge {% if v.estatus == 'Completada' %}badge-active{% else %}badge-warning{% endif %}">
+                                    {{ v.estatus }}
+                                </span>
+                            </td>
                             <td class="actions">
-                                <a href="/ventas/editar/{{ v.id }}/" class="btn btn-edit">Modificar</a>
-                                <a href="/ventas/eliminar/{{ v.id }}/" class="btn btn-delete" onclick="return confirm('¿Eliminar esta venta?');">Eliminar</a>
+                                <a href="/ventas/editar/{{ v.id }}/" class="btn btn-edit btn-sm"><i class="fas fa-pen"></i> Editar</a>
+                                <a href="/ventas/eliminar/{{ v.id }}/" class="btn btn-delete btn-sm"
+                                   onclick="return confirm('¿Eliminar esta venta?');">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </a>
                             </td>
                         </tr>
                         {% empty %}

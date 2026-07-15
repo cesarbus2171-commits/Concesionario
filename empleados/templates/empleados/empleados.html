@@ -4,38 +4,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blue Oval Classics | Empleados</title>
+    <title>Blue Oval Classics | Equipo</title>
+    <!-- Fuentes elegantes -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{% static 'clientes/css/estilos.css' %}">
-    <style>
-        .alert { padding: 15px; margin-bottom: 20px; border-radius: 4px; font-weight: bold; }
-        .alert-success { background-color: #D4EDDA; color: #155724; border: 1px solid #c3e6cb; }
-        .alert-error { background-color: #F8D7DA; color: #721C24; border: 1px solid #f5c6cb; }
-    </style>
 </head>
 <body>
-    <header class="vintage-header">
-        <div class="header-content">
-            <h1>Blue Oval Classics</h1>
-            <h2>Nómina de Maestros y Empleados del Taller</h2>
+    <!-- ========== HERO BANNER (Sucursal con autos Ford) ========== -->
+    <header class="hero" style="background: linear-gradient(135deg, #0A2B4E 0%, #051C33 100%), url('https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80') center/cover no-repeat; background-blend-mode: overlay;">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Blue Oval <span class="text-red">Classics</span></h1>
+            <p class="hero-subtitle">Nómina de Maestros y Empleados del Taller</p>
+            <a href="#equipo" class="btn btn-hero">Conoce al equipo <i class="fas fa-arrow-down"></i></a>
         </div>
     </header>
 
-    <main class="container">
+    <!-- ========== NAVBAR MODERNA ========== -->
+    <nav class="modern-navbar">
+        <a href="/autos/" class="logo">BLUE OVAL <span class="text-red">CLASSICS</span></a>
+        <div class="nav-links">
+            <a href="/autos/" class="nav-btn active">Autos</a>
+            <a href="/clientes/" class="nav-btn">Clientes</a>
+            <a href="/empleados/" class="nav-btn">Equipo</a>
+            <a href="/fabrica/" class="nav-btn">Fábricas</a>
+            <a href="/sucursal/" class="nav-btn">Sucursales</a>
+            <a href="/proveedor/" class="nav-btn">Proveedores</a>
+            <a href="/taller/" class="nav-btn">Taller</a>
+            <a href="/ventas/" class="nav-btn">Ventas</a>
+            <a href="/stock/" class="nav-btn">Inventario</a>
+            <a href="/pruebas/" class="nav-btn btn-highlight">Test Drive</a>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="container" id="equipo">
+        <!-- Mensajes de Django -->
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                <div class="alert alert-{{ message.tags }}">
+                    <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+                    {{ message }}
+                </div>
             {% endfor %}
         {% endif %}
 
+        <!-- ========== FORMULARIO DINÁMICO ========== -->
         <section class="card form-section">
             <div class="card-header">
-                {% if empleado_edit %}
-                    <h3>Modificando a: {{ empleado_edit.nombre }} {{ empleado_edit.apellido }}</h3>
-                {% else %}
-                    <h3>Registrar Nuevo Empleado</h3>
-                {% endif %}
+                <h3>
+                    {% if empleado_edit %}
+                        <i class="fas fa-user-edit"></i> Modificando a: {{ empleado_edit.nombre }} {{ empleado_edit.apellido }}
+                    {% else %}
+                        <i class="fas fa-user-plus"></i> Registrar Nuevo Empleado
+                    {% endif %}
+                </h3>
             </div>
+            
             <form action="{% if empleado_edit %}/empleados/editar/{{ empleado_edit.id }}/{% else %}/empleados/nuevo/{% endif %}" method="POST" class="vintage-form">
                 {% csrf_token %}
                 <div class="form-grid">
@@ -86,18 +113,19 @@
                 
                 <div class="form-actions">
                     {% if empleado_edit %}
-                        <a href="/empleados/" class="btn btn-outline" style="margin-right: 15px;">Cancelar</a>
-                        <button type="submit" class="btn btn-edit">Guardar Cambios</button>
+                        <a href="/empleados/" class="btn btn-outline">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                     {% else %}
-                        <button type="submit" class="btn btn-primary">Guardar en Nómina</button>
+                        <button type="submit" class="btn btn-primary">Registrar en Nómina</button>
                     {% endif %}
                 </div>
             </form>
         </section>
 
+        <!-- ========== TABLA DE EMPLEADOS ========== -->
         <section class="card table-section">
             <div class="card-header">
-                <h3>Plantilla Activa</h3>
+                <h3><i class="fas fa-users"></i> Plantilla Activa</h3>
             </div>
             <div class="table-responsive">
                 <table class="vintage-table">
@@ -117,17 +145,20 @@
                         <tr>
                             <td><strong>{{ empleado.nombre }} {{ empleado.apellido }}</strong></td>
                             <td>{{ empleado.puesto }}</td>
-                            <td>${{ empleado.salario }}</td>
+                            <td>${{ empleado.salario|floatformat:2 }}</td>
                             <td>{{ empleado.fecha_contratacion|date:"d/m/Y" }}</td>
                             <td>{{ empleado.sucursal.nombre }}</td>
                             <td>
-                                <span class="badge {% if empleado.estatus == 'Activo' %}badge-active{% else %}badge-inactive{% endif %}">
+                                <span class="badge {% if empleado.estatus == 'Activo' %}badge-active{% elif empleado.estatus == 'Vacaciones' %}badge-warning{% else %}badge-inactive{% endif %}">
                                     {{ empleado.estatus }}
                                 </span>
                             </td>
                             <td class="actions">
-                                <a href="/empleados/editar/{{ empleado.id }}/" class="btn btn-edit">Editar</a>
-                                <a href="/empleados/eliminar/{{ empleado.id }}/" class="btn btn-delete" onclick="return confirm('¿Seguro que deseas dar de baja a {{ empleado.nombre }}?');">Eliminar</a>
+                                <a href="/empleados/editar/{{ empleado.id }}/" class="btn btn-edit btn-sm"><i class="fas fa-pen"></i> Editar</a>
+                                <a href="/empleados/eliminar/{{ empleado.id }}/" class="btn btn-delete btn-sm"
+                                   onclick="return confirm('¿Dar de baja a {{ empleado.nombre }} {{ empleado.apellido }}?');">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </a>
                             </td>
                         </tr>
                         {% empty %}

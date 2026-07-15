@@ -6,36 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blue Oval Classics | Test Drive</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{% static 'clientes/css/estilos.css' %}">
-    <style>
-        .alert { padding: 15px; margin-bottom: 20px; border-radius: 4px; font-weight: bold; }
-        .alert-success { background-color: #D4EDDA; color: #155724; border: 1px solid #c3e6cb; }
-        .alert-error { background-color: #F8D7DA; color: #721C24; border: 1px solid #f5c6cb; }
-        .multiselect { height: 100px !important; }
-    </style>
 </head>
 <body>
-    <header class="vintage-header">
-        <div class="header-content">
-            <h1>Blue Oval Classics</h1>
-            <h2>Experiencia Test Drive</h2>
+    <header class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Blue Oval <span class="text-red">Classics</span></h1>
+            <p class="hero-subtitle">Experiencia Test Drive</p>
+            <a href="#testdrives" class="btn btn-hero">Ver pruebas <i class="fas fa-arrow-down"></i></a>
         </div>
     </header>
 
-    <main class="container">
+    <nav class="modern-navbar">
+        <a href="/autos/" class="logo">BLUE OVAL <span class="text-red">CLASSICS</span></a>
+        <div class="nav-links">
+            <a href="/autos/" class="nav-btn active">Autos</a>
+            <a href="/clientes/" class="nav-btn">Clientes</a>
+            <a href="/empleados/" class="nav-btn">Equipo</a>
+            <a href="/fabrica/" class="nav-btn">Fábricas</a>
+            <a href="/sucursal/" class="nav-btn">Sucursales</a>
+            <a href="/proveedor/" class="nav-btn">Proveedores</a>
+            <a href="/taller/" class="nav-btn">Taller</a>
+            <a href="/ventas/" class="nav-btn">Ventas</a>
+            <a href="/stock/" class="nav-btn">Inventario</a>
+            <a href="/pruebas/" class="nav-btn btn-highlight">Test Drive</a>
+        </div>
+    </nav>
+
+    <main class="container" id="testdrives">
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                <div class="alert alert-{{ message.tags }}">
+                    <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+                    {{ message }}
+                </div>
             {% endfor %}
         {% endif %}
 
         <section class="card form-section">
             <div class="card-header">
-                {% if prueba_edit %}
-                    <h3>Reprogramar Prueba: {{ prueba_edit.nombre_cliente }}</h3>
-                {% else %}
-                    <h3>Agendar Nuevo Test Drive</h3>
-                {% endif %}
+                <h3>
+                    {% if prueba_edit %}
+                        <i class="fas fa-edit"></i> Reprogramar Prueba: {{ prueba_edit.nombre_cliente }}
+                    {% else %}
+                        <i class="fas fa-car"></i> Agendar Nuevo Test Drive
+                    {% endif %}
+                </h3>
             </div>
             
             <form action="{% if prueba_edit %}/pruebas/editar/{{ prueba_edit.id }}/{% else %}/pruebas/nuevo/{% endif %}" method="POST" class="vintage-form">
@@ -95,7 +113,7 @@
                     <div class="form-group full-width">
                         <label for="autos">Vehículos a Probar (Selección Múltiple)</label>
                         <small style="color: #666; margin-bottom: 5px; display:block;">Mantén presionada la tecla Ctrl (o Cmd) para elegir varios autos.</small>
-                        <select name="autos" id="autos" class="multiselect" multiple required>
+                        <select name="autos" id="autos" class="multiselect" multiple required style="height: 100px;">
                             {% for auto in autos %}
                                 <option value="{{ auto.id }}" 
                                     {% if prueba_edit and auto in prueba_edit.autos.all %}selected{% endif %}>
@@ -108,8 +126,8 @@
                 
                 <div class="form-actions">
                     {% if prueba_edit %}
-                        <a href="/pruebas/" class="btn btn-outline" style="margin-right: 15px;">Cancelar</a>
-                        <button type="submit" class="btn btn-edit">Actualizar Test Drive</button>
+                        <a href="/pruebas/" class="btn btn-outline">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Actualizar Test Drive</button>
                     {% else %}
                         <button type="submit" class="btn btn-primary">Agendar Test Drive</button>
                     {% endif %}
@@ -119,7 +137,7 @@
 
         <section class="card table-section">
             <div class="card-header">
-                <h3>Agenda de Test Drives</h3>
+                <h3><i class="fas fa-calendar-check"></i> Agenda de Test Drives</h3>
             </div>
             <div class="table-responsive">
                 <table class="vintage-table">
@@ -140,7 +158,6 @@
                             <td><strong>{{ prueba.nombre_cliente }}</strong></td>
                             <td>{{ prueba.fecha_prueba|date:"d/m/Y" }}</td>
                             <td>
-                                <!-- Iteramos sobre la relación Muchos a Muchos -->
                                 {% for auto in prueba.autos.all %}
                                     &bull; {{ auto.modelo }}<br>
                                 {% endfor %}
@@ -148,13 +165,16 @@
                             <td>{{ prueba.empleado_encargado.nombre }}</td>
                             <td>{{ prueba.sucursal.nombre }}</td>
                             <td>
-                                <span class="badge {% if prueba.estatus == 'Completada' %}badge-active{% elif prueba.estatus == 'Programada' %}badge-pending{% else %}badge-inactive{% endif %}">
+                                <span class="badge {% if prueba.estatus == 'Completada' %}badge-active{% elif prueba.estatus == 'Programada' %}badge-warning{% else %}badge-inactive{% endif %}">
                                     {{ prueba.estatus }}
                                 </span>
                             </td>
                             <td class="actions">
-                                <a href="/pruebas/editar/{{ prueba.id }}/" class="btn btn-edit">Editar</a>
-                                <a href="/pruebas/eliminar/{{ prueba.id }}/" class="btn btn-delete" onclick="return confirm('¿Seguro que deseas cancelar la prueba de {{ prueba.nombre_cliente }}?');">Eliminar</a>
+                                <a href="/pruebas/editar/{{ prueba.id }}/" class="btn btn-edit btn-sm"><i class="fas fa-pen"></i> Editar</a>
+                                <a href="/pruebas/eliminar/{{ prueba.id }}/" class="btn btn-delete btn-sm"
+                                   onclick="return confirm('¿Cancelar la prueba de {{ prueba.nombre_cliente }}?');">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </a>
                             </td>
                         </tr>
                         {% empty %}

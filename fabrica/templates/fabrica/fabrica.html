@@ -6,36 +6,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blue Oval Classics | Fábricas</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{% static 'clientes/css/estilos.css' %}">
-    <style>
-        .alert { padding: 15px; margin-bottom: 20px; border-radius: 4px; font-weight: bold; }
-        .alert-success { background-color: #D4EDDA; color: #155724; border: 1px solid #c3e6cb; }
-        .alert-error { background-color: #F8D7DA; color: #721C24; border: 1px solid #f5c6cb; }
-    </style>
 </head>
 <body>
-    <header class="vintage-header">
-        <div class="header-content">
-            <h1>Blue Oval Classics</h1>
-            <h2>Plantas de Restauración y Ensamblaje</h2>
+    <header class="hero" style="background: linear-gradient(135deg, rgba(10,43,78,0.75) 0%, rgba(5,28,51,0.8) 100%), url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Blue Oval <span class="text-red">Classics</span></h1>
+            <p class="hero-subtitle">Plantas de Restauración y Ensamblaje</p>
+            <a href="#plantas" class="btn btn-hero">Ver fábricas <i class="fas fa-arrow-down"></i></a>
         </div>
     </header>
 
-    <main class="container">
+    <nav class="modern-navbar">
+        <a href="/autos/" class="logo">BLUE OVAL <span class="text-red">CLASSICS</span></a>
+        <div class="nav-links">
+            <a href="/autos/" class="nav-btn active">Autos</a>
+            <a href="/clientes/" class="nav-btn">Clientes</a>
+            <a href="/empleados/" class="nav-btn">Equipo</a>
+            <a href="/fabrica/" class="nav-btn">Fábricas</a>
+            <a href="/sucursal/" class="nav-btn">Sucursales</a>
+            <a href="/proveedor/" class="nav-btn">Proveedores</a>
+            <a href="/taller/" class="nav-btn">Taller</a>
+            <a href="/ventas/" class="nav-btn">Ventas</a>
+            <a href="/stock/" class="nav-btn">Inventario</a>
+            <a href="/pruebas/" class="nav-btn btn-highlight">Test Drive</a>
+        </div>
+    </nav>
+
+    <main class="container" id="plantas">
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                <div class="alert alert-{{ message.tags }}">
+                    <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+                    {{ message }}
+                </div>
             {% endfor %}
         {% endif %}
 
         <section class="card form-section">
             <div class="card-header">
-                {% if fabrica_edit %}
-                    <h3>Modificando Planta: {{ fabrica_edit.nombre }}</h3>
-                {% else %}
-                    <h3>Dar de Alta Nueva Fábrica</h3>
-                {% endif %}
+                <h3>
+                    {% if fabrica_edit %}
+                        <i class="fas fa-industry"></i> Modificando Planta: {{ fabrica_edit.nombre }}
+                    {% else %}
+                        <i class="fas fa-plus-circle"></i> Dar de Alta Nueva Fábrica
+                    {% endif %}
+                </h3>
             </div>
+            
             <form action="{% if fabrica_edit %}/fabrica/editar/{{ fabrica_edit.id }}/{% else %}/fabrica/crear/{% endif %}" method="POST" class="vintage-form">
                 {% csrf_token %}
                 <div class="form-grid">
@@ -76,8 +96,8 @@
                 
                 <div class="form-actions">
                     {% if fabrica_edit %}
-                        <a href="/fabrica/" class="btn btn-outline" style="margin-right: 15px;">Cancelar</a>
-                        <button type="submit" class="btn btn-edit">Actualizar Fábrica</button>
+                        <a href="/fabrica/" class="btn btn-outline">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Actualizar Fábrica</button>
                     {% else %}
                         <button type="submit" class="btn btn-primary">Registrar Fábrica</button>
                     {% endif %}
@@ -87,7 +107,7 @@
 
         <section class="card table-section">
             <div class="card-header">
-                <h3>Red de Fábricas Operativas</h3>
+                <h3><i class="fas fa-network-wired"></i> Red de Fábricas Operativas</h3>
             </div>
             <div class="table-responsive">
                 <table class="vintage-table">
@@ -111,13 +131,16 @@
                             <td>{{ fabrica.fecha_fundacion|date:"d/m/Y" }}</td>
                             <td>{{ fabrica.procesos_activos }}</td>
                             <td>
-                                <span class="badge {% if fabrica.estatus == 'Activo' %}badge-active{% else %}badge-inactive{% endif %}">
+                                <span class="badge {% if fabrica.estatus == 'Activo' %}badge-active{% elif fabrica.estatus == 'Mantenimiento' %}badge-warning{% else %}badge-inactive{% endif %}">
                                     {{ fabrica.estatus }}
                                 </span>
                             </td>
                             <td class="actions">
-                                <a href="/fabrica/editar/{{ fabrica.id }}/" class="btn btn-edit">Modificar</a>
-                                <a href="/fabrica/eliminar/{{ fabrica.id }}/" class="btn btn-delete" onclick="return confirm('¿Seguro que deseas eliminar el registro de {{ fabrica.nombre }}?');">Eliminar</a>
+                                <a href="/fabrica/editar/{{ fabrica.id }}/" class="btn btn-edit btn-sm"><i class="fas fa-pen"></i> Editar</a>
+                                <a href="/fabrica/eliminar/{{ fabrica.id }}/" class="btn btn-delete btn-sm"
+                                   onclick="return confirm('¿Eliminar el registro de {{ fabrica.nombre }}?');">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </a>
                             </td>
                         </tr>
                         {% empty %}

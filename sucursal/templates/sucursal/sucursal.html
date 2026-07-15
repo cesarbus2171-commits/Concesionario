@@ -6,36 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blue Oval Classics | Sucursales</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{% static 'clientes/css/estilos.css' %}">
-    <style>
-        .alert { padding: 15px; margin-bottom: 20px; border-radius: 4px; font-weight: bold; }
-        .alert-success { background-color: #D4EDDA; color: #155724; border: 1px solid #c3e6cb; }
-        .alert-error { background-color: #F8D7DA; color: #721C24; border: 1px solid #f5c6cb; }
-    </style>
 </head>
 <body>
-    <header class="vintage-header">
-        <div class="header-content">
-            <h1>Blue Oval Classics</h1>
-            <h2>Nuestras Sedes y Puntos de Venta</h2>
+    <header class="hero" style="background: linear-gradient(135deg, rgba(10,43,78,0.75) 0%, rgba(5,28,51,0.8) 100%), url(https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80) center/cover no-repeat;">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Blue Oval <span class="text-red">Classics</span></h1>
+            <p class="hero-subtitle">Nuestras Sedes y Puntos de Venta</p>
+            <a href="#red-sucursales" class="btn btn-hero">Conoce nuestras sucursales <i class="fas fa-arrow-down"></i></a>
         </div>
     </header>
 
-    <main class="container">
+    <nav class="modern-navbar">
+        <a href="/autos/" class="logo">BLUE OVAL <span class="text-red">CLASSICS</span></a>
+        <div class="nav-links">
+            <a href="/autos/" class="nav-btn active">Autos</a>
+            <a href="/clientes/" class="nav-btn">Clientes</a>
+            <a href="/empleados/" class="nav-btn">Equipo</a>
+            <a href="/fabrica/" class="nav-btn">Fábricas</a>
+            <a href="/sucursal/" class="nav-btn">Sucursales</a>
+            <a href="/proveedor/" class="nav-btn">Proveedores</a>
+            <a href="/taller/" class="nav-btn">Taller</a>
+            <a href="/ventas/" class="nav-btn">Ventas</a>
+            <a href="/stock/" class="nav-btn">Inventario</a>
+            <a href="/pruebas/" class="nav-btn btn-highlight">Test Drive</a>
+    </nav>
+
+    <main class="container" id="red-sucursales">
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                <div class="alert alert-{{ message.tags }}">
+                    <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+                    {{ message }}
+                </div>
             {% endfor %}
         {% endif %}
 
         <section class="card form-section">
             <div class="card-header">
-                {% if sucursal_edit %}
-                    <h3>Modificando Sede: {{ sucursal_edit.nombre }}</h3>
-                {% else %}
-                    <h3>Aperturar Nueva Sucursal</h3>
-                {% endif %}
+                <h3>
+                    {% if sucursal_edit %}
+                        <i class="fas fa-edit"></i> Modificando Sede: {{ sucursal_edit.nombre }}
+                    {% else %}
+                        <i class="fas fa-store-alt"></i> Aperturar Nueva Sucursal
+                    {% endif %}
+                </h3>
             </div>
+            
             <form action="{% if sucursal_edit %}/sucursal/editar/{{ sucursal_edit.id }}/{% else %}/sucursal/nuevo/{% endif %}" method="POST" class="vintage-form">
                 {% csrf_token %}
                 <div class="form-grid">
@@ -71,8 +90,8 @@
                 
                 <div class="form-actions">
                     {% if sucursal_edit %}
-                        <a href="/sucursal/" class="btn btn-outline" style="margin-right: 15px;">Cancelar</a>
-                        <button type="submit" class="btn btn-edit">Actualizar Datos</button>
+                        <a href="/sucursal/" class="btn btn-outline">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Actualizar Datos</button>
                     {% else %}
                         <button type="submit" class="btn btn-primary">Registrar Sucursal</button>
                     {% endif %}
@@ -82,7 +101,7 @@
 
         <section class="card table-section">
             <div class="card-header">
-                <h3>Red de Sucursales</h3>
+                <h3><i class="fas fa-map-marked-alt"></i> Red de Sucursales</h3>
             </div>
             <div class="table-responsive">
                 <table class="vintage-table">
@@ -102,15 +121,18 @@
                             <td><strong>{{ sucursal.nombre }}</strong></td>
                             <td>{{ sucursal.ciudad }}</td>
                             <td>{{ sucursal.direccion }}</td>
-                            <td>{{ sucursal.telefono }}</td>
+                            <td><i class="fas fa-phone-alt" style="color: var(--primary-blue);"></i> {{ sucursal.telefono }}</td>
                             <td>
-                                <span class="badge {% if sucursal.estatus == 'Activa' %}badge-active{% else %}badge-inactive{% endif %}">
+                                <span class="badge {% if sucursal.estatus == 'Activa' %}badge-active{% elif sucursal.estatus == 'En Remodelacion' %}badge-warning{% else %}badge-inactive{% endif %}">
                                     {{ sucursal.estatus }}
                                 </span>
                             </td>
                             <td class="actions">
-                                <a href="/sucursal/editar/{{ sucursal.id }}/" class="btn btn-edit">Modificar</a>
-                                <a href="/sucursal/eliminar/{{ sucursal.id }}/" class="btn btn-delete" onclick="return confirm('¿Seguro que deseas eliminar permanentemente {{ sucursal.nombre }}?');">Cerrar</a>
+                                <a href="/sucursal/editar/{{ sucursal.id }}/" class="btn btn-edit btn-sm"><i class="fas fa-pen"></i> Editar</a>
+                                <a href="/sucursal/eliminar/{{ sucursal.id }}/" class="btn btn-delete btn-sm"
+                                   onclick="return confirm('¿Cerrar permanentemente la sucursal {{ sucursal.nombre }}?');">
+                                    <i class="fas fa-door-closed"></i> Cerrar
+                                </a>
                             </td>
                         </tr>
                         {% empty %}

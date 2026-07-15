@@ -5,22 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blue Oval Classics | Inventario de Autos</title>
+    <!-- Fuentes elegantes -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Iconos opcionales (Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{% static 'clientes/css/estilos.css' %}">
-    <style>
-        .alert { padding: 15px; margin-bottom: 20px; border-radius: 4px; font-weight: bold; }
-        .alert-success { background-color: #D4EDDA; color: #155724; border: 1px solid #c3e6cb; }
-        .alert-error { background-color: #F8D7DA; color: #721C24; border: 1px solid #f5c6cb; }
-    </style>
 </head>
 <body>
+    <!-- ========== HERO BANNER ========== -->
+    <header class="hero" style="background: linear-gradient(135deg, rgba(10,43,78,0.75) 0%, rgba(5,28,51,0.8) 100%), url(https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80) center/cover no-repeat;">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Blue Oval <span class="text-red">Classics</span></h1>
+            <p class="hero-subtitle">Leyendas del asfalto. Elegancia atemporal.</p>
+            <a href="#inventario" class="btn btn-hero">Explorar inventario <i class="fas fa-arrow-down"></i></a>
+        </div>
+    </header>
+
     <!-- ========== NAVBAR MODERNA ========== -->
     <nav class="modern-navbar">
-        <a href="/autos/" style="color: white; text-decoration: none; font-size: 1.5rem; font-weight: bold;">
-            BLUE OVAL <span style="color: var(--classic-red);">CLASSICS</span>
-        </a>
+        <a href="/autos/" class="logo">BLUE OVAL <span class="text-red">CLASSICS</span></a>
         <div class="nav-links">
-            <a href="/autos/" class="nav-btn">Autos</a>
+            <a href="/autos/" class="nav-btn active">Autos</a>
             <a href="/clientes/" class="nav-btn">Clientes</a>
             <a href="/empleados/" class="nav-btn">Equipo</a>
             <a href="/fabrica/" class="nav-btn">Fábricas</a>
@@ -28,28 +34,33 @@
             <a href="/proveedor/" class="nav-btn">Proveedores</a>
             <a href="/taller/" class="nav-btn">Taller</a>
             <a href="/ventas/" class="nav-btn">Ventas</a>
+            <a href="/stock/" class="nav-btn">Inventario</a>
             <a href="/pruebas/" class="nav-btn btn-highlight">Test Drive</a>
         </div>
     </nav>
-    
-    <!-- ... resto de tu contenido ... -->
 
-    <main class="container">
-        <!-- ALERTAS DE MENSAJES -->
+    <!-- Contenido principal -->
+    <main class="container" id="inventario">
+        <!-- Mensajes de Django -->
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                <div class="alert alert-{{ message.tags }}">
+                    <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+                    {{ message }}
+                </div>
             {% endfor %}
         {% endif %}
 
-        <!-- FORMULARIO DINÁMICO -->
+        <!-- ========== FORMULARIO DINÁMICO ========== -->
         <section class="card form-section">
             <div class="card-header">
-                {% if auto_edit %}
-                    <h3>Modificando Vehículo: {{ auto_edit.marca }} {{ auto_edit.modelo }}</h3>
-                {% else %}
-                    <h3>Ingresar Nuevo Vehículo al Inventario</h3>
-                {% endif %}
+                <h3>
+                    {% if auto_edit %}
+                        <i class="fas fa-edit"></i> Modificando: {{ auto_edit.marca }} {{ auto_edit.modelo }}
+                    {% else %}
+                        <i class="fas fa-plus-circle"></i> Ingresar Nuevo Vehículo al Inventario
+                    {% endif %}
+                </h3>
             </div>
             
             <form action="{% if auto_edit %}/autos/editar/{{ auto_edit.id }}/{% else %}/autos/nuevo/{% endif %}" method="POST" class="vintage-form">
@@ -66,13 +77,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="anio">Año de Fabricación</label>
-                        <input type="number" name="anio" id="anio" value="{{ auto_edit.anio|default:'' }}" required>
+                        <label for="anio">Año</label>
+                        <input type="number" name="anio" id="anio" placeholder="1967" value="{{ auto_edit.anio|default:'' }}" required>
                     </div>
 
                     <div class="form-group">
                         <label for="precio">Precio (USD)</label>
-                        <input type="number" name="precio" id="precio" step="0.01" value="{{ auto_edit.precio|default:'' }}" required>
+                        <input type="number" name="precio" id="precio" step="0.01" placeholder="25000" value="{{ auto_edit.precio|default:'' }}" required>
                     </div>
 
                     <div class="form-group">
@@ -81,7 +92,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="estatus">Estatus en Inventario</label>
+                        <label for="estatus">Estatus</label>
                         <select name="estatus" id="estatus" required>
                             <option value="Disponible" {% if auto_edit.estatus == 'Disponible' %}selected{% endif %}>Disponible</option>
                             <option value="Reservado" {% if auto_edit.estatus == 'Reservado' %}selected{% endif %}>Reservado</option>
@@ -93,8 +104,8 @@
                 
                 <div class="form-actions">
                     {% if auto_edit %}
-                        <a href="/autos/" class="btn btn-outline" style="margin-right: 15px;">Cancelar</a>
-                        <button type="submit" class="btn btn-edit">Guardar Cambios</button>
+                        <a href="/autos/" class="btn btn-outline">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                     {% else %}
                         <button type="submit" class="btn btn-primary">Registrar Vehículo</button>
                     {% endif %}
@@ -102,10 +113,10 @@
             </form>
         </section>
 
-        <!-- TABLA DE INVENTARIO -->
+        <!-- ========== TABLA DE INVENTARIO ========== -->
         <section class="card table-section">
             <div class="card-header">
-                <h3>Inventario de Clásicos</h3>
+                <h3><i class="fas fa-garage"></i> Inventario de Clásicos</h3>
             </div>
             <div class="table-responsive">
                 <table class="vintage-table">
@@ -125,15 +136,18 @@
                             <td><strong>{{ auto.marca }} {{ auto.modelo }}</strong></td>
                             <td>{{ auto.anio }}</td>
                             <td>{{ auto.edicion }}</td>
-                            <td>${{ auto.precio }}</td>
+                            <td>${{ auto.precio|floatformat:2 }}</td>
                             <td>
-                                <span class="badge {% if auto.estatus == 'Disponible' %}badge-active{% elif auto.estatus == 'Vendido' %}badge-inactive{% endif %}">
+                                <span class="badge {% if auto.estatus == 'Disponible' %}badge-active{% elif auto.estatus == 'Reservado' %}badge-warning{% elif auto.estatus == 'En Restauracion' %}badge-info{% else %}badge-inactive{% endif %}">
                                     {{ auto.estatus }}
                                 </span>
                             </td>
                             <td class="actions">
-                                <a href="/autos/editar/{{ auto.id }}/" class="btn btn-edit">Editar</a>
-                                <a href="/autos/eliminar/{{ auto.id }}/" class="btn btn-delete" onclick="return confirm('¿Seguro que deseas eliminar este {{ auto.modelo }} del inventario?');">Eliminar</a>
+                                <a href="/autos/editar/{{ auto.id }}/" class="btn btn-edit btn-sm"><i class="fas fa-pen"></i> Editar</a>
+                                <a href="/autos/eliminar/{{ auto.id }}/" class="btn btn-delete btn-sm"
+                                   onclick="return confirm('¿Seguro que deseas eliminar este {{ auto.modelo }} del inventario?');">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </a>
                             </td>
                         </tr>
                         {% empty %}
@@ -146,5 +160,7 @@
             </div>
         </section>
     </main>
+
+    <!-- Sin JavaScript adicional, solo HTML y CSS -->
 </body>
 </html>
